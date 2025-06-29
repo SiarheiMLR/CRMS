@@ -1,0 +1,61 @@
+﻿<metro:MetroWindow x:Class="CRMS.Views.User.TicketEdit.TicketEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="{Binding WindowTitle}"
+        Height="400" Width="600"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF6C5B7B" Offset="0"/>
+            <GradientStop Color="#FFC06C84" Offset="0.5"/>
+            <GradientStop Color="#FF355C7D" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid Margin="16">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel>
+            <!-- Subject -->
+            <TextBox Grid.Row="0"
+                     materialDesign:HintAssist.Hint="Тема"
+                     Text="{Binding Subject}"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Margin="0 0 0 16"/>
+
+            <!-- Content -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                <TextBox materialDesign:HintAssist.Hint="Описание"
+                         Text="{Binding Content}"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         AcceptsReturn="True"
+                         TextWrapping="Wrap"
+                         MinHeight="150"/>
+            </ScrollViewer>
+
+            <!-- Кнопки -->
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 16 0 0">
+                <Button Content="Сохранить"
+                        Command="{Binding SaveCommand}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Foreground="White"
+                        Margin="0 0 8 0"/>
+
+                <Button Content="Отмена"
+                        Command="{Binding CancelCommand}"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</metro:MetroWindow>

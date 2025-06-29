@@ -1,0 +1,181 @@
+﻿<metro:MetroWindow x:Class="CRMS.Views.MainWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"        
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
+        xmlns:local="clr-namespace:CRMS.Views"
+        xmlns:enums="clr-namespace:CRMS.Domain.Entities;assembly=CRMS.Domain"
+        mc:Ignorable="d"
+        Title="CRMS"
+        Height="1000" Width="1900"
+        ResizeMode="CanResizeWithGrip"
+        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+        BorderThickness="1"
+        BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        ShowTitleBar="True"
+        WindowTransitionsEnabled="True"
+        WindowState="Maximized">
+
+    <Window.Resources>
+        <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF6C5B7B" Offset="0"/>
+            <GradientStop Color="#FFC06C84" Offset="0.5"/>
+            <GradientStop Color="#FF355C7D" Offset="1"/>
+        </LinearGradientBrush>
+
+        <Style x:Key="MenuTextButtonStyle" 
+               TargetType="Button"
+               BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="8 4"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <!-- Убираем эффекты при наведении -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter 
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                        Margin="{TemplateBinding Padding}"
+                        TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для Flyout -->
+        <Style x:Key="MenuFlyoutStyle" TargetType="{x:Type metro:Flyout}">
+            <Setter Property="Header" Value="Меню"/>
+            <Setter Property="Position" Value="Left"/>
+            <Setter Property="Width" Value="250"/>
+        </Style>
+
+        <!-- Стиль для кликабельного текста -->
+        <Style x:Key="ClickableTextStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="{DynamicResource PrimaryHueMidBrush}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
+        </Style>
+    </Window.Resources>
+
+    <metro:MetroWindow.RightWindowCommands>
+        <metro:WindowCommands>
+            <TextBlock
+                Text="{Binding UserName}"
+                VerticalAlignment="Center"/>
+            <Button 
+               Command="{Binding LogoutCommand}"
+               Content="🏠︎"
+               ToolTip="Выйти"/>
+        </metro:WindowCommands>
+    </metro:MetroWindow.RightWindowCommands>
+
+    <Grid>
+        <Border Background="{StaticResource BackgroundGradient}"/>
+
+        
+        <!-- Панель с кнопкой меню -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" >
+            <Button Content="☰" 
+              Panel.ZIndex="1000"
+              Command="{Binding DataContext.ToggleMenuCommand, 
+           RelativeSource={RelativeSource AncestorType={x:Type metro:MetroWindow}}}"
+              ToolTip="Основное меню"
+              Style="{StaticResource MahApps.Styles.Button.Circle}"
+              Width="40" Height="40"
+              FontSize="20"
+              Margin="5"
+              />
+
+            <TextBlock Text="{Binding CurrentDate}" 
+                 FontSize="16" 
+                 Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                 VerticalAlignment="Center"/>
+        </StackPanel>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
+        <!-- Flyout-меню -->
+        <metro:FlyoutsControl Panel.ZIndex="1000">
+            <metro:Flyout Header="Меню" 
+                Position="Left"
+                Width="250"
+                IsOpen="{Binding IsMenuOpen}">
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Style.Triggers>
+                                <!-- Для администратора -->
+                                <DataTrigger Binding="{Binding CurrentRole}" 
+                                   Value="{x:Static enums:UserRole.Admin}">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <StackPanel>
+                                                <Button Content="Главная" 
+                                                Command="{Binding MainPageCommand}"
+                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Пользователи" 
+                                                Command="{Binding ManageUsersCommand}"
+                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                            </StackPanel>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+
+                                <!-- Для поддержки -->
+                                <DataTrigger Binding="{Binding CurrentRole}" 
+                                   Value="{x:Static enums:UserRole.Support}">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <StackPanel>
+                                                <Button Content="Главная" 
+                                                Command="{Binding MainPageCommand}"
+                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Тикеты" 
+                                                Command="{Binding SupportTicketsPageCommand}"
+                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                            </StackPanel>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+
+                                <!-- Для обычного пользователя -->
+                                <DataTrigger Binding="{Binding CurrentRole}" 
+                                   Value="{x:Static enums:UserRole.User}">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <StackPanel>
+                                                <Button Content="Главная" 
+                                                Command="{Binding MainPageCommand}"
+                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Тикеты" 
+                                                Command="{Binding UserTicketPageCommand}"
+                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                            </StackPanel>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ContentControl.Style>
+                </ContentControl>
+            </metro:Flyout>
+        </metro:FlyoutsControl>
+
+        
+
+    </Grid>
+</metro:MetroWindow>
