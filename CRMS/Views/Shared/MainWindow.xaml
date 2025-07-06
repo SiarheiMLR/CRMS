@@ -8,8 +8,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
         xmlns:local="clr-namespace:CRMS.Views"
         xmlns:enums="clr-namespace:CRMS.Domain.Entities;assembly=CRMS.Domain"
+        xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
         mc:Ignorable="d"
-        Title="CRMS"
+        Title="Client Request Management System"
         Height="1000" Width="1900"
         ResizeMode="CanResizeWithGrip"
         GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
@@ -21,34 +22,63 @@
         WindowState="Maximized">
 
     <Window.Resources>
+        <converters:MenuMarginConverter x:Key="MenuMarginConverter"/>
+
         <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#FF6C5B7B" Offset="0"/>
             <GradientStop Color="#FFC06C84" Offset="0.5"/>
             <GradientStop Color="#FF355C7D" Offset="1"/>
         </LinearGradientBrush>
 
-        <Style x:Key="MenuTextButtonStyle" 
-               TargetType="Button"
-               BasedOn="{StaticResource {x:Type Button}}">
+        <!-- Стиль для Button -->
+        <Style x:Key="MenuTextButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Padding" Value="8 4"/>
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-
-            <!-- Убираем эффекты при наведении -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Grid Background="{TemplateBinding Background}">
-                            <ContentPresenter 
-                        VerticalAlignment="Center"
-                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                        Margin="{TemplateBinding Padding}"
-                        TextElement.Foreground="{TemplateBinding Foreground}"/>
+                            <ContentPresenter VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Отдельный стиль для ToggleButton -->
+        <Style x:Key="MenuToggleButtonStyle" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="8 4"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid Background="{TemplateBinding Background}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="▶" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                <ContentPresenter VerticalAlignment="Center"
+                                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}"/>
+                            </StackPanel>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
@@ -71,99 +101,120 @@
             <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
             <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
         </Style>
+
+        <!-- Стиль для Expander в меню -->
+        <Style x:Key="MenuExpanderStyle" TargetType="Expander">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Expander">
+                        <DockPanel>
+                            <ToggleButton x:Name="HeaderSite"
+                                          DockPanel.Dock="Top"
+                                          Content="{TemplateBinding Header}"
+                                          IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          Style="{StaticResource MenuToggleButtonStyle}"/>
+                            <ContentPresenter x:Name="ExpandSite"
+                                              DockPanel.Dock="Bottom"
+                                              Visibility="Collapsed"/>
+                        </DockPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsExpanded" Value="True">
+                                <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Стиль для вложенного Expander -->
+        <Style x:Key="SubMenuExpanderStyle" TargetType="Expander" BasedOn="{StaticResource MenuExpanderStyle}">
+            <Setter Property="Margin" Value="20,0,0,0"/>
+        </Style>
+       
     </Window.Resources>
 
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
-            <TextBlock
-                Text="{Binding UserName}"
-                VerticalAlignment="Center"/>
-            <Button 
-               Command="{Binding LogoutCommand}"
-               Content="🏠︎"
-               ToolTip="Выйти"/>
+            <TextBlock Text="{Binding UserName}" VerticalAlignment="Center"/>
+            <Button Command="{Binding LogoutCommand}" Content="🏠︎" ToolTip="Выйти"/>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 
     <Grid>
         <Border Background="{StaticResource BackgroundGradient}"/>
-
         
         <!-- Панель с кнопкой меню -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" >
-            <Button Content="☰" 
-              Panel.ZIndex="1000"
-              Command="{Binding DataContext.ToggleMenuCommand, 
-           RelativeSource={RelativeSource AncestorType={x:Type metro:MetroWindow}}}"
-              ToolTip="Основное меню"
-              Style="{StaticResource MahApps.Styles.Button.Circle}"
-              Width="40" Height="40"
-              FontSize="20"
-              Margin="5"
-              />
-
-            <TextBlock Text="{Binding CurrentDate}" 
-                 FontSize="16" 
-                 Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                 VerticalAlignment="Center"/>
+            <Button Content="☰" Panel.ZIndex="1000"
+                    Command="{Binding DataContext.ToggleMenuCommand, RelativeSource={RelativeSource AncestorType={x:Type metro:MetroWindow}}}"
+                    ToolTip="Основное меню"
+                    Style="{StaticResource MahApps.Styles.Button.Circle}"
+                    Width="40" Height="40"
+                    FontSize="20"
+                    Margin="5" />
+            <TextBlock Text="{Binding CurrentDate}" FontSize="16"
+                       Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                       VerticalAlignment="Center"/>
         </StackPanel>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" />
+        <Frame x:Name="MainFrame"
+                NavigationUIVisibility="Hidden"
+                Margin="{Binding IsMenuOpen, Converter={StaticResource MenuMarginConverter}}"/>
         <!-- Flyout-меню -->
         <metro:FlyoutsControl Panel.ZIndex="1000">
             <metro:Flyout Header="Меню" 
                 Position="Left"
-                Width="250"
+                Width="300"
                 IsOpen="{Binding IsMenuOpen}">
                 <ContentControl>
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
                             <Style.Triggers>
-                                <!-- Для администратора -->
-                                <DataTrigger Binding="{Binding CurrentRole}" 
-                                   Value="{x:Static enums:UserRole.Admin}">
+                                <!-- Модифицированное меню для администратора -->
+                                <DataTrigger Binding="{Binding CurrentRole}" Value="{x:Static enums:UserRole.Admin}">
                                     <Setter Property="Content">
                                         <Setter.Value>
                                             <StackPanel>
-                                                <Button Content="Главная" 
-                                                Command="{Binding MainPageCommand}"
-                                                Style="{StaticResource MenuTextButtonStyle}"/>
-                                                <Button Content="Пользователи" 
-                                                Command="{Binding ManageUsersCommand}"
-                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+
+                                                <Expander Header="Пользователи" Style="{StaticResource MenuExpanderStyle}">
+                                                    <StackPanel>
+                                                        <Button Content="Просмотр информации" Command="{Binding ViewUsersCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Expander Header="Добавить" Style="{StaticResource SubMenuExpanderStyle}">
+                                                            <StackPanel>
+                                                                <Button Content="Создать" Command="{Binding CreateUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                                <Button Content="Импорт из Active Directory" Command="{Binding ImportUsersCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                            </StackPanel>
+                                                        </Expander>
+                                                        <Button Content="Редактировать" Command="{Binding EditUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Удалить" Command="{Binding DeleteUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                    
+                                                    </StackPanel>
+                                                </Expander>
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
 
                                 <!-- Для поддержки -->
-                                <DataTrigger Binding="{Binding CurrentRole}" 
-                                   Value="{x:Static enums:UserRole.Support}">
+                                <DataTrigger Binding="{Binding CurrentRole}" Value="{x:Static enums:UserRole.Support}">
                                     <Setter Property="Content">
                                         <Setter.Value>
                                             <StackPanel>
-                                                <Button Content="Главная" 
-                                                Command="{Binding MainPageCommand}"
-                                                Style="{StaticResource MenuTextButtonStyle}"/>
-                                                <Button Content="Тикеты" 
-                                                Command="{Binding SupportTicketsPageCommand}"
-                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Тикеты" Command="{Binding SupportTicketsPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>
                                 </DataTrigger>
 
                                 <!-- Для обычного пользователя -->
-                                <DataTrigger Binding="{Binding CurrentRole}" 
-                                   Value="{x:Static enums:UserRole.User}">
+                                <DataTrigger Binding="{Binding CurrentRole}" Value="{x:Static enums:UserRole.User}">
                                     <Setter Property="Content">
                                         <Setter.Value>
                                             <StackPanel>
-                                                <Button Content="Главная" 
-                                                Command="{Binding MainPageCommand}"
-                                                Style="{StaticResource MenuTextButtonStyle}"/>
-                                                <Button Content="Тикеты" 
-                                                Command="{Binding UserTicketPageCommand}"
-                                                Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Content="Тикеты" Command="{Binding UserTicketPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>

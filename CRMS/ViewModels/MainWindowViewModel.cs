@@ -1,9 +1,11 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CRMS.Business.Models;
 using CRMS.Business.Services.AuthService;
 using CRMS.Domain.Entities;
 using CRMS.Services;
 using CRMS.Views;
+using CRMS.Views.AD;
 using CRMS.Views.Admin;
 using CRMS.Views.Support;
 using CRMS.Views.User.TicketsPage;
@@ -83,12 +85,26 @@ namespace CRMS.ViewModels
         public object RoleSpecificContent => CurrentRole;
 
         [RelayCommand]
+        private void ImportUsers()
+        {
+            var window = _serviceProvider.GetRequiredService<ADLoginWindow>();
+            window.ShowDialog();
+        }
+
+        [RelayCommand]
         private void Logout()
         {
             _authService.Logout();
             var window = _serviceProvider.GetRequiredService<StartUpWindow>();
             Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
             window?.Show();
+        }
+
+        public void NavigateToUserListPage(List<ADUserDto> users)
+        {
+            var userListPage = new UserListPage(users);
+            var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+            mainWindow?.MainFrame.Navigate(userListPage);
         }
     }
 }

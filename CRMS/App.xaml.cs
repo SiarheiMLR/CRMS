@@ -20,6 +20,8 @@ using CRMS.ViewModels.UserVM;
 using CRMS.Views.User.TicketEdit;
 using CRMS.Views.Support;
 using CRMS.ViewModels.Support;
+using CRMS.Views.AD;
+using CRMS.ViewModels.AD;
 
 
 //admin@bigfirm.by
@@ -44,13 +46,14 @@ namespace CRMS
 
         private void ConfigureServices(ServiceCollection services)
         {
-            // Регистрация контекста базы данных 
+            // Контекст базы данных
             services.AddDbContext<CRMSDbContext>(options =>
-                options.UseMySql(connectionString: _configuration.GetConnectionString("DefaultConnection"),
-                serverVersion: new MySqlServerVersion(new System.Version(10, 4))),
+                options.UseMySql(
+                    connectionString: _configuration.GetConnectionString("DefaultConnection"),
+                    serverVersion: new MySqlServerVersion(new System.Version(10, 4))),
                 ServiceLifetime.Transient);
 
-            // Регистрация сервисов
+            // Сервисы
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ITicketService, TicketService>();
@@ -58,11 +61,14 @@ namespace CRMS
             services.AddTransient<IAttachmentService, AttachmentService>();
             services.AddScoped<INavigationService, NavigationService>();
 
-            // Регистрация представлений
+            // Окна
             services.AddTransient<StartUpWindow>();
             services.AddTransient<LoginWindow>();
             services.AddTransient<MainWindow>();
 
+            services.AddTransient<ADLoginWindow>(); // ✅            
+
+            // Страницы
             services.AddTransient<MainAdminPage>();
             services.AddTransient<UsersEditingPage>();
             services.AddTransient<UserEditWindow>();
@@ -74,7 +80,7 @@ namespace CRMS
             services.AddTransient<UserTicketsPage>();
             services.AddTransient<TicketEditWindow>();
 
-            // Регистрация ViewModels
+            // ViewModels
             services.AddTransient<UsersEditingViewModel>();
             services.AddTransient<UserEditWindowViewModel>();
 
@@ -84,9 +90,12 @@ namespace CRMS
 
             services.AddTransient<UserTicketsViewModel>();
             services.AddTransient<TicketEditViewModel>();
-
             services.AddTransient<SupportTicketsViewModel>();
+
+            services.AddTransient<ADLoginWindowViewModel>(); // ✅
+            //services.AddTransient<ADUserListWindowViewModel>(); // ✅
         }
+
 
         protected override void OnStartup(StartupEventArgs e)
         {
