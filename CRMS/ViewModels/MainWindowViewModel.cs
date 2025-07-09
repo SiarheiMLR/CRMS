@@ -100,6 +100,14 @@ namespace CRMS.ViewModels
             window?.Show();
         }
 
+        [RelayCommand]
+        private void ViewUsers()
+        {
+            _navigationService.NavigateTo<UsersOverviewPage>();
+            //ToggleMenu();
+        }
+
+
         public void NavigateToUserListPage(List<ADUserDto> users)
         {
             var userListPage = new UserListPage(users);

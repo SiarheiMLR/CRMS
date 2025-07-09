@@ -109,6 +109,9 @@ namespace CRMS.Domain.Entities
         [MaxLength(100)]
         public string ManagerName { get; set; } = string.Empty;// Имя прямого начальника пользователя
 
+        [Column(TypeName = "LONGBLOB")]
+        public byte[]? Avatar { get; set; } // Фото пользователя
+
         // Связи "многие ко многим"
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
         public ICollection<Group> Groups { get; set; } = new List<Group>();

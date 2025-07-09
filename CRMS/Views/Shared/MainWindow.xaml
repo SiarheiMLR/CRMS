@@ -142,30 +142,49 @@
     </metro:MetroWindow.RightWindowCommands>
 
     <Grid>
+        <!-- Градиент -->
         <Border Background="{StaticResource BackgroundGradient}"/>
         
-        <!-- Панель с кнопкой меню -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" >
-            <Button Content="☰" Panel.ZIndex="1000"
-                    Command="{Binding DataContext.ToggleMenuCommand, RelativeSource={RelativeSource AncestorType={x:Type metro:MetroWindow}}}"
-                    ToolTip="Основное меню"
-                    Style="{StaticResource MahApps.Styles.Button.Circle}"
-                    Width="40" Height="40"
-                    FontSize="20"
-                    Margin="5" />
-            <TextBlock Text="{Binding CurrentDate}" FontSize="16"
-                       Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                       VerticalAlignment="Center"/>
-        </StackPanel>
-        <Frame x:Name="MainFrame"
-                NavigationUIVisibility="Hidden"
-                Margin="{Binding IsMenuOpen, Converter={StaticResource MenuMarginConverter}}"/>
+        
+        <!-- Основной контент -->
+        <Grid>
+            <!-- Flyout-меню и Frame -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <!-- Меню -->
+                    <ColumnDefinition Width="*"/>
+                    <!-- Контент -->
+                </Grid.ColumnDefinitions>
+
+                <!-- Frame -->
+                <Frame x:Name="MainFrame"
+                   Grid.Column="1"
+                   NavigationUIVisibility="Hidden"
+                   Margin="{Binding IsMenuOpen, Converter={StaticResource MenuMarginConverter}}" 
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch"/>
+            </Grid>
+            <!-- Панель с кнопкой меню -->
+            <StackPanel Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Top" >
+                <Button Content="☰" Panel.ZIndex="1000"
+                Command="{Binding DataContext.ToggleMenuCommand, RelativeSource={RelativeSource AncestorType={x:Type metro:MetroWindow}}}"
+                ToolTip="Основное меню"
+                Style="{StaticResource MahApps.Styles.Button.Circle}"
+                Width="40" Height="40"
+                FontSize="20"
+                Margin="5" />
+                <TextBlock Text="{Binding CurrentDate}" FontSize="16"
+                   Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                   VerticalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
         <!-- Flyout-меню -->
         <metro:FlyoutsControl Panel.ZIndex="1000">
             <metro:Flyout Header="Меню" 
-                Position="Left"
-                Width="300"
-                IsOpen="{Binding IsMenuOpen}">
+        Position="Left"
+        Width="250"
+        IsOpen="{Binding IsMenuOpen}">
                 <ContentControl>
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
@@ -188,7 +207,7 @@
                                                         </Expander>
                                                         <Button Content="Редактировать" Command="{Binding EditUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
                                                         <Button Content="Удалить" Command="{Binding DeleteUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                    
+
                                                     </StackPanel>
                                                 </Expander>
                                             </StackPanel>
@@ -226,7 +245,6 @@
             </metro:Flyout>
         </metro:FlyoutsControl>
 
-        
 
     </Grid>
 </metro:MetroWindow>

@@ -80,6 +80,8 @@ namespace CRMS
             services.AddTransient<UserTicketsPage>();
             services.AddTransient<TicketEditWindow>();
 
+            services.AddTransient<UsersOverviewPage>();
+
             // ViewModels
             services.AddTransient<UsersEditingViewModel>();
             services.AddTransient<UserEditWindowViewModel>();
@@ -94,6 +96,9 @@ namespace CRMS
 
             services.AddTransient<ADLoginWindowViewModel>(); // ✅
             //services.AddTransient<ADUserListWindowViewModel>(); // ✅
+
+            services.AddTransient<UsersOverviewPageViewModel>();
+            
         }
 
 

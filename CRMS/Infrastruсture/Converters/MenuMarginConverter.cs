@@ -10,7 +10,7 @@ namespace CRMS.Infrastructure.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             bool isMenuOpen = value is bool b && b;
-            return isMenuOpen ? new Thickness(300, 0, 0, 0) : new Thickness(0);
+            return isMenuOpen ? new Thickness(250, 0, 0, 0) : new Thickness(0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

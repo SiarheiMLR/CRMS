@@ -87,6 +87,7 @@ namespace CRMS.ViewModels.Admin
                 Country = SelectedUser.Country,
                 WebPage = SelectedUser.WebPage,
                 DateOfBirth = SelectedUser.DateOfBirth,
+                Avatar = SelectedUser.Avatar,
                 Role = UserRole.User,
                 Status = UserStatus.Active
             };

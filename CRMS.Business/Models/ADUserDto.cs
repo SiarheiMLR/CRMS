@@ -23,6 +23,7 @@ namespace CRMS.Business.Models
         public string PostalCode { get; set; } = "Не указано";
         public string Country { get; set; } = "Не указано";
         public string UserLogonName { get; set; } = "Не указано";
+        public byte[]? Avatar { get; set; }
         public string WorkPhone { get; set; } = "Не указано";
         public string MobilePhone { get; set; } = "Не указано";
         public string IPPhone { get; set; } = "Не указано";

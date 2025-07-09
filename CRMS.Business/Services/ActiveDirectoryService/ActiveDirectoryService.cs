@@ -53,6 +53,7 @@ namespace CRMS.Business.ActiveDirectoryService
                             PostalCode = Get(entry, "postalCode"),
                             Country = Get(entry, "co"),
                             UserLogonName = $"{principal.SamAccountName}@{domain}",
+                            Avatar = GetPhoto(entry, "thumbnailPhoto"),
                             WorkPhone = Get(entry, "telephoneNumber"),
                             MobilePhone = Get(entry, "mobile"),
                             IPPhone = Get(entry, "ipPhone"),
@@ -95,5 +96,16 @@ namespace CRMS.Business.ActiveDirectoryService
             }
             return null;
         }
+
+        private byte[]? GetPhoto(DirectoryEntry entry, string propName)
+        {
+            if (entry.Properties.Contains(propName))
+            {
+                var data = entry.Properties[propName].Value as byte[];
+                return data?.Length > 0 ? data : null;
+            }
+            return null;
+        }
+
     }
 }
