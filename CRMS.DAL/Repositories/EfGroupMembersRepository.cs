@@ -1,25 +1,31 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CRMS.DAL.Data;
+﻿using CRMS.DAL.Data;
 using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CRMS.DAL.Repositories
 {
-    public class EfGroupMembersRepository : Repository<GroupMember>, IGroupMemberRepository
+    public class EfGroupMembersRepository : Repository<GroupMember>, IRepository<GroupMember>
     {
-        public EfGroupMembersRepository(CRMSDbContext context) : base(context) { }
+        private readonly CRMSDbContext _context;
 
-        public async Task<IEnumerable<GroupMember>> GetByUserIdAsync(int userId)
+        public EfGroupMembersRepository(CRMSDbContext context) : base(context)
         {
-            return await _dbSet.Where(gm => gm.UserId == userId).ToListAsync();
+            _context = context;
         }
 
-        public async Task<IEnumerable<GroupMember>> GetByGroupIdAsync(int groupId)
+        // Метод: получить список участников с подгрузкой связанных пользователей
+        public async Task<List<GroupMember>> GetWithUsersAsync(Expression<Func<GroupMember, bool>> predicate)
         {
-            return await _dbSet.Where(gm => gm.GroupId == groupId).ToListAsync();
+            return await _context.GroupMembers
+                .Include(gm => gm.User)
+                .Where(predicate)
+                .ToListAsync();
         }
     }
 }
+

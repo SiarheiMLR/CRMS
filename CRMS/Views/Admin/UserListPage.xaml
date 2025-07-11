@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:viewModels="clr-namespace:CRMS.ViewModels.Admin"
-      xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
+      xmlns:converters="clr-namespace:CRMS.Infrastruсture.Converters"
       mc:Ignorable="d"
       Title="Импортированные пользователи из AD">
 

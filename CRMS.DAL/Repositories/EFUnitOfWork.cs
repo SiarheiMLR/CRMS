@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace CRMS.DAL.Repositories
 {
-    public class EFUnitOfWork : IUnitOfWork
+    public class EFUnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly CRMSDbContext _context;
 
@@ -24,12 +24,19 @@ namespace CRMS.DAL.Repositories
             Attachments = new EfAttachmentsRepository(_context);
             Tickets = new EfTicketsRepository(_context);
             Users = new EfUsersRepository(_context);
+            GroupsRepository = new EfGroupsRepository(_context);
+            GroupMembersRepository = new EfGroupMembersRepository(_context);
+            GroupRoleMappings = new Repository<GroupRoleMapping>(context);
         }
 
-        public EfAttachmentsRepository Attachments {  get; }
+        public EfAttachmentsRepository Attachments { get; }
         public EfTicketsRepository Tickets { get; }
         public EfUsersRepository Users { get; }
-        
+
+        public IRepository<Group> GroupsRepository { get; }
+        public IRepository<GroupMember> GroupMembersRepository { get; }
+        public IRepository<GroupRoleMapping> GroupRoleMappings { get; }
+
         public async Task<int> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync();

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace CRMS.Infrastructure.Converters
+namespace CRMS.Infrastruсture.Converters
 {
     public class NullToTextConverter : IValueConverter
     {

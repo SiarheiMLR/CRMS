@@ -24,6 +24,7 @@ namespace CRMS.DAL.Data
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<GroupRoleMapping> GroupRoleMappings { get; set; }
 
         /// <summary>
         /// Метод <see cref="OnConfiguring(DbContextOptionsBuilder)"/> используется для настройки параметров подключения к базе данных в Entity Framework Core.
@@ -321,6 +322,12 @@ namespace CRMS.DAL.Data
                 .HasOne(gm => gm.Group)
                 .WithMany(g => g.GroupMembers)
                 .HasForeignKey(gm => gm.GroupId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<GroupRoleMapping>()
+                .HasOne(m => m.Group)
+                .WithMany()
+                .HasForeignKey(m => m.GroupId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
 

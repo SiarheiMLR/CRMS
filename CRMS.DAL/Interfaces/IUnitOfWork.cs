@@ -1,4 +1,5 @@
 ﻿using CRMS.DAL.Repositories;
+using CRMS.Domain.Entities;
 
 namespace CRMS.Domain.Interfaces
 {
@@ -10,8 +11,9 @@ namespace CRMS.Domain.Interfaces
         public EfUsersRepository Users { get; }
         //IRepository<CustomField> CustomFieldsRepository { get; }
         //IRepository<CustomFieldValue> CustomFieldValuesRepository { get; }
-        //IRepository<Group> GroupsRepository { get; }
-        //IRepository<GroupMember> GroupMembersRepository { get; }
+        IRepository<Group> GroupsRepository { get; }
+        IRepository<GroupMember> GroupMembersRepository { get; }
+        IRepository<GroupRoleMapping> GroupRoleMappings { get; }
         //IRepository<Transaction> TransactionsRepository { get; }
 
         // Методы сохраняют все изменения в БД

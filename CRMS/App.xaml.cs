@@ -22,6 +22,9 @@ using CRMS.Views.Support;
 using CRMS.ViewModels.Support;
 using CRMS.Views.AD;
 using CRMS.ViewModels.AD;
+using CRMS.Business.Services.GroupService;
+using CRMS.ViewModels.Admin.Groups;
+using CRMS.Views.Admin.Groups;
 
 
 //admin@bigfirm.by
@@ -59,7 +62,8 @@ namespace CRMS
             services.AddTransient<ITicketService, TicketService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddTransient<IAttachmentService, AttachmentService>();
-            services.AddScoped<INavigationService, NavigationService>();
+            services.AddScoped<INavigationService, NavigationService>();  
+            services.AddScoped<IGroupService, GroupService>();
 
             // Окна
             services.AddTransient<StartUpWindow>();
@@ -67,6 +71,8 @@ namespace CRMS
             services.AddTransient<MainWindow>();
 
             services.AddTransient<ADLoginWindow>(); // ✅            
+
+            services.AddTransient<AddUserToGroupWindow>();
 
             // Страницы
             services.AddTransient<MainAdminPage>();
@@ -81,6 +87,10 @@ namespace CRMS
             services.AddTransient<TicketEditWindow>();
 
             services.AddTransient<UsersOverviewPage>();
+
+            services.AddTransient<CreateGroupPage>();
+            services.AddTransient<GroupOverviewPage>();
+            
 
             // ViewModels
             services.AddTransient<UsersEditingViewModel>();
@@ -98,7 +108,10 @@ namespace CRMS
             //services.AddTransient<ADUserListWindowViewModel>(); // ✅
 
             services.AddTransient<UsersOverviewPageViewModel>();
-            
+
+            services.AddTransient<CreateGroupViewModel>();
+            services.AddTransient<GroupOverviewViewModel>();            
+            services.AddTransient<AddUserToGroupViewModel>();
         }
 
 

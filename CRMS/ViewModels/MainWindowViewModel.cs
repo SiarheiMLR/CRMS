@@ -7,6 +7,7 @@ using CRMS.Services;
 using CRMS.Views;
 using CRMS.Views.AD;
 using CRMS.Views.Admin;
+using CRMS.Views.Admin.Groups;
 using CRMS.Views.Support;
 using CRMS.Views.User.TicketsPage;
 using Microsoft.Extensions.DependencyInjection;
@@ -107,6 +108,18 @@ namespace CRMS.ViewModels
             //ToggleMenu();
         }
 
+        [RelayCommand]
+        private void CreateGroup()
+        {
+            _navigationService.NavigateTo<CreateGroupPage>();
+            //ToggleMenu();
+        }
+
+        [RelayCommand]
+        private void ViewGroups()
+        {
+            _navigationService.NavigateTo<GroupOverviewPage>();
+        }
 
         public void NavigateToUserListPage(List<ADUserDto> users)
         {

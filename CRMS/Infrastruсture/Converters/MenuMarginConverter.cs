@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace CRMS.Infrastructure.Converters
+namespace CRMS.Infrastruсture.Converters
 {
     public class MenuMarginConverter : IValueConverter
     {

@@ -6,6 +6,9 @@ namespace CRMS.DAL.Repositories
 {
     public class EfGroupsRepository : Repository<Group>, IRepository<Group>
     {
-        public EfGroupsRepository(CRMSDbContext context) : base(context) { }
+        public EfGroupsRepository(CRMSDbContext context) : base(context)
+        {
+        }
     }
 }
+

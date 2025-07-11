@@ -4,7 +4,7 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:local="clr-namespace:CRMS.Views.Admin"
-                  xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
+                  xmlns:converters="clr-namespace:CRMS.Infrastruсture.Converters"
                   xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   mc:Ignorable="d"
@@ -16,6 +16,7 @@
         <converters:ByteArrayToImageConverter x:Key="AvatarConverter"/>
         <converters:NullToTextConverter x:Key="NullToTextConverter" NullText="Не указано"/>
         <converters:BoolToTextConverter x:Key="BoolToTextConverter" TrueText="Да" FalseText="Нет"/>
+        <converters:RoleFromGroupsConverter x:Key="RoleFromGroupsConverter"/>
 
         <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#FF6C5B7B" Offset="0"/>
@@ -185,15 +186,15 @@
 
                                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Статус активности пользователя:" FontWeight="Bold"/>
                                 <TextBlock Grid.Row="2" Grid.Column="1" 
-           Text="{Binding Status, Converter={StaticResource NullToTextConverter}, ConverterParameter='Никогда'}"/>
+                                            Text="{Binding Status, Converter={StaticResource NullToTextConverter}, ConverterParameter='Никогда'}"/>
 
                                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Принадлежность к группе:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="3" Grid.Column="1" 
-           Text="{Binding Role, Converter={StaticResource BoolToTextConverter}}"/>
+                                <TextBlock Grid.Row="3" Grid.Column="1"
+                                            Text="{Binding ., Converter={StaticResource RoleFromGroupsConverter}}"/> <!--Binding . — означает привязку к текущему объекту User-->
 
                                 <TextBlock Grid.Row="4" Grid.Column="0" Text="Первоначальный пароль:" FontWeight="Bold"/>
                                 <TextBlock Grid.Row="4" Grid.Column="1" 
-           Text="{Binding CannotChangePassword, Converter={StaticResource BoolToTextConverter}}"/>
+                                            Text="{Binding CannotChangePassword, Converter={StaticResource BoolToTextConverter}}"/>
                             </Grid>
                         </GroupBox>
                     </StackPanel>

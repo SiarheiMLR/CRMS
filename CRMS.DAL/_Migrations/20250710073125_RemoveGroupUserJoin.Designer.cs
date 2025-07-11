@@ -4,6 +4,7 @@ using CRMS.DAL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CRMS.DAL.Migrations
 {
     [DbContext(typeof(CRMSDbContext))]
-    partial class CRMSDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250710073125_RemoveGroupUserJoin")]
+    partial class RemoveGroupUserJoin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,27 +149,6 @@ namespace CRMS.DAL.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("GroupMembers");
-                });
-
-            modelBuilder.Entity("CRMS.Domain.Entities.GroupRoleMapping", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
-
-                    b.ToTable("GroupRoleMappings");
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.Queue", b =>
@@ -338,6 +320,9 @@ namespace CRMS.DAL.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
+                    b.Property<int?>("GroupId")
+                        .HasColumnType("int");
+
                     b.Property<string>("IPPhone")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -424,13 +409,15 @@ namespace CRMS.DAL.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
+                    b.HasIndex("GroupId");
+
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            AccountCreated = new DateTime(2025, 7, 10, 20, 53, 14, 957, DateTimeKind.Utc).AddTicks(6967),
+                            AccountCreated = new DateTime(2025, 7, 10, 7, 31, 22, 809, DateTimeKind.Utc).AddTicks(4584),
                             City = "Malorita",
                             Company = "BIGFIRM",
                             Country = "Belarus",
@@ -447,8 +434,8 @@ namespace CRMS.DAL.Migrations
                             ManagerName = "не указан",
                             MobilePhone = "+375-29-7012884",
                             Office = "не указан",
-                            PasswordHash = "q70Neq0YQkZwIt33ebbunH1eCGNwHGWhSG+HlaeiU5o=",
-                            PasswordSalt = "mfrd8ryYpqAuU03r6V2f2g==",
+                            PasswordHash = "w785I9nb7QoOxWX3GnbDKD+iv77/sEQceq64Hyy5ZHM=",
+                            PasswordSalt = "oP7dJz7yqzGlCZ+Xt0RlcA==",
                             PostalCode = "225903",
                             Role = 2,
                             State = "Brest region",
@@ -501,17 +488,6 @@ namespace CRMS.DAL.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("CRMS.Domain.Entities.GroupRoleMapping", b =>
-                {
-                    b.HasOne("CRMS.Domain.Entities.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
-                });
-
             modelBuilder.Entity("CRMS.Domain.Entities.Ticket", b =>
                 {
                     b.HasOne("CRMS.Domain.Entities.Queue", null)
@@ -557,6 +533,13 @@ namespace CRMS.DAL.Migrations
                     b.Navigation("Ticket");
                 });
 
+            modelBuilder.Entity("CRMS.Domain.Entities.User", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.Group", null)
+                        .WithMany("Users")
+                        .HasForeignKey("GroupId");
+                });
+
             modelBuilder.Entity("CRMS.Domain.Entities.CustomField", b =>
                 {
                     b.Navigation("CustomFieldValues");
@@ -565,6 +548,8 @@ namespace CRMS.DAL.Migrations
             modelBuilder.Entity("CRMS.Domain.Entities.Group", b =>
                 {
                     b.Navigation("GroupMembers");
+
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.Queue", b =>

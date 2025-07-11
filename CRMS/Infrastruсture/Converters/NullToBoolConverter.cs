@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace CRMS.Infrastructure.Converters
+namespace CRMS.Infrastruсture.Converters
 {
     public class NullToBoolConverter : IValueConverter
     {

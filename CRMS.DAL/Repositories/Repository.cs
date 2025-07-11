@@ -21,7 +21,17 @@ namespace CRMS.DAL.Repositories
             return await _entities.ToListAsync();
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _entities.Where(predicate).ToListAsync();
+        }
+
+        public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _entities.FirstOrDefaultAsync(predicate);
+        }
+
+        public async Task<TEntity?> GetByIdAsync(int id)
         {
             return await _entities.FindAsync(id);
         }

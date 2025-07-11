@@ -114,7 +114,7 @@ namespace CRMS.Domain.Entities
 
         // Связи "многие ко многим"
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
-        public ICollection<Group> Groups { get; set; } = new List<Group>();
+        
         public ICollection<GroupMember> GroupMembers { get; set; } = new List<GroupMember>();
 
         // Методы для работы с паролем

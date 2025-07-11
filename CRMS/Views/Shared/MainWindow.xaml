@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
         xmlns:local="clr-namespace:CRMS.Views"
         xmlns:enums="clr-namespace:CRMS.Domain.Entities;assembly=CRMS.Domain"
-        xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
+        xmlns:converters="clr-namespace:CRMS.Infrastruсture.Converters"
         mc:Ignorable="d"
         Title="Client Request Management System"
         Height="1000" Width="1900"
@@ -195,7 +195,7 @@
                                         <Setter.Value>
                                             <StackPanel>
                                                 <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
-
+                                                <!-- Меню Пользователи -->
                                                 <Expander Header="Пользователи" Style="{StaticResource MenuExpanderStyle}">
                                                     <StackPanel>
                                                         <Button Content="Просмотр информации" Command="{Binding ViewUsersCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
@@ -207,6 +207,16 @@
                                                         </Expander>
                                                         <Button Content="Редактировать" Command="{Binding EditUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
                                                         <Button Content="Удалить" Command="{Binding DeleteUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+
+                                                    </StackPanel>
+                                                </Expander>
+                                                <!-- Меню Группы -->
+                                                <Expander Header="Группы" Style="{StaticResource MenuExpanderStyle}">
+                                                    <StackPanel>
+                                                        <Button Content="Просмотр групп" Command="{Binding ViewGroupsCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Создать" Command="{Binding CreateGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Редактировать" Command="{Binding EditGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Удалить" Command="{Binding DeleteGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
 
                                                     </StackPanel>
                                                 </Expander>
