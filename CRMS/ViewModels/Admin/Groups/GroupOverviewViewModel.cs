@@ -6,11 +6,14 @@ using CRMS.Business.Services.UserService;
 using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
 using CRMS.Views.Admin.Groups;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+
 
 namespace CRMS.ViewModels.Admin.Groups
 {
@@ -26,8 +29,6 @@ namespace CRMS.ViewModels.Admin.Groups
         [ObservableProperty]
         private User? selectedMember;
 
-        public IRelayCommand<(Group group, User user)> RemoveUserFromGroupCommand { get; }
-
         public GroupOverviewViewModel(
             IGroupService groupService,
             IUnitOfWork unitOfWork,
@@ -36,13 +37,6 @@ namespace CRMS.ViewModels.Admin.Groups
             _groupService = groupService;
             _unitOfWork = unitOfWork;
             _serviceProvider = serviceProvider;
-
-            RemoveUserFromGroupCommand = new RelayCommand<(Group group, User user)>(async tuple =>
-            {
-                var (group, user) = tuple;
-                await RemoveUserFromGroupAsync(group, user);
-            });
-
             LoadGroupsAsync();
         }
 
@@ -59,24 +53,89 @@ namespace CRMS.ViewModels.Admin.Groups
             var window = _serviceProvider.GetRequiredService<AddUserToGroupWindow>();
             window.SetGroup(groupWithMembers.Group);
             window.ShowDialog();
-
-            _ = LoadGroupsAsync();
+            LoadGroupsAsync().ConfigureAwait(false);
         }
 
-        private async Task RemoveUserFromGroupAsync(Group group, User user)
+        [RelayCommand]
+        private async Task RemoveUserFromGroup(GroupWithMembers groupWithMembers)
         {
-            var member = await _unitOfWork.GroupMembersRepository
-                .FirstOrDefaultAsync(gm => gm.GroupId == group.Id && gm.UserId == user.Id);
-
-            if (member is not null)
+            if (SelectedMember == null)
             {
-                _unitOfWork.GroupMembersRepository.Remove(member);
-                await _unitOfWork.SaveChangesAsync();
-
-                user.Role = RoleMapper.ResolveRole(user);
+                MessageBox.Show("Не выбран пользователь для удаления.");
+                return;
             }
 
-            await LoadGroupsAsync();
+            var userId = SelectedMember.Id;
+            var groupId = groupWithMembers.Group.Id;
+            var userName = SelectedMember.DisplayName;
+            var groupName = groupWithMembers.Name;
+
+            // Показываем диалог подтверждения
+            var dialog = new ConfirmationDialog
+            {
+                Title = "Подтверждение удаления",
+                Message = $"Вы действительно хотите удалить пользователя {userName} из группы {groupName}?",
+                YesButtonText = "Да, удалить",
+                NoButtonText = "Отмена"
+            };
+
+            var result = await DialogHost.Show(dialog, "MainDialogHost");
+
+            // Отладка: покажем, что вернул диалог
+            if (result is not bool confirmed || !confirmed)
+            {
+                MessageBox.Show("Удаление отменено пользователем.");
+                return;
+            }
+
+            try
+            {
+                // 1. Найти объект связи GroupMember
+                var member = await _unitOfWork.GroupMembersRepository
+                    .FirstOrDefaultAsync(gm => gm.GroupId == groupId && gm.UserId == userId);
+
+                if (member == null)
+                {
+                    MessageBox.Show("Связь между пользователем и группой не найдена.");
+                    return;
+                }
+
+                // 2. Удалить из репозитория
+                _unitOfWork.GroupMembersRepository.Remove(member);
+
+                // 3. Сохранить изменения
+                int removed = await _unitOfWork.SaveChangesAsync();
+                if (removed == 0)
+                {
+                    MessageBox.Show("Удаление не было сохранено в базе данных.");
+                    return;
+                }
+
+                // 4. Перерасчитать роль пользователя
+                var user = await _unitOfWork.Users.GetByIdAsync(userId);
+                if (user == null)
+                {
+                    MessageBox.Show("Пользователь не найден после удаления.");
+                    return;
+                }
+
+                user.Role = RoleMapper.ResolveRole(user);
+                _unitOfWork.Users.Update(user);
+                await _unitOfWork.SaveChangesAsync();
+
+                // 5. Обновить UI
+                await LoadGroupsAsync();
+                SelectedMember = null;
+
+                MessageBox.Show($"Пользователь {userName} успешно удалён из группы {groupName}.",
+                                "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при удалении:\n{ex.Message}\n\n{ex.InnerException?.Message}",
+                                "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
+
     }
 }

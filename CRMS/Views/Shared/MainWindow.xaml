@@ -8,7 +8,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
         xmlns:local="clr-namespace:CRMS.Views"
         xmlns:enums="clr-namespace:CRMS.Domain.Entities;assembly=CRMS.Domain"
-        xmlns:converters="clr-namespace:CRMS.Infrastruсture.Converters"
+        xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
         mc:Ignorable="d"
         Title="Client Request Management System"
         Height="1000" Width="1900"

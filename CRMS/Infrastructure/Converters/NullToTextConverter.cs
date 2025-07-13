@@ -6,16 +6,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace CRMS.Infrastruсture.Converters
+namespace CRMS.Infrastructure.Converters
 {
-    public class BoolToTextConverter : IValueConverter
+    public class NullToTextConverter : IValueConverter
     {
-        public string TrueText { get; set; } = "Да";
-        public string FalseText { get; set; } = "Нет";
+        public string NullText { get; set; } = "Не указано";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value is bool b && b ? TrueText : FalseText;
+            return value ?? (parameter as string ?? NullText);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

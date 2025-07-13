@@ -5,7 +5,7 @@ using System.Windows.Data;
 using CRMS.Business.Services.UserService;
 using CRMS.Domain.Entities;
 
-namespace CRMS.Infrastruсture.Converters
+namespace CRMS.Infrastructure.Converters
 {
     public class RoleFromGroupsConverter : IValueConverter
     {

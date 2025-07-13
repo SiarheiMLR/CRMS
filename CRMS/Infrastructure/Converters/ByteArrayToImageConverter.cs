@@ -5,7 +5,7 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace CRMS.Infrastruсture.Converters
+namespace CRMS.Infrastructure.Converters
 {
     public class ByteArrayToImageConverter : IValueConverter
     {

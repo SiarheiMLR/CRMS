@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
-namespace CRMS.Infrastruсture.Converters
+namespace CRMS.Infrastructure.Converters
 {
-    public class NullToBoolConverter : IValueConverter
+    public class MenuMarginConverter : IValueConverter
     {
-        public bool Invert { get; set; } = false;
-
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            bool result = value != null;
-            return Invert ? !result : result;
+            bool isMenuOpen = value is bool b && b;
+            return isMenuOpen ? new Thickness(250, 0, 0, 0) : new Thickness(0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+            => throw new NotImplementedException();
     }
 }
-
-
 

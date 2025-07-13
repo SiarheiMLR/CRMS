@@ -3,7 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using CRMS.Business.Services.UserService;
 using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
-using CRMS.Infrastruсture.Converters;
+using CRMS.Infrastructure.Converters;
 using CRMS.Views.Admin.Groups;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;

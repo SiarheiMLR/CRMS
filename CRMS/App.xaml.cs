@@ -25,6 +25,7 @@ using CRMS.ViewModels.AD;
 using CRMS.Business.Services.GroupService;
 using CRMS.ViewModels.Admin.Groups;
 using CRMS.Views.Admin.Groups;
+using CRMS.Infrastructure.Converters;
 
 
 //admin@bigfirm.by
@@ -64,6 +65,9 @@ namespace CRMS
             services.AddTransient<IAttachmentService, AttachmentService>();
             services.AddScoped<INavigationService, NavigationService>();  
             services.AddScoped<IGroupService, GroupService>();
+
+            // Конвертер
+            services.AddSingleton<NullToBoolConverter>();
 
             // Окна
             services.AddTransient<StartUpWindow>();
