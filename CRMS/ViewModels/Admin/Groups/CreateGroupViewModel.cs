@@ -17,7 +17,7 @@ namespace CRMS.ViewModels.Admin.Groups
         [ObservableProperty] private string groupName;
         [ObservableProperty] private string groupDescription;
 
-        
+
         [ObservableProperty] private RoleOption selectedRoleOption;
 
         public ObservableCollection<RoleOption> AvailableRoles { get; }
@@ -63,6 +63,6 @@ namespace CRMS.ViewModels.Admin.Groups
 
             GroupName = GroupDescription = string.Empty;
             SelectedRoleOption = AvailableRoles.First(); // сброс выбора на "Пользователь"
-        }      
+        }
     }
 }

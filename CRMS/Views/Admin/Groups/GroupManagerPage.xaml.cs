@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRMS.ViewModels.Admin.Groups;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace CRMS.Views.Admin.Groups
 {
     /// <summary>
     /// Логика взаимодействия для GroupManagerPage.xaml
-    /// </summary>
+    /// </summary>    
     public partial class GroupManagerPage : Page
     {
         public GroupManagerPage()

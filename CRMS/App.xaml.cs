@@ -109,7 +109,7 @@ namespace CRMS
             services.AddTransient<CreateGroupViewModel>();
             services.AddTransient<GroupOverviewViewModel>();
             services.AddTransient<AddUserToGroupViewModel>();
-            services.AddTransient<EditDeleteGroupViewModel>();
+            services.AddTransient<EditDeleteGroupViewModel>();            
         }
 
         protected override void OnStartup(StartupEventArgs e)

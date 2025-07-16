@@ -140,7 +140,7 @@ namespace CRMS.ViewModels.Admin.Groups
             {
                 MessageBox.Show($"Ошибка при удалении:\n{ex.Message}\n\n{ex.InnerException?.Message}",
                                 "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }                        
+            }
         }
 
         private void RegisterMessenger()

@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CRMS.Business.Services.GroupService;
 using CRMS.Business.Services.UserService;
 using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
@@ -16,6 +17,7 @@ namespace CRMS.ViewModels.Admin.Groups
     public partial class AddUserToGroupViewModel : ObservableObject
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGroupService _groupService;
 
         private Group _currentGroup;
 
@@ -24,9 +26,10 @@ namespace CRMS.ViewModels.Admin.Groups
 
         public Action CloseAction { get; set; } // Добавлено действие для закрытия
 
-        public AddUserToGroupViewModel(IUnitOfWork unitOfWork)
+        public AddUserToGroupViewModel(IUnitOfWork unitOfWork, IGroupService groupService)
         {
             _unitOfWork = unitOfWork;
+            _groupService = groupService;
         }
 
         public async Task SetGroupAsync(Group group)
@@ -55,19 +58,24 @@ namespace CRMS.ViewModels.Admin.Groups
                 return;
             }
 
+            //foreach (var user in SelectedUsers)
+            //{
+            //    var member = new GroupMember
+            //    {
+            //        GroupId = _currentGroup.Id,
+            //        UserId = user.Id
+            //    };
+
+            //    await _unitOfWork.GroupMembersRepository.AddAsync(member);
+            //    user.Role = RoleMapper.ResolveRole(user);
+            //}
+
             foreach (var user in SelectedUsers)
             {
-                var member = new GroupMember
-                {
-                    GroupId = _currentGroup.Id,
-                    UserId = user.Id
-                };
-
-                await _unitOfWork.GroupMembersRepository.AddAsync(member);
-                user.Role = RoleMapper.ResolveRole(user);
+                await _groupService.AddUserToGroupAsync(_currentGroup.Id, user);
             }
 
-            await _unitOfWork.SaveChangesAsync();
+            //await _unitOfWork.SaveChangesAsync();
 
             MessageBox.Show("Пользователи добавлены в группу.");
 

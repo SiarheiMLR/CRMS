@@ -18,5 +18,6 @@ namespace CRMS.Business.Services.GroupService
         Task<UserRole> GetRoleForGroupAsync(int groupId);
         Task UpdateGroupAsync(Group group, UserRole role);
         Task DeleteGroupAsync(int groupId);
+        Task AddUserToGroupAsync(int groupId, User user);
     }
 }

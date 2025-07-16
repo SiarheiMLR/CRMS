@@ -61,5 +61,11 @@ namespace CRMS.DAL.Repositories
         {
             _entities.Remove(entity);
         }
+
+        public virtual Task UpdateAsync(TEntity entity)
+        {
+            Update(entity); // обычный метод обновления
+            return Task.CompletedTask;
+        }
     }
 }

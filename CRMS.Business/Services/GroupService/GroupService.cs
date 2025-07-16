@@ -125,5 +125,37 @@ namespace CRMS.Business.Services.GroupService
                 await _unitOfWork.SaveChangesAsync();
             }
         }
+
+        public async Task AddUserToGroupAsync(int groupId, User user)
+        {
+            // Проверка — пользователь уже состоит в группе?
+            var existing = await _unitOfWork.GroupMembersRepository
+                .FirstOrDefaultAsync(gm => gm.GroupId == groupId && gm.UserId == user.Id);
+
+            if (existing != null)
+                return; // уже состоит — выходим
+
+            // Добавляем пользователя в группу
+            var groupMember = new GroupMember
+            {
+                GroupId = groupId,
+                UserId = user.Id
+            };
+
+            await _unitOfWork.GroupMembersRepository.AddAsync(groupMember);
+
+            // Получаем роль, сопоставленную группе
+            var mapping = await _unitOfWork.GroupRoleMappings
+                .FirstOrDefaultAsync(m => m.GroupId == groupId);
+
+            if (mapping != null)
+            {
+                user.Role = mapping.Role;
+                await _unitOfWork.Users.UpdateAsync(user);
+            }
+
+            await _unitOfWork.SaveChangesAsync();
+        }
+
     }
 }

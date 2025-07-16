@@ -98,7 +98,7 @@ namespace CRMS.ViewModels.Admin.Groups
             // 📣 Уведомление через Messenger
             WeakReferenceMessenger.Default.Send(new GroupUpdatedMessage(SelectedGroup));
 
-            MessageBox.Show($"Группа «{SelectedGroup.Name}» успешно обновлена.");            
+            MessageBox.Show($"Группа «{SelectedGroup.Name}» успешно обновлена.");
         }
 
         [RelayCommand]
@@ -132,9 +132,9 @@ namespace CRMS.ViewModels.Admin.Groups
             WeakReferenceMessenger.Default.Send(new GroupDeletedMessage(deletedId));
 
             Groups.Remove(SelectedGroup);
-            SelectedGroup = null;           
+            SelectedGroup = null;
 
-            MessageBox.Show("Группа удалена.");            
+            MessageBox.Show("Группа удалена.");
         }
     }
 }
