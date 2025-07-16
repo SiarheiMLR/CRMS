@@ -36,6 +36,8 @@ namespace CRMS
     public partial class App : Application
     {
         public static ServiceProvider ServiceProvider { get; private set; }
+        public static IServiceScopeFactory ScopeFactory { get; private set; }
+
         private IConfiguration _configuration;
         private const string SettingsFile = "appsettings.json";
 
@@ -45,79 +47,70 @@ namespace CRMS
             var serviceCollection = new ServiceCollection();
             ConfigureServices(serviceCollection);
             ServiceProvider = serviceCollection.BuildServiceProvider();
+            ScopeFactory = ServiceProvider.GetRequiredService<IServiceScopeFactory>();
 
         }
 
         private void ConfigureServices(ServiceCollection services)
         {
-            // Контекст базы данных
+            // Подключение к БД
             services.AddDbContext<CRMSDbContext>(options =>
                 options.UseMySql(
-                    connectionString: _configuration.GetConnectionString("DefaultConnection"),
-                    serverVersion: new MySqlServerVersion(new System.Version(10, 4))),
-                ServiceLifetime.Transient);
+                    _configuration.GetConnectionString("DefaultConnection"),
+                    new MySqlServerVersion(new System.Version(10, 4))),
+                ServiceLifetime.Scoped); // <-- теперь Scoped
 
-            // Сервисы
+            // Сервисы и инфраструктура
             services.AddScoped<IUnitOfWork, EFUnitOfWork>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<ITicketService, TicketService>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddTransient<IAttachmentService, AttachmentService>();
-            services.AddScoped<INavigationService, NavigationService>();  
             services.AddScoped<IGroupService, GroupService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IAttachmentService, AttachmentService>();
 
-            // Конвертер
+            services.AddScoped<INavigationService, NavigationService>();
             services.AddSingleton<NullToBoolConverter>();
 
             // Окна
             services.AddTransient<StartUpWindow>();
             services.AddTransient<LoginWindow>();
             services.AddTransient<MainWindow>();
-
+            services.AddTransient<UserEditWindow>();
             services.AddTransient<ADLoginWindow>(); // ✅            
-
+            services.AddTransient<TicketEditWindow>();
             services.AddTransient<AddUserToGroupWindow>();
 
             // Страницы
             services.AddTransient<MainAdminPage>();
             services.AddTransient<UsersEditingPage>();
-            services.AddTransient<UserEditWindow>();
-
             services.AddTransient<MainSupportPage>();
             services.AddTransient<SupportTicketsPage>();
-
             services.AddTransient<MainUserPage>();
             services.AddTransient<UserTicketsPage>();
-            services.AddTransient<TicketEditWindow>();
-
             services.AddTransient<UsersOverviewPage>();
+            services.AddTransient<GroupManagerPage>();
 
-            services.AddTransient<CreateGroupPage>();
-            services.AddTransient<GroupOverviewPage>();
-            
 
             // ViewModels
-            services.AddTransient<UsersEditingViewModel>();
-            services.AddTransient<UserEditWindowViewModel>();
-
             services.AddTransient<MainWindowViewModel>();
             services.AddTransient<LoginWindowViewModel>();
             services.AddTransient<StartUpWindowViewModel>();
+
+            services.AddTransient<UsersEditingViewModel>();
+            services.AddTransient<UserEditWindowViewModel>();
 
             services.AddTransient<UserTicketsViewModel>();
             services.AddTransient<TicketEditViewModel>();
             services.AddTransient<SupportTicketsViewModel>();
 
-            services.AddTransient<ADLoginWindowViewModel>(); // ✅
-            //services.AddTransient<ADUserListWindowViewModel>(); // ✅
+            services.AddTransient<ADLoginWindowViewModel>();
 
             services.AddTransient<UsersOverviewPageViewModel>();
-
             services.AddTransient<CreateGroupViewModel>();
-            services.AddTransient<GroupOverviewViewModel>();            
+            services.AddTransient<GroupOverviewViewModel>();
             services.AddTransient<AddUserToGroupViewModel>();
+            services.AddTransient<EditDeleteGroupViewModel>();
         }
-
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -128,7 +121,7 @@ namespace CRMS
             // Глобальный обработчик ошибок
             DispatcherUnhandledException += (sender, args) =>
             {
-                MessageBox.Show($"Ошибка: {args.Exception.Message}");
+                MessageBox.Show($"Ошибка: {args.Exception.Message}", "Критическая ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 args.Handled = true;
             };
         }

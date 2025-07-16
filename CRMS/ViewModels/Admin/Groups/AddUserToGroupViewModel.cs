@@ -22,12 +22,14 @@ namespace CRMS.ViewModels.Admin.Groups
         [ObservableProperty] private ObservableCollection<User> availableUsers = new();
         [ObservableProperty] private ObservableCollection<User> selectedUsers = new();
 
+        public Action CloseAction { get; set; } // Добавлено действие для закрытия
+
         public AddUserToGroupViewModel(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        public async void SetGroup(Group group)
+        public async Task SetGroupAsync(Group group)
         {
             _currentGroup = group;
 
@@ -40,7 +42,7 @@ namespace CRMS.ViewModels.Admin.Groups
             var memberIds = members.Select(m => m.UserId).ToHashSet();
 
             // Оставляем только тех, кто еще не в группе
-            var notInGroup = allUsers.Where(u => !memberIds.Contains(u.Id)).ToList(); ;
+            var notInGroup = allUsers.Where(u => !memberIds.Contains(u.Id)).ToList();
             AvailableUsers = new ObservableCollection<User>(notInGroup);
         }
 
@@ -62,12 +64,24 @@ namespace CRMS.ViewModels.Admin.Groups
                 };
 
                 await _unitOfWork.GroupMembersRepository.AddAsync(member);
-                user.Role = RoleMapper.ResolveRole(user); // обновить роль
+                user.Role = RoleMapper.ResolveRole(user);
             }
 
             await _unitOfWork.SaveChangesAsync();
+
             MessageBox.Show("Пользователи добавлены в группу.");
-            Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w is AddUserToGroupWindow)?.Close();
+
+            Application.Current.Windows
+                .OfType<Window>()
+                .FirstOrDefault(w => w is Views.Admin.Groups.AddUserToGroupWindow)
+                ?.Close();
+        }
+
+        // Новая команда для кнопки Отмена
+        [RelayCommand]
+        private void Cancel()
+        {
+            CloseAction?.Invoke(); // Закрытие окна
         }
     }
 }

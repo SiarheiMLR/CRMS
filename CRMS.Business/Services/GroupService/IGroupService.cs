@@ -15,5 +15,8 @@ namespace CRMS.Business.Services.GroupService
         Task<List<Group>> GetAllGroupsAsync();
         Task<Group?> GetGroupByNameAsync(string name);
         Task<List<GroupWithMembers>> GetGroupsWithMembersAsync();
+        Task<UserRole> GetRoleForGroupAsync(int groupId);
+        Task UpdateGroupAsync(Group group, UserRole role);
+        Task DeleteGroupAsync(int groupId);
     }
 }

@@ -211,7 +211,7 @@
                                                     </StackPanel>
                                                 </Expander>
                                                 <!-- Меню Группы -->
-                                                <Expander Header="Группы" Style="{StaticResource MenuExpanderStyle}">
+                                                <!--<Expander Header="Группы" Style="{StaticResource MenuExpanderStyle}">
                                                     <StackPanel>
                                                         <Button Content="Просмотр групп" Command="{Binding ViewGroupsCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
                                                         <Button Content="Создать" Command="{Binding CreateGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
@@ -219,7 +219,9 @@
                                                         <Button Content="Удалить" Command="{Binding DeleteGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
 
                                                     </StackPanel>
-                                                </Expander>
+                                                </Expander>-->
+                                                <Button Content="Группы" Command="{Binding ShowGroupManagerPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>

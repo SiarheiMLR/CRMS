@@ -109,16 +109,9 @@ namespace CRMS.ViewModels
         }
 
         [RelayCommand]
-        private void CreateGroup()
+        private void ShowGroupManagerPage()
         {
-            _navigationService.NavigateTo<CreateGroupPage>();
-            //ToggleMenu();
-        }
-
-        [RelayCommand]
-        private void ViewGroups()
-        {
-            _navigationService.NavigateTo<GroupOverviewPage>();
+            _navigationService.NavigateTo<GroupManagerPage>();
         }
 
         public void NavigateToUserListPage(List<ADUserDto> users)

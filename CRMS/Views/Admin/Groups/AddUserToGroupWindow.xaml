@@ -1,64 +1,98 @@
-﻿<Window x:Class="CRMS.Views.Admin.Groups.AddUserToGroupWindow"
+﻿<metro:MetroWindow x:Class="CRMS.Views.Admin.Groups.AddUserToGroupWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:behaviors="clr-namespace:CRMS.Infrastructure.Behaviors"
         Title="Добавление пользователей в группу"
-        Width="500" Height="600"
-        WindowStartupLocation="CenterScreen">
+        Height="400" Width="400"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
 
-    <Grid Margin="20">
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF6C5B7B" Offset="0"/>
+            <GradientStop Color="#FFC06C84" Offset="0.5"/>
+            <GradientStop Color="#FF355C7D" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+
+    <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- Заголовок -->
         <TextBlock Text="Выберите пользователей для добавления:" 
-                   FontSize="16" FontWeight="Bold" Margin="0 0 0 10"/>
+                   FontSize="16" FontWeight="Bold" Margin="0 0 0 10"
+                   Foreground="White"/>
 
-        <ListBox Grid.Row="1"
-                 ItemsSource="{Binding AvailableUsers}"
-                 SelectionMode="Extended"
-                 Style="{StaticResource MaterialDesignListBox}">
-            <i:Interaction.Behaviors>
-                <behaviors:ListBoxSelectedItemsBehavior SelectedItems="{Binding SelectedUsers}" />
-            </i:Interaction.Behaviors>
+        <!-- Список пользователей -->
+        <Border Grid.Row="1" 
+                BorderThickness="1" 
+                BorderBrush="#AAFFFFFF"
+                CornerRadius="4"
+                Margin="0 0 0 10">
+            <ListBox ItemsSource="{Binding AvailableUsers}"
+                      SelectionMode="Extended"
+                      Background="Transparent"
+                      Foreground="White"
+                      BorderThickness="0">
+                <i:Interaction.Behaviors>
+                    <behaviors:ListBoxSelectedItemsBehavior SelectedItems="{Binding SelectedUsers}" />
+                </i:Interaction.Behaviors>
 
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                    <Setter Property="Margin" Value="2"/>
-                    <Setter Property="Padding" Value="6"/>
-                    <Setter Property="Background" Value="Transparent"/>
-                    <Setter Property="Foreground" Value="Black"/>
-                    <Setter Property="Cursor" Value="Hand"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource PrimaryHueLightBrush}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                        </Trigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}"/>
-                            <Setter Property="Foreground" Value="White"/>
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.ItemContainerStyle>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem" BasedOn="{StaticResource MaterialDesignListBoxItem}">
+                        <Setter Property="Margin" Value="2"/>
+                        <Setter Property="Padding" Value="6"/>
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#3AFFFFFF"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2AFFFFFF"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding DisplayName}" FontSize="14"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayName}" 
+                                   FontSize="14"
+                                   Foreground="White"
+                                   Margin="4"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Border>
 
-        <Button Grid.Row="2"
-                Content="Добавить"
-                Command="{Binding AddSelectedUsersCommand}"
-                Width="120" Height="36"
-                HorizontalAlignment="Right"
-                Margin="0 15 0 0"/>
+        <!-- Кнопки -->
+        <StackPanel Grid.Row="2" 
+                    Orientation="Horizontal" 
+                    HorizontalAlignment="Right" 
+                    Margin="0 16 0 0">
+            <Button Content="Добавить"
+                    Command="{Binding AddSelectedUsersCommand}"
+                    Style="{StaticResource MaterialDesignRaisedButton}"
+                    Background="#FF6C5B7B"
+                    Foreground="White"
+                    Margin="0 0 8 0"/>
+
+            <Button Content="Отмена"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    Foreground="White"
+                    BorderBrush="#AAFFFFFF"/>
+        </StackPanel>
     </Grid>
-</Window>
+</metro:MetroWindow>

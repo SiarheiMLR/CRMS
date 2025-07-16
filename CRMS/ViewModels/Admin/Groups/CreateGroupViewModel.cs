@@ -4,17 +4,20 @@ using CRMS.Business.Services.GroupService;
 using CRMS.Domain.Entities;
 using System.Collections.ObjectModel;
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
+using CRMS.Business.Messages;
 
 namespace CRMS.ViewModels.Admin.Groups
 {
     public partial class CreateGroupViewModel : ObservableObject
     {
         private readonly IGroupService _groupService;
+        public static event Action? GroupCreated;
 
         [ObservableProperty] private string groupName;
         [ObservableProperty] private string groupDescription;
 
-        // ПЕРЕМЕСТИЛ ВЫШЕ 👇
+        
         [ObservableProperty] private RoleOption selectedRoleOption;
 
         public ObservableCollection<RoleOption> AvailableRoles { get; }
@@ -53,12 +56,13 @@ namespace CRMS.ViewModels.Admin.Groups
 
             await _groupService.CreateGroupAsync(group, selectedRole);
 
+            // 📣 Отправляем сообщение
+            WeakReferenceMessenger.Default.Send(new GroupCreatedMessage(group));
+
             MessageBox.Show($"Группа «{group.Name}» с ролью «{selectedRole}» успешно создана.");
 
             GroupName = GroupDescription = string.Empty;
             SelectedRoleOption = AvailableRoles.First(); // сброс выбора на "Пользователь"
-        }
-
+        }      
     }
-
 }

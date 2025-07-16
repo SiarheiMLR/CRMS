@@ -1,0 +1,55 @@
+﻿<Page x:Class="CRMS.Views.Admin.Groups.GroupManagerPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:CRMS.Views.Admin.Groups"
+        Title="Управление группами">
+
+    <Page.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF6C5B7B" Offset="0"/>
+            <GradientStop Color="#FFC06C84" Offset="0.5"/>
+            <GradientStop Color="#FF355C7D" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    <materialDesign:DialogHost Identifier="EditDeleteGroupDialogHost">
+        <!-- Верхний отступ для меню -->
+        <Grid Margin="16,56,16,16">
+            <!-- Отступы со всех сторон -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Просмотр групп -->
+            <StackPanel Grid.Row="0" Grid.Column="1" Grid.RowSpan="2" Margin="8,0,0,16" VerticalAlignment="Stretch">
+                <TextBlock Text="Просмотр групп"
+                   FontSize="18" FontWeight="Bold" Margin="0,0,0,8"
+                   Foreground="White"/>
+                <local:GroupOverviewControl Background="Transparent" VerticalAlignment="Stretch"/>
+            </StackPanel>
+
+            <!-- Создание группы -->
+            <StackPanel Grid.Row="0" Grid.Column="0" Margin="0,0,8,16">
+                <TextBlock Text="Создать группу"
+                   FontSize="18" FontWeight="Bold" Margin="0,0,0,8"
+                   Foreground="White"/>
+                <local:CreateGroupControl Background="Transparent"/>
+            </StackPanel>
+
+            <!-- Редактирование/Удаление группы -->
+            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,8,16" VerticalAlignment="Stretch">
+                <TextBlock Text="Редактировать/Удалить группу"
+                   FontSize="18" FontWeight="Bold" Margin="0,0,0,8"
+                   Foreground="White"/>
+                <local:EditDeleteGroupControl Background="Transparent"/>
+            </StackPanel>
+        </Grid>        
+    </materialDesign:DialogHost>
+</Page>
+

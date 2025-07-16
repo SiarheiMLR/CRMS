@@ -34,12 +34,12 @@ namespace CRMS.Views.Admin.Groups
 
         private void YesButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogHost.Close("MainDialogHost", true);
+            DialogHost.Close("EditDeleteGroupDialogHost", true);
         }
 
         private void NoButton_Click(object sender, RoutedEventArgs e)
         {
-            DialogHost.Close("MainDialogHost", false);
+            DialogHost.Close("EditDeleteGroupDialogHost", false);
         }
     }
 }

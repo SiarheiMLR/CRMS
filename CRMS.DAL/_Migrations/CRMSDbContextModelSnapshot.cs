@@ -164,7 +164,8 @@ namespace CRMS.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("GroupId")
+                        .IsUnique();
 
                     b.ToTable("GroupRoleMappings");
                 });
@@ -430,7 +431,7 @@ namespace CRMS.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            AccountCreated = new DateTime(2025, 7, 10, 20, 53, 14, 957, DateTimeKind.Utc).AddTicks(6967),
+                            AccountCreated = new DateTime(2025, 7, 15, 20, 41, 26, 1, DateTimeKind.Utc).AddTicks(3545),
                             City = "Malorita",
                             Company = "BIGFIRM",
                             Country = "Belarus",
@@ -447,8 +448,8 @@ namespace CRMS.DAL.Migrations
                             ManagerName = "не указан",
                             MobilePhone = "+375-29-7012884",
                             Office = "не указан",
-                            PasswordHash = "q70Neq0YQkZwIt33ebbunH1eCGNwHGWhSG+HlaeiU5o=",
-                            PasswordSalt = "mfrd8ryYpqAuU03r6V2f2g==",
+                            PasswordHash = "PXDTRF/Z3CN4oOV0akKuV1P8IFWO5DGremkHC4f+6/w=",
+                            PasswordSalt = "uWCMQXxdflfiztsyIZfR7w==",
                             PostalCode = "225903",
                             Role = 2,
                             State = "Brest region",
@@ -504,8 +505,8 @@ namespace CRMS.DAL.Migrations
             modelBuilder.Entity("CRMS.Domain.Entities.GroupRoleMapping", b =>
                 {
                     b.HasOne("CRMS.Domain.Entities.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
+                        .WithOne("GroupRoleMapping")
+                        .HasForeignKey("CRMS.Domain.Entities.GroupRoleMapping", "GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -565,6 +566,9 @@ namespace CRMS.DAL.Migrations
             modelBuilder.Entity("CRMS.Domain.Entities.Group", b =>
                 {
                     b.Navigation("GroupMembers");
+
+                    b.Navigation("GroupRoleMapping")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.Queue", b =>

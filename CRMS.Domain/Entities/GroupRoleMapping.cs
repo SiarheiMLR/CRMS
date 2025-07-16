@@ -10,7 +10,7 @@ namespace CRMS.Domain.Entities
 
         [ForeignKey("Group")]
         public int GroupId { get; set; }
-        public Group Group { get; set; }
+        public Group Group { get; set; } = null!;
 
         public UserRole Role { get; set; }
     }

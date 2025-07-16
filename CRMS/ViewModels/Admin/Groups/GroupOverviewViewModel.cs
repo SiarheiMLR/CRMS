@@ -9,10 +9,13 @@ using CRMS.Views.Admin.Groups;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Messaging;
+using CRMS.Business.Messages;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 
 namespace CRMS.ViewModels.Admin.Groups
@@ -37,7 +40,8 @@ namespace CRMS.ViewModels.Admin.Groups
             _groupService = groupService;
             _unitOfWork = unitOfWork;
             _serviceProvider = serviceProvider;
-            LoadGroupsAsync();
+            RegisterMessenger();
+            _ = LoadGroupsAsync(); // фоновая загрузка
         }
 
         [RelayCommand]
@@ -48,12 +52,14 @@ namespace CRMS.ViewModels.Admin.Groups
         }
 
         [RelayCommand]
-        private void AddUserToGroup(GroupWithMembers groupWithMembers)
+        private async Task AddUserToGroupAsync(GroupWithMembers groupWithMembers)
         {
             var window = _serviceProvider.GetRequiredService<AddUserToGroupWindow>();
-            window.SetGroup(groupWithMembers.Group);
+            if (window.DataContext is AddUserToGroupViewModel vm)
+                await vm.SetGroupAsync(groupWithMembers.Group);
+
             window.ShowDialog();
-            LoadGroupsAsync().ConfigureAwait(false);
+            await LoadGroupsAsync();
         }
 
         [RelayCommand]
@@ -79,7 +85,7 @@ namespace CRMS.ViewModels.Admin.Groups
                 NoButtonText = "Отмена"
             };
 
-            var result = await DialogHost.Show(dialog, "MainDialogHost");
+            var result = await DialogHost.Show(dialog, "EditDeleteGroupDialogHost");
 
             // Отладка: покажем, что вернул диалог
             if (result is not bool confirmed || !confirmed)
@@ -134,8 +140,26 @@ namespace CRMS.ViewModels.Admin.Groups
             {
                 MessageBox.Show($"Ошибка при удалении:\n{ex.Message}\n\n{ex.InnerException?.Message}",
                                 "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            }                        
         }
 
+        private void RegisterMessenger()
+        {
+            WeakReferenceMessenger.Default.Register<GroupCreatedMessage>(this, async (_, _) =>
+            {
+                await LoadGroupsAsync();
+            });
+
+            WeakReferenceMessenger.Default.Register<GroupUpdatedMessage>(this, async (_, _) =>
+            {
+                await LoadGroupsAsync();
+            });
+
+            WeakReferenceMessenger.Default.Register<GroupDeletedMessage>(this, async (_, _) =>
+            {
+                await Task.Delay(100);
+                await LoadGroupsAsync();
+            });
+        }
     }
 }

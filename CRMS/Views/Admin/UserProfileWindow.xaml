@@ -103,8 +103,8 @@
 
                                 <TextBlock Grid.Row="2" Grid.Column="0" Text="Описание:" FontWeight="Bold"/>
                                 <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" 
-           Text="{Binding Description, Converter={StaticResource NullToTextConverter}}" 
-           TextWrapping="Wrap" Margin="0,0,0,10"/>
+                                           Text="{Binding Description, Converter={StaticResource NullToTextConverter}}" 
+                                           TextWrapping="Wrap" Margin="0,0,0,10"/>
 
                                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Офис:" FontWeight="Bold"/>
                                 <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Office, Converter={StaticResource NullToTextConverter}}"/>

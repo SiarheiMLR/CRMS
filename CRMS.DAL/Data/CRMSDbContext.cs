@@ -271,6 +271,12 @@ namespace CRMS.DAL.Data
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
 
+                modelBuilder.Entity<Group>()
+                    .HasOne(g => g.GroupRoleMapping)
+                    .WithOne(m => m.Group)
+                    .HasForeignKey<GroupRoleMapping>(grm => grm.GroupId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
             });
             // Создание или обновление в базе дынных учетной записи Administrator
             var adminEmail = "admin@bigfirm.by";
@@ -324,11 +330,11 @@ namespace CRMS.DAL.Data
                 .HasForeignKey(gm => gm.GroupId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<GroupRoleMapping>()
-                .HasOne(m => m.Group)
-                .WithMany()
-                .HasForeignKey(m => m.GroupId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<GroupRoleMapping>()
+            //    .HasOne(m => m.Group)
+            //    .WithMany()
+            //    .HasForeignKey(m => m.GroupId)
+            //    .OnDelete(DeleteBehavior.Cascade);
         }
 
         public void EnsureAdminUser()

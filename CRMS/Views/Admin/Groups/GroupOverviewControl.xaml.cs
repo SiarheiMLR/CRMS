@@ -18,15 +18,14 @@ using System.Windows.Shapes;
 namespace CRMS.Views.Admin.Groups
 {
     /// <summary>
-    /// Логика взаимодействия для GroupOverviewPage.xaml
+    /// Логика взаимодействия для GroupOverviewControl.xaml
     /// </summary>
-    public partial class GroupOverviewPage : Page
+    public partial class GroupOverviewControl : UserControl
     {
-        public GroupOverviewPage()
+        public GroupOverviewControl()
         {
             InitializeComponent();
-            var viewModel = App.ServiceProvider.GetRequiredService<GroupOverviewViewModel>();
-            DataContext = viewModel;
+            DataContext = App.ServiceProvider.GetRequiredService<GroupOverviewViewModel>();
         }
     }
 }
