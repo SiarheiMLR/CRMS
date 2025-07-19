@@ -21,6 +21,18 @@ namespace CRMS.DAL.Repositories
             return await _entities.ToListAsync();
         }
 
+        public async Task<IEnumerable<TEntity>> GetAllAsync(params string[] includeProperties)
+        {
+            IQueryable<TEntity> query = _entities;
+
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await query.ToListAsync();
+        }
+
         public async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _entities.Where(predicate).ToListAsync();

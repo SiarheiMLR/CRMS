@@ -17,7 +17,7 @@
                                HorizontalAlignment="Center"
                                Margin="20"
                                ItemWidth="260"
-                               ItemHeight="360"/>
+                               ItemHeight="380"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -29,7 +29,7 @@
                             Width="260" Height="360"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Top">
-                        <shared:UserCardControl Width="220" Height="260"/>
+                        <shared:UserCardControl DataContext="{Binding}" Width="220" Height="260"/>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

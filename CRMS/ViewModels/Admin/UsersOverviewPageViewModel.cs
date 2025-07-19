@@ -25,6 +25,11 @@ namespace CRMS.ViewModels.Admin
         private async void LoadUsers()
         {
             var allUsers = await _userService.GetAllUsersAsync();
+            // Обновляем роли на основе групп
+            foreach (var user in allUsers)
+            {
+                user.Role = RoleMapper.ResolveRole(user);
+            }
             Users = new ObservableCollection<CRMS.Domain.Entities.User>(allUsers);
         }
 

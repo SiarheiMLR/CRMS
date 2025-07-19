@@ -195,7 +195,9 @@
                                         <Setter.Value>
                                             <StackPanel>
                                                 <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                
                                                 <!-- Меню Пользователи -->
+                                                <!--<Button Content="Пользователи" Command="{Binding ViewUsersCommand}" Style="{StaticResource MenuTextButtonStyle}"/>-->
                                                 <Expander Header="Пользователи" Style="{StaticResource MenuExpanderStyle}">
                                                     <StackPanel>
                                                         <Button Content="Просмотр информации" Command="{Binding ViewUsersCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
@@ -210,18 +212,31 @@
 
                                                     </StackPanel>
                                                 </Expander>
+                                                
                                                 <!-- Меню Группы -->
-                                                <!--<Expander Header="Группы" Style="{StaticResource MenuExpanderStyle}">
+                                                <Button Content="Группы" Command="{Binding ShowGroupManagerPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                
+                                                <!-- Меню Отчеты и Статистика-->
+                                                <Expander Header="Отчеты и аналитика" Style="{StaticResource MenuExpanderStyle}">
                                                     <StackPanel>
-                                                        <Button Content="Просмотр групп" Command="{Binding ViewGroupsCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                        <Button Content="Создать" Command="{Binding CreateGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                        <Button Content="Редактировать" Command="{Binding EditGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                        <Button Content="Удалить" Command="{Binding DeleteGroupCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Отчет 1" Command="{Binding Report1Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Отчет 2" Command="{Binding Report2Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Статистика 1" Command="{Binding LiveChart1Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Статистика 2" Command="{Binding LiveChart2Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
 
                                                     </StackPanel>
-                                                </Expander>-->
-                                                <Button Content="Группы" Command="{Binding ShowGroupManagerPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                </Expander>
+                                                
+                                                <!-- Меню Настройки -->
+                                                <Expander Header="Настройки" Style="{StaticResource MenuExpanderStyle}">
+                                                    <StackPanel>
+                                                        <Button Content="Настройки 1" Command="{Binding Settings1Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Настройки 2" Command="{Binding Settings2Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Настройки 3" Command="{Binding Settings3Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
+                                                        <Button Content="Настройки 4" Command="{Binding Settings4Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
 
+                                                    </StackPanel>
+                                                </Expander>
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>

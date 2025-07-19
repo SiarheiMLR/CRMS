@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using CRMS.Domain.Entities;
 
 namespace CRMS.Views.Shared
 {
@@ -6,7 +7,7 @@ namespace CRMS.Views.Shared
     {
         public UserCardControl()
         {
-            InitializeComponent();
+            InitializeComponent();            
         }
     }
 }

@@ -58,7 +58,12 @@ namespace CRMS.Business.Services.UserService
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _unitOfWork.Users.GetAllAsync();
+            // Загружаем пользователей с группами и связями ролей
+            return await _unitOfWork.Users.GetAllAsync(
+                "GroupMembers",
+                "GroupMembers.Group",
+                "GroupMembers.Group.GroupRoleMapping"
+            );
         }
 
         public async Task<IEnumerable<User>> GetUsersByEmailAsync(string email)
@@ -96,6 +101,6 @@ namespace CRMS.Business.Services.UserService
                 byte[] hashBytes = sha256.ComputeHash(combinedBytes);
                 return Convert.ToBase64String(hashBytes) == storedHash;
             }
-        }
+        }       
     }
 }

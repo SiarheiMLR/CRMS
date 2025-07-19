@@ -60,7 +60,7 @@
         BorderBrush="#AAFFFFFF"
         Background="#20000000"
         Padding="16"
-        MaxHeight="867">
+        MaxHeight="870">
 
         <ScrollViewer VerticalScrollBarVisibility="Auto"
                       HorizontalScrollBarVisibility="Disabled"
