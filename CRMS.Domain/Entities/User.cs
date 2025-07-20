@@ -112,6 +112,9 @@ namespace CRMS.Domain.Entities
         [Column(TypeName = "LONGBLOB")]
         public byte[]? Avatar { get; set; } // Фото пользователя
 
+        [NotMapped] // ВАЖНО! не сохраняем в БД!
+        public string? InitialPassword { get; set; }
+
         // Связи "многие ко многим"
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
         

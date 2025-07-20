@@ -79,6 +79,7 @@ namespace CRMS
             services.AddTransient<ADLoginWindow>(); // ✅            
             services.AddTransient<TicketEditWindow>();
             services.AddTransient<AddUserToGroupWindow>();
+            //services.AddTransient<UserCreateWindow>();
 
             // Страницы
             services.AddTransient<MainAdminPage>();
@@ -106,6 +107,7 @@ namespace CRMS
             services.AddTransient<ADLoginWindowViewModel>();
 
             services.AddTransient<UsersOverviewPageViewModel>();
+            
             services.AddTransient<CreateGroupViewModel>();
             services.AddTransient<GroupOverviewViewModel>();
             services.AddTransient<AddUserToGroupViewModel>();

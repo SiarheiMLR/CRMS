@@ -125,6 +125,9 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="FontSize" Value="16"/>           
+            <Setter Property="TextOptions.TextFormattingMode" Value="Ideal"/>
+            <Setter Property="TextOptions.TextRenderingMode" Value="Auto"/>
         </Style>
 
         <!-- Стиль для вложенного Expander -->
@@ -182,9 +185,9 @@
         <!-- Flyout-меню -->
         <metro:FlyoutsControl Panel.ZIndex="1000">
             <metro:Flyout Header="Меню" 
-        Position="Left"
-        Width="250"
-        IsOpen="{Binding IsMenuOpen}">
+                            Position="Left"
+                            Width="250"
+                            IsOpen="{Binding IsMenuOpen}">
                 <ContentControl>
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
@@ -194,30 +197,43 @@
                                     <Setter Property="Content">
                                         <Setter.Value>
                                             <StackPanel>
-                                                <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
-                                                
-                                                <!-- Меню Пользователи -->
-                                                <!--<Button Content="Пользователи" Command="{Binding ViewUsersCommand}" Style="{StaticResource MenuTextButtonStyle}"/>-->
-                                                <Expander Header="Пользователи" Style="{StaticResource MenuExpanderStyle}">
-                                                    <StackPanel>
-                                                        <Button Content="Просмотр информации" Command="{Binding ViewUsersCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                        <Expander Header="Добавить" Style="{StaticResource SubMenuExpanderStyle}">
-                                                            <StackPanel>
-                                                                <Button Content="Создать" Command="{Binding CreateUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                                <Button Content="Импорт из Active Directory" Command="{Binding ImportUsersCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                            </StackPanel>
-                                                        </Expander>
-                                                        <Button Content="Редактировать" Command="{Binding EditUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-                                                        <Button Content="Удалить" Command="{Binding DeleteUserCommand}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
-
+                                                <Button Command="{Binding MainPageCommand}" 
+                                                        Style="{StaticResource MenuTextButtonStyle}"
+                                                        materialDesign:ButtonAssist.CornerRadius="8">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="HomeAnalytics" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="Главная"/>
                                                     </StackPanel>
-                                                </Expander>
-                                                
+                                                </Button>
+
+                                                <!-- Меню Пользователи -->
+                                                <Button Command="{Binding ViewUsersCommand}" 
+                                                        Style="{StaticResource MenuTextButtonStyle}"
+                                                        materialDesign:ButtonAssist.CornerRadius="8">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="Account" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="Пользователи"/>
+                                                    </StackPanel>
+                                                </Button>
+
                                                 <!-- Меню Группы -->
-                                                <Button Content="Группы" Command="{Binding ShowGroupManagerPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
-                                                
-                                                <!-- Меню Отчеты и Статистика-->
-                                                <Expander Header="Отчеты и аналитика" Style="{StaticResource MenuExpanderStyle}">
+                                                <Button Command="{Binding ShowGroupManagerPageCommand}" 
+                                                        Style="{StaticResource MenuTextButtonStyle}"
+                                                        materialDesign:ButtonAssist.CornerRadius="8">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="AccountGroup" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="Группы"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                            <!-- Меню Отчеты и Статистика-->
+                                                <Expander Style="{StaticResource MenuExpanderStyle}">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon Kind="ChartAreaspline" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                            <TextBlock Text="Отчеты и аналитика"/>
+                                                        </StackPanel>
+                                                    </Expander.Header>
                                                     <StackPanel>
                                                         <Button Content="Отчет 1" Command="{Binding Report1Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
                                                         <Button Content="Отчет 2" Command="{Binding Report2Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
@@ -228,7 +244,13 @@
                                                 </Expander>
                                                 
                                                 <!-- Меню Настройки -->
-                                                <Expander Header="Настройки" Style="{StaticResource MenuExpanderStyle}">
+                                                <Expander Style="{StaticResource MenuExpanderStyle}">
+                                                    <Expander.Header>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon Kind="CogOutline" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                            <TextBlock Text="Настройки"/>
+                                                        </StackPanel>
+                                                    </Expander.Header>
                                                     <StackPanel>
                                                         <Button Content="Настройки 1" Command="{Binding Settings1Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>
                                                         <Button Content="Настройки 2" Command="{Binding Settings2Command}" Style="{StaticResource MenuTextButtonStyle}" Margin="20,0,0,0"/>

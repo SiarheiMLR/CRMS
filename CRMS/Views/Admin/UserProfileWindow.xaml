@@ -14,7 +14,7 @@
 
     <metro:MetroWindow.Resources>
         <converters:ByteArrayToImageConverter x:Key="AvatarConverter"/>
-        <converters:NullToTextConverter x:Key="NullToTextConverter" NullText="Не указано"/>
+        <converters:NullToTextConverter x:Key="NullToTextConverter" NullText="Не указано" DateTimeFormat="dd.MM.yyyy HH:mm:ss"/>
         <converters:BoolToTextConverter x:Key="BoolToTextConverter" TrueText="Да" FalseText="Нет"/>
         <converters:RoleFromGroupsConverter x:Key="RoleFromGroupsConverter"/>
 
@@ -39,221 +39,276 @@
             <Setter Property="Padding" Value="8,4"/>
         </Style>
     </metro:MetroWindow.Resources>
+    <materialDesign:DialogHost Identifier="EditDeleteGroupDialogHost">
+        <Grid>
+            <Border Background="{StaticResource BackgroundGradient}"/>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-    <Grid>
-        <Border Background="{StaticResource BackgroundGradient}"/>
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+                <!-- Заголовок с фото -->
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-            <!-- Заголовок с фото -->
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+                    <Image Width="100" Height="100"
+                    Source="{Binding Avatar, Converter={StaticResource AvatarConverter}}"
+                    VerticalAlignment="Top" HorizontalAlignment="Left" />
 
-                <Image Width="100" Height="100"
-                Source="{Binding Avatar, Converter={StaticResource AvatarConverter}}"
-                VerticalAlignment="Top" HorizontalAlignment="Left" />
-
-                <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding DisplayName}" FontSize="20" FontWeight="Bold"/>
-                    <TextBlock Text="{Binding JobTitle}" FontStyle="Italic" Foreground="Black"/>
-                </StackPanel>
-            </Grid>
-
-            <!-- Основная информация с вкладками -->
-            <TabControl Grid.Row="1" Margin="0,10,0,34" Padding="0">
-                <TabItem Header="Общие" Background="#FFFBEEC1">
-                    <StackPanel>
-                        <!-- Основная информация -->
-                        <GroupBox Header="Основная информация" Height="174">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FirstName, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="0" Grid.Column="3" Text="Инициалы:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding Initials, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Фамилия:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LastName, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="1" Grid.Column="3" Text="День рождения:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding DateOfBirth, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Описание:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" 
-                                           Text="{Binding Description, Converter={StaticResource NullToTextConverter}}" 
-                                           TextWrapping="Wrap" Margin="0,0,0,10"/>
-
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Офис:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Office, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="3" Grid.Column="3" Text="Телефон:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="3" Grid.Column="4" Text="{Binding WorkPhone, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Email:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Email, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="4" Grid.Column="3" Text="Веб-страница:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="4" Grid.Column="4" Text="{Binding WebPage, Converter={StaticResource NullToTextConverter}}"/>
-                            </Grid>
-                        </GroupBox>
+                    <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding DisplayName}" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding JobTitle}" FontStyle="Italic" Foreground="Black"/>
                     </StackPanel>
-                </TabItem>
+                </Grid>
 
-                <TabItem Header="Адрес" Background="Azure">
-                    <StackPanel>
-                        <GroupBox Header="Почтовый адрес">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                <!-- Основная информация с вкладками -->
+                <TabControl Grid.Row="1" Margin="0,10,0,34" Padding="0">
+                    <TabItem Header="Общие" Background="#FFFBEEC1">
+                        <StackPanel>
+                            <!-- Основная информация -->
+                            <GroupBox Header="Основная информация" Height="174">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
 
-                                <!-- Страна -->
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Страна:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Country, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FirstName, Converter={StaticResource NullToTextConverter}}"/>
 
-                                <!-- Область/край -->
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Область/край:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding State, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Инициалы:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding Initials, Converter={StaticResource NullToTextConverter}}"/>
 
-                                <!-- Город -->
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Город:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding City, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Фамилия:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LastName, Converter={StaticResource NullToTextConverter}}"/>
 
-                                <!-- Индекс -->
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Почтовый индекс:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="День рождения:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding DateOfBirth, Converter={StaticResource NullToTextConverter}}"/>
 
-                                <!-- Улица -->
-                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Street, Converter={StaticResource NullToTextConverter}}"/>
-                            </Grid>
-                        </GroupBox>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Описание:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" 
+                                               Text="{Binding Description, Converter={StaticResource NullToTextConverter}}" 
+                                               TextWrapping="Wrap" Margin="0,0,0,10"/>
+
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Офис:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Office, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="3" Grid.Column="3" Text="Телефон:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="4" Text="{Binding WorkPhone, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Email:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Email, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="4" Grid.Column="3" Text="Веб-страница:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="4" Text="{Binding WebPage, Converter={StaticResource NullToTextConverter}}"/>
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem Header="Адрес" Background="Azure">
+                        <StackPanel>
+                            <GroupBox Header="Почтовый адрес">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <!-- Страна -->
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Страна:" FontWeight="Bold" Margin="0,0,10,0"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Country, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <!-- Область/край -->
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Область/край:" FontWeight="Bold" Margin="0,0,10,0"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding State, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <!-- Город -->
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Город:" FontWeight="Bold" Margin="0,0,10,0"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding City, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <!-- Индекс -->
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Почтовый индекс:" FontWeight="Bold" Margin="0,0,10,0"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <!-- Улица -->
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес:" FontWeight="Bold" Margin="0,0,10,0"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Street, Converter={StaticResource NullToTextConverter}}"/>
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem Header="Учетная запись" Background="#FFE1F5FE">
+                        <StackPanel Margin="0,0,0,-49">
+                            <GroupBox Header="Параметры учетной записи">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин пользователя:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UserLogonName, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Первоначальный пароль:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" 
+                                               Text="{Binding InitialPassword}"
+                                               Foreground="{DynamicResource MahApps.Brushes.Text.Red}"
+                                               FontWeight="Bold"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата создания учетной записи:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccountCreated, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Статус активности пользователя:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" 
+                                                Text="{Binding Status, Converter={StaticResource NullToTextConverter}, ConverterParameter='Никогда'}"/>
+
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Принадлежность к группе:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1"
+                                                Text="{Binding ., Converter={StaticResource RoleFromGroupsConverter}}"/>
+                                    <!--Binding . — означает привязку к текущему объекту User-->
+
+
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
+                    </TabItem>
+
+                    <TabItem Header="Контакты" Background="#FFF3E5F5">
+                        <StackPanel>
+                            <GroupBox Header="Контактные данные">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Компания:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Company, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Рабочий телефон:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding WorkPhone, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Отдел:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Department, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="Мобильный телефон:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding MobilePhone, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Менеджер:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ManagerName, Converter={StaticResource NullToTextConverter}}"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="3" Text="IP-телефон:" FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="4" Text="{Binding IPPhone, Converter={StaticResource NullToTextConverter}}"/>
+                                </Grid>
+                            </GroupBox>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+
+                <!-- Кнопки -->
+                <StackPanel Grid.Row="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Stretch"
+                            Margin="10,10,10,10">
+
+                    <!-- Левая часть: Удалить / Редактировать -->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom">
+
+                        <Button Content="Удалить пользователя"
+                                Width="Auto"
+                                Height="35"
+                                Click="Delete_Click"
+                                Style="{StaticResource MahApps.Styles.Button}"
+                                Background="IndianRed"
+                                Foreground="White"
+                                Margin="5"/>
+
+                        <Button Content="Редактировать пользователя"
+                                Width="Auto"
+                                Height="35"
+                                Click="Edit_Click"
+                                Style="{StaticResource MahApps.Styles.Button}"                            
+                                Background="{DynamicResource PrimaryHueMidBrush}"
+                                Foreground="White"
+                                Margin="5"/>
                     </StackPanel>
-                </TabItem>
 
-                <TabItem Header="Учетная запись" Background="#FFE1F5FE">
-                    <StackPanel Margin="0,0,0,-49">
-                        <GroupBox Header="Параметры учетной записи">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин пользователя:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UserLogonName, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Дата создания учетной записи:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding AccountCreated, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Статус активности пользователя:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="2" Grid.Column="1" 
-                                            Text="{Binding Status, Converter={StaticResource NullToTextConverter}, ConverterParameter='Никогда'}"/>
-
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Принадлежность к группе:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="3" Grid.Column="1"
-                                            Text="{Binding ., Converter={StaticResource RoleFromGroupsConverter}}"/> <!--Binding . — означает привязку к текущему объекту User-->
-
-                                <TextBlock Grid.Row="4" Grid.Column="0" Text="Первоначальный пароль:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="4" Grid.Column="1" 
-                                            Text="{Binding CannotChangePassword, Converter={StaticResource BoolToTextConverter}}"/>
-                            </Grid>
-                        </GroupBox>
-                    </StackPanel>
-                </TabItem>
-
-                <TabItem Header="Контакты" Background="#FFF3E5F5">
-                    <StackPanel>
-                        <GroupBox Header="Контактные данные">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="Компания:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Company, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="0" Grid.Column="3" Text="Рабочий телефон:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding WorkPhone, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Отдел:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Department, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="1" Grid.Column="3" Text="Мобильный телефон:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding MobilePhone, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Менеджер:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ManagerName, Converter={StaticResource NullToTextConverter}}"/>
-
-                                <TextBlock Grid.Row="2" Grid.Column="3" Text="IP-телефон:" FontWeight="Bold"/>
-                                <TextBlock Grid.Row="2" Grid.Column="4" Text="{Binding IPPhone, Converter={StaticResource NullToTextConverter}}"/>
-                            </Grid>
-                        </GroupBox>
-                    </StackPanel>
-                </TabItem>
-            </TabControl>
-
-            <!-- Кнопка ОК -->
-            <StackPanel Grid.Row="2"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Right"
-                        Margin="0,10,20,10">
-                <Button Content="ОК"
+                    <!-- Правая часть: ОК / Отмена / Сохранить -->
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Margin="90,0,0,0">
+                        <Button Content="ОК"
                                 Width="100"
                                 Height="35"
                                 Click="Ok_Click"
                                 Style="{StaticResource MahApps.Styles.Button}"
                                 Background="{DynamicResource PrimaryHueMidBrush}"
-                                Foreground="White"/>
-            </StackPanel>
+                                Foreground="White"
+                                Margin="5"/>
 
+                        <Button Content="Отмена"
+                                Width="100"
+                                Height="35"
+                                Click="Cancel_Click"
+                                Style="{StaticResource MahApps.Styles.Button}"
+                                Background="{DynamicResource PrimaryHueMidBrush}"
+                                Foreground="White"
+                                Margin="5"/>
+
+                        <Button Content="Сохранить"
+                                Width="100"
+                                Height="35"
+                                Click="Save_Click"
+                                Style="{StaticResource MahApps.Styles.Button}"
+                                Background="{DynamicResource PrimaryHueMidBrush}"
+                                Foreground="White"
+                                Margin="5"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </materialDesign:DialogHost>
 </metro:MetroWindow>

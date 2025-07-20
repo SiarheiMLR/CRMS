@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using CRMS.Views.Admin.Groups;
+using MaterialDesignThemes.Wpf;
 
 namespace CRMS.Views.Admin
 {
@@ -24,12 +26,43 @@ namespace CRMS.Views.Admin
         public UserProfileWindow(CRMS.Domain.Entities.User user)
         {
             InitializeComponent();
-            DataContext = user;
+            DataContext = user;           
         }
 
         private void Ok_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private async void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new ConfirmationDialog
+            {
+                Message = "Вы действительно хотите удалить этого пользователя?"
+            };
+
+            var result = await DialogHost.Show(dialog, "EditDeleteGroupDialogHost");
+            if (result is bool confirmed && confirmed)
+            {
+                // TODO: Логика удаления пользователя из базы данных
+                MessageBox.Show("Пользователь успешно удалён.", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
+            }
+        }
+
+        private void Edit_Click(object sender, RoutedEventArgs e)
+        {
+            // Переход к режиму редактирования
+        }
+
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            // Отмена изменений
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            // Сохранение изменений
         }
     }
 }

@@ -3,22 +3,36 @@ using CommunityToolkit.Mvvm.Input;
 using CRMS.Business.Services.UserService;
 using CRMS.Domain.Entities;
 using CRMS.Views.Admin;
-using Microsoft.VisualBasic.ApplicationServices;
+using CRMS.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
+using System.Windows;
+using CRMS.Views.AD;
+using CRMS.Business.Services.AuthService;
 
 namespace CRMS.ViewModels.Admin
 {
     public partial class UsersOverviewPageViewModel : ObservableObject
     {
+        private readonly IAuthService _authService;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly INavigationService _navigationService;
         private readonly IUserService _userService;
 
         [ObservableProperty]
         private ObservableCollection<CRMS.Domain.Entities.User> users = new();
 
-        public UsersOverviewPageViewModel(IUserService userService)
+        public UsersOverviewPageViewModel(
+            IUserService userService,
+            IAuthService authService,
+            IServiceProvider serviceProvider,
+            INavigationService navigationService)
         {
             _userService = userService;
+            _authService = authService;
+            _serviceProvider = serviceProvider;
+            _navigationService = navigationService;
+
             LoadUsers();
         }
 
@@ -37,6 +51,24 @@ namespace CRMS.ViewModels.Admin
         private void OpenUserProfile(CRMS.Domain.Entities.User user)
         {
             var window = new UserProfileWindow(user); // передаём данные
+            window.ShowDialog();
+            LoadUsers(); // Всегда обновляем список после закрытия окна
+        }
+
+        //[RelayCommand]
+        //private void CreateUser()
+        //{
+        //    var window = _serviceProvider.GetRequiredService<UserCreateWindow>();
+        //    window.ShowDialog();
+
+        //    // После создания обновляем список
+        //    LoadUsers();
+        //}
+
+        [RelayCommand]
+        private void ImportUsers()
+        {
+            var window = _serviceProvider.GetRequiredService<ADLoginWindow>();
             window.ShowDialog();
         }
     }

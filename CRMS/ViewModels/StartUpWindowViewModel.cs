@@ -10,12 +10,22 @@ namespace CRMS.ViewModels
 {
     public partial class StartUpWindowViewModel : ObservableObject
     {
-        [ObservableProperty]
-        private DateTime currentDate = DateTime.Now;
-
-        [ObservableProperty]
-        private string currentTime = DateTime.Now.ToString("HH:mm:ss"); // Вторые часы
         private readonly IServiceProvider _serviceProvider;
+
+        // Правильный формат даты и времени
+        private string _currentDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+        public string CurrentDate
+        {
+            get => _currentDate;
+            set => SetProperty(ref _currentDate, value);
+        }
+
+        private string _currentTime = DateTime.Now.ToString("HH:mm:ss");
+        public string CurrentTime
+        {
+            get => _currentTime;
+            set => SetProperty(ref _currentTime, value);
+        }
 
         //private readonly App _app;
 
@@ -28,11 +38,11 @@ namespace CRMS.ViewModels
         {
             _serviceProvider = serviceProvider;
 
-            // Таймер для обновления времени
+            // Таймер обновляет время каждую секунду
             var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += (s, e) =>
             {
-                CurrentDate = DateTime.Now;
+                CurrentDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
                 CurrentTime = DateTime.Now.ToString("HH:mm:ss");
             };
             timer.Start();

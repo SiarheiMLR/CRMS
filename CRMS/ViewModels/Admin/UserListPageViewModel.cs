@@ -94,6 +94,7 @@ namespace CRMS.ViewModels.Admin
 
             string tempPassword = $"AD!{Guid.NewGuid():N}".Substring(0, 8);
             user.SetPassword(tempPassword);
+            user.InitialPassword = tempPassword;
 
             await _userService.AddUserAsync(user);
 

@@ -60,7 +60,7 @@ namespace CRMS.Business.ActiveDirectoryService
                             JobTitle = Get(entry, "title"),
                             Department = Get(entry, "department"),
                             Company = Get(entry, "company"),
-                            ManagerName = Get(entry, "manager")
+                            ManagerName = ResolveManagerDisplayName(entry)
                         };
 
                         result.Add(user);
@@ -105,6 +105,52 @@ namespace CRMS.Business.ActiveDirectoryService
                 return data?.Length > 0 ? data : null;
             }
             return null;
+        }
+
+        private string ResolveManagerDisplayName(DirectoryEntry entry)
+        {
+            try
+            {
+                if (entry.Properties.Contains("manager"))
+                {
+                    var managerDn = entry.Properties["manager"].Value.ToString();
+
+                    // Пример: "CN=Administrator,CN=Users,DC=bigfirm,DC=by"
+                    var parts = managerDn.Split(',');
+
+                    string? samAccount = null;
+                    string? domain = null;
+
+                    // Ищем CN=
+                    foreach (var part in parts)
+                    {
+                        if (part.StartsWith("CN=", StringComparison.OrdinalIgnoreCase) && samAccount == null)
+                        {
+                            samAccount = part.Substring(3);
+                        }
+                    }
+
+                    // Собираем домен
+                    var domainParts = parts
+                        .Where(p => p.StartsWith("DC=", StringComparison.OrdinalIgnoreCase))
+                        .Select(p => p.Substring(3));
+
+                    domain = string.Join(".", domainParts);
+
+                    if (!string.IsNullOrEmpty(samAccount) && !string.IsNullOrEmpty(domain))
+                    {
+                        return $"{samAccount}@{domain}";
+                    }
+
+                    return samAccount ?? managerDn; // Fallback, если нет домена
+                }
+            }
+            catch
+            {
+                // Игнорируем ошибки
+            }
+
+            return "Не указано";
         }
 
     }

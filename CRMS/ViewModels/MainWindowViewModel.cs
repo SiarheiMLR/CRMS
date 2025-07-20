@@ -86,13 +86,6 @@ namespace CRMS.ViewModels
         public object RoleSpecificContent => CurrentRole;
 
         [RelayCommand]
-        private void ImportUsers()
-        {
-            var window = _serviceProvider.GetRequiredService<ADLoginWindow>();
-            window.ShowDialog();
-        }
-
-        [RelayCommand]
         private void Logout()
         {
             _authService.Logout();
