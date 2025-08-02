@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:CRMS.Views.AD"
         xmlns:helpers="clr-namespace:CRMS.Helpers"
         Title="Авторизация в Active Directory"
-        Height="250" Width="350"
+        Height="270" Width="350"
         WindowStartupLocation="CenterScreen"
         GlowBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"           
@@ -77,22 +77,29 @@
                          Width="200"
                          PasswordChanged="PasswordBox_PasswordChanged"/>
 
+            <CheckBox Grid.Row="3"
+                      Content="Сохранить авторизацию до перезапуска системы"
+                      IsChecked="{Binding RememberMe}"
+                      HorizontalAlignment="Center"
+                      Foreground="White"
+                      Margin="0,10,0,0"/>
+
             <!-- Кнопки -->
             <StackPanel Grid.Row="4" 
                         Orientation="Horizontal" 
                         HorizontalAlignment="Center" 
-                        Margin="0,10,0,0">
+                        Margin="0,16,0,0">
                 <Button Content="Войти"
                         Command="{Binding AuthorizeCommand}"
-                        Style="{StaticResource MahApps.Styles.Button}"
-                        Width="100" 
-                        Margin="5"/>
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Foreground="White"
+                        Margin="0 0 8 0"/>
 
                 <Button Content="Отмена"
                         Command="{Binding CancelCommand}"
-                        Style="{StaticResource MahApps.Styles.Button}"
-                        Width="100" 
-                        Margin="5"/>                        
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"/>                        
                 
             </StackPanel>
         </Grid>

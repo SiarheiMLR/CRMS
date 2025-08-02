@@ -10,6 +10,8 @@ namespace CRMS.Business.Services.AuthService
         Task RegisterAsync(User user);
         Task<bool> UserEmailExists(string email);
         Task<bool> UserNameExists(string firstName, string lastName);
+        Task<User?> GetFirstAdminAsync();
+        Task<User?> GetUserByEmailAsync(string email);
         void Logout();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CRMS.ViewModels;
 using MahApps.Metro.Controls;
+using System.Windows.Input;
 
 namespace CRMS.Views
 {
@@ -12,6 +13,6 @@ namespace CRMS.Views
         {
             InitializeComponent();
             DataContext = viewModel;
-        }
+        }       
     }
 }

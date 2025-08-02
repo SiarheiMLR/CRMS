@@ -27,6 +27,11 @@ namespace CRMS.ViewModels.AD
 
         public Action? CloseAction { get; set; }
 
+        [ObservableProperty]
+        private bool rememberMe;
+
+        public static List<ADUserDto>? CachedUsers { get; private set; } = null;
+
         [RelayCommand]
         private async Task AuthorizeAsync()
         {
@@ -41,6 +46,9 @@ namespace CRMS.ViewModels.AD
                 string domain = Login.Split('@')[1];
 
                 List<ADUserDto> users = await _adService.GetAllUsersAsync(domain, Login, Password);
+
+                if (RememberMe)
+                    CachedUsers = users;
 
                 if (users.Count == 0)
                 {

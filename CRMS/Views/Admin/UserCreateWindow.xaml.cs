@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using CRMS.Views.Admin.Groups;
 using MaterialDesignThemes.Wpf;
+using MahApps.Metro.Controls;
 using CRMS.Domain.Entities;
 using CRMS.ViewModels.Admin;
 using CRMS.Business.Services.UserService;
@@ -22,19 +23,19 @@ using CRMS.Business.Services.UserService;
 namespace CRMS.Views.Admin
 {
     /// <summary>
-    /// Логика взаимодействия для UserProfileWindow.xaml
+    /// Логика взаимодействия для UserCreateWindow.xaml
     /// </summary>
-    public partial class UserProfileWindow : MetroWindow
+    public partial class UserCreateWindow : MetroWindow
     {
-        private readonly UserProfileWindowViewModel _viewModel;
+        private readonly UserCreateWindowViewModel _viewModel;
 
         private static bool _isFormatting = false;
 
-        public UserProfileWindow(CRMS.Domain.Entities.User user, IUserService userService)
+        public UserCreateWindow(IUserService userService)
         {
             InitializeComponent();
 
-            _viewModel = new UserProfileWindowViewModel(user, userService);
+            _viewModel = new UserCreateWindowViewModel(userService);
             DataContext = _viewModel;
         }
 
@@ -126,54 +127,55 @@ namespace CRMS.Views.Admin
                 return $"+{input.Substring(0, 3)} ({input.Substring(3, 2)}) {input.Substring(5, 3)}-{input.Substring(8, 2)}-{input.Substring(10)}";
         }
 
-        private async void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            var dialog = new ConfirmationDialog
-            {
-                Message = "Вы действительно хотите удалить этого пользователя?"
-            };
+        //private async void Delete_Click(object sender, RoutedEventArgs e)
+        //{
+        //    var dialog = new ConfirmationDialog
+        //    {
+        //        Message = "Вы действительно хотите удалить этого пользователя?"
+        //    };
 
-            var result = await DialogHost.Show(dialog, "EditDeleteGroupDialogHost");
-            if (result is bool confirmed && confirmed)
-            {
-                await _viewModel.DeleteAsyncCommand.ExecuteAsync(null);
-                //MessageBox.Show("Пользователь успешно удалён.", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information);
-                Close();
-            }
-        }
+        //    var result = await DialogHost.Show(dialog, "EditDeleteGroupDialogHost");
+        //    if (result is bool confirmed && confirmed)
+        //    {
+        //        await _viewModel.DeleteAsyncCommand.ExecuteAsync(null);
+        //        //MessageBox.Show("Пользователь успешно удалён.", "Удаление", MessageBoxButton.OK, MessageBoxImage.Information);
+        //        Close();
+        //    }
+        //}
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (sender is PasswordBox passwordBox && DataContext is UserProfileWindowViewModel viewModel)
+            if (sender is PasswordBox passwordBox && DataContext is UserCreateWindowViewModel viewModel)
             {
                 viewModel.EditableUser.InitialPassword = passwordBox.Password;
                 viewModel.HasChanges = true;
             }
         }
 
-        private void Edit_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.EditCommand.Execute(null);
-        }
+        //private void Edit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    _viewModel.EditCommand.Execute(null);
+        //}
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.CancelCommand.Execute(null);
-        }
+        //private void Cancel_Click(object sender, RoutedEventArgs e)
+        //{
+        //    _viewModel.CancelCommand.Execute(null);
+        //}
 
-        private async void Save_Click(object sender, RoutedEventArgs e)
-        {
-            await _viewModel.SaveAsyncCommand.ExecuteAsync(null);
-        }
+        //private async void Save_Click(object sender, RoutedEventArgs e)
+        //{
+        //    await _viewModel.SaveAsyncCommand.ExecuteAsync(null);
+        //}
 
-        private void Ok_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        //private void Ok_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Close();
+        //}
 
-        private void SelectAvatar_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.SelectAvatarCommand.Execute(null);
-        }
+        //private void SelectAvatar_Click(object sender, RoutedEventArgs e)
+        //{
+        //    _viewModel.SelectAvatarCommand.Execute(null);
+        //}
     }
 }
+

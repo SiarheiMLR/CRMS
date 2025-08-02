@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,101 +22,140 @@ namespace CRMS.Domain.Entities
         Admin
     }
 
-    public class User
+    public partial class User : ObservableValidator
     {
         [Key]
         public int Id { get; set; } // Уникальный идентификатор пользователя
 
         // Вкладка General
+        [ObservableProperty]
         [Required, MaxLength(50)]
-        public string FirstName { get; set; } // Имя пользователя
+        private string firstName; // Имя пользователя
 
+        [ObservableProperty]
         [MaxLength(10)]
-        public string Initials { get; set; } = string.Empty; // Инициалы пользователя
+        private string initials = string.Empty; // Инициалы пользователя
 
+        [ObservableProperty]
         [Required, MaxLength(50)]
-        public string LastName { get; set; } // Фамилия пользователя
+        private string lastName; // Фамилия пользователя
 
+        [ObservableProperty]
         [Required, MaxLength(100)]
-        public string DisplayName { get; set; } = string.Empty; // Отображаемое имя пользователя
+        private string displayName = string.Empty; // Отображаемое имя пользователя
 
+        [ObservableProperty]
         [MaxLength(255)]
-        public string Description { get; set; } = string.Empty; // Описание пользователя
+        private string description = string.Empty; // Описание пользователя
 
+        [ObservableProperty]
         [MaxLength(100)]
-        public string Office { get; set; } = string.Empty; // Офис в котором работает пользователь
+        private string office = string.Empty; // Офис в котором работает пользователь
 
+        [ObservableProperty]
         [Required, MaxLength(100), EmailAddress]
-        public string Email { get; set; } = string.Empty; // Электронная почта пользователя
+        private string email = string.Empty; // Электронная почта пользователя
 
+        [ObservableProperty]
         [MaxLength(255), Url]
-        public string WebPage { get; set; } = string.Empty; // Сайт пользователя
+        private string webPage = string.Empty; // Сайт пользователя
 
+        [ObservableProperty]
         [Column(TypeName = "date")]
-        public DateTime? DateOfBirth { get; set; } // Дата рождения
+        private DateTime? dateOfBirth; // Дата рождения
 
         // Вкладка Address
+        [ObservableProperty]
         [MaxLength(255)]
-        public string Street { get; set; } = string.Empty; // Улица
+        private string street = string.Empty; // Улица
 
+        [ObservableProperty]
         [MaxLength(100)]
-        public string City { get; set; } = string.Empty;// Город
+        private string city = string.Empty; // Город
 
+        [ObservableProperty]
         [MaxLength(100)]
-        public string State { get; set; } = string.Empty;// Штат/Регион
+        private string state = string.Empty; // Штат/Регион
 
+        [ObservableProperty]
         [MaxLength(20)]
-        public string PostalCode { get; set; } = string.Empty;// Почтовый индекс
+        private string postalCode = string.Empty; // Почтовый индекс
 
+        [ObservableProperty]
         [MaxLength(100)]
-        public string Country { get; set; } = string.Empty;// Страна
+        private string country = string.Empty; // Страна
 
         // Вкладка Account
+        [ObservableProperty]
         [Required, MaxLength(50)]
-        public string UserLogonName { get; set; } = string.Empty; // Логин пользователя
+        private string userLogonName = string.Empty; // Логин пользователя
 
+        [ObservableProperty]
         [Required, MaxLength(255)]
-        public string PasswordHash { get; set; } = string.Empty; // Хеш пароля пользователя
+        private string passwordHash = string.Empty; // Хеш пароля пользователя
 
+        [ObservableProperty]
         [Required, MaxLength(255)]
-        public string PasswordSalt { get; set; } = string.Empty; // Соль для пароля
+        private string passwordSalt = string.Empty; // Соль для пароля
 
-        public DateTime AccountCreated { get; set; } = DateTime.UtcNow; // Дата создания учетной записи
+        [ObservableProperty]
+        //private DateTime accountCreated = DateTime.UtcNow;
+        private DateTime accountCreated; // Дата создания учетной записи
 
-        public UserStatus Status { get; set; } = UserStatus.Active; // Статус активности пользователя
+        [ObservableProperty]
+        private UserStatus status = UserStatus.Active; // Статус активности пользователя
 
-        public UserRole Role { get; set; } = UserRole.User; // Роль пользователя
+        [ObservableProperty]
+        private UserRole role = UserRole.User; // Роль пользователя
 
         // Вкладка Telephones
+        [ObservableProperty]
         [MaxLength(20)]
-        public string WorkPhone { get; set; } = string.Empty;// Номер телефона Рабочий
+        private string workPhone = string.Empty; // Номер телефона Рабочий
 
+        [ObservableProperty]
         [MaxLength(20)]
-        public string MobilePhone { get; set; } = string.Empty;// Номер телефона Мобильный        
+        private string mobilePhone = string.Empty; // Номер телефона Мобильный        
 
+        [ObservableProperty]
         [MaxLength(20)]
-        public string IPPhone { get; set; } = string.Empty;// Номер IP-телефона
+        private string iPPhone = string.Empty; // Номер IP-телефона
 
         // Вкладка Organization
+        [ObservableProperty]
         [MaxLength(100)]
-        public string JobTitle { get; set; } = string.Empty;// Должность
+        private string jobTitle = string.Empty; // Должность
 
+        [ObservableProperty]
         [MaxLength(100)]
-        public string Department { get; set; } = string.Empty;// Отдел
+        private string department = string.Empty; // Отдел
 
+        [ObservableProperty]
         [MaxLength(100)]
-        public string Company { get; set; } = string.Empty;// Компания
+        private string company = string.Empty; // Компания
 
+        [ObservableProperty]
         [MaxLength(100)]
-        public string ManagerName { get; set; } = string.Empty;// Имя прямого начальника пользователя
+        private string managerName = string.Empty; // Имя прямого начальника пользователя
 
+        [ObservableProperty]
         [Column(TypeName = "LONGBLOB")]
-        public byte[]? Avatar { get; set; } // Фото пользователя
+        private byte[]? avatar; // Фото пользователя
 
-        [NotMapped] // ВАЖНО! не сохраняем в БД!
-        public string? InitialPassword { get; set; }
+        //[ObservableProperty]
+        //[NotMapped] // ВАЖНО!!! Не сохраняем в БД
+        //private string? initialPassword;
 
-        // Связи "многие ко многим"
+        private string? _initialPassword;
+
+        [NotMapped] // ВАЖНО!!! Не сохраняем в БД
+        public string? InitialPassword
+        {
+            get => _initialPassword;
+            set => SetProperty(ref _initialPassword, value);
+        }
+
+        // Навигационные свойства: Связи "многие ко многим"
         public ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
         
         public ICollection<GroupMember> GroupMembers { get; set; } = new List<GroupMember>();
@@ -163,6 +203,6 @@ namespace CRMS.Domain.Entities
                 byte[] hashBytes = sha256.ComputeHash(combinedBytes);
                 return Convert.ToBase64String(hashBytes);
             }
-        }
+        }       
     }    
 }

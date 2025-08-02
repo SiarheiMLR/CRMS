@@ -18,5 +18,12 @@ namespace CRMS.DAL.Repositories
         {
             return await _entities.SingleOrDefaultAsync(u => u.FirstName == firstName && u.LastName == lastName);
         }
+
+        public async Task<List<User>> GetUsersByRoleAsync(UserRole role)
+        {
+            return await _context.Users
+                .Where(u => u.Role == role)
+                .ToListAsync();
+        }
     }
 }

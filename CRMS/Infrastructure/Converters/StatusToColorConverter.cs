@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Media;
 using System.Windows.Data;
 
-namespace CRMS.Converters
+namespace CRMS.Infrastructure.Converters
 {
     public class StatusToColorConverter : IValueConverter
     {

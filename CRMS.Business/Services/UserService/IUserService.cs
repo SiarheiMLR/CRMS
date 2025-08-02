@@ -14,8 +14,9 @@ namespace CRMS.Business.Services.UserService
         public Task<IEnumerable<User>> GetUsersByEmailAsync(string email);
         public Task<IEnumerable<User>> GetUsersByLoginAsync(string login);
         public Task AddUserAsync(User user);
-        public void UpdateUser(User user);
-        public void DeleteUser(User user);
+        Task<User> AddUserAsyncManual(User user);
+        public Task UpdateUserAsync(User user);
+        public Task DeleteUserAsync(User user);
         public Task<IEnumerable<User>> FindUsersAsync(Expression<Func<User, bool>> predicate);
     }
 }

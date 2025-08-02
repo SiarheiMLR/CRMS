@@ -1,21 +1,24 @@
 ﻿using CRMS.Domain.Entities;
 using System.Globalization;
 using System.Windows.Data;
-using System.Windows;
 
-namespace CRMS.Converters
+namespace CRMS.Infrastructure.Converters
 {
-    public class StatusToVisibilityConverter : IValueConverter
+    public class StatusToRussianConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is TicketStatus status)
             {
-                return (status == TicketStatus.InProgress || status == TicketStatus.Closed)
-                    ? Visibility.Visible
-                    : Visibility.Collapsed;
+                return status switch
+                {
+                    TicketStatus.Active => "Активный",
+                    TicketStatus.InProgress => "В работе",
+                    TicketStatus.Closed => "Закрыт",
+                    _ => value.ToString()
+                };
             }
-            return Visibility.Collapsed;
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

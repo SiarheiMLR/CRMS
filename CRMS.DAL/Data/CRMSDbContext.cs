@@ -318,6 +318,9 @@ namespace CRMS.DAL.Data
                 Role = UserRole.Admin
             });
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            // Явно исключаем InitialPassword
+            modelBuilder.Entity<User>()
+                .Ignore(u => u.InitialPassword);
             modelBuilder.Entity<GroupMember>()
                .HasOne(gm => gm.User)
                .WithMany(u => u.GroupMembers)

@@ -62,5 +62,17 @@ namespace CRMS.Business.Services.AuthService
             var user = await _unitOfWork.Users.GetByNameAsync(firstName, lastName);
             return user != null;
         }
+
+        public async Task<User?> GetFirstAdminAsync()
+        {
+            var admins = await _unitOfWork.Users.GetUsersByRoleAsync(UserRole.Admin);
+            return admins?.FirstOrDefault();
+        }
+
+        public async Task<User?> GetUserByEmailAsync(string email)
+        {
+            var users = await _unitOfWork.Users.GetWhereAsync(u => u.Email == email);
+            return users.FirstOrDefault();
+        }
     }
 }

@@ -5,11 +5,13 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:local="clr-namespace:CRMS.Views.Admin"
                   xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
+                  xmlns:domain="clr-namespace:CRMS.Domain.Entities;assembly=CRMS.Domain"
+                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                   xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
                   xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                   mc:Ignorable="d"
-                  Title="{Binding DisplayName, StringFormat='Профиль пользователя: {0}'}"
-                  Height="476" Width="800"
+                  Title="{Binding EditableUser.DisplayName, StringFormat='Профиль пользователя: {0}'}"
+                  Height="500" Width="800"
                   WindowStartupLocation="CenterScreen">
 
     <metro:MetroWindow.Resources>
@@ -17,6 +19,19 @@
         <converters:NullToTextConverter x:Key="NullToTextConverter" NullText="Не указано" DateTimeFormat="dd.MM.yyyy HH:mm:ss"/>
         <converters:BoolToTextConverter x:Key="BoolToTextConverter" TrueText="Да" FalseText="Нет"/>
         <converters:RoleFromGroupsConverter x:Key="RoleFromGroupsConverter"/>
+        <converters:InverseBooleanConverter x:Key="InverseBool"/>
+        <converters:UserRoleToGroupLabelConverter x:Key="UserRoleToGroupLabelConverter"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>        
+        <converters:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibility"/>
+        <converters:UserStatusToRussianConverter x:Key="UserStatusToRussianConverter"/>
+
+        <ObjectDataProvider x:Key="UserStatusValues"
+                    MethodName="GetValues"
+                    ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="domain:UserStatus"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
 
         <LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#FF6C5B7B" Offset="0"/>
@@ -56,22 +71,31 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <Image Width="100" Height="100"
-                    Source="{Binding Avatar, Converter={StaticResource AvatarConverter}}"
-                    VerticalAlignment="Top" HorizontalAlignment="Left" />
+                    <!--<Image Width="100" Height="100"
+                           Source="{Binding EditableUser.Avatar, Converter={StaticResource AvatarConverter}}"
+                           VerticalAlignment="Top" HorizontalAlignment="Left" />-->
+                    <Button Width="130" Height="130"
+                            VerticalAlignment="Top" HorizontalAlignment="Left"
+                            Background="Transparent"
+                            BorderBrush="{x:Null}"
+                            Padding="0"
+                            Command="{Binding SelectAvatarCommand}">
+                        <Image Source="{Binding EditableUser.Avatar, Converter={StaticResource AvatarConverter}}"
+                               Width="100" Height="100"/>
+                    </Button>
 
                     <StackPanel Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center">
-                        <TextBlock Text="{Binding DisplayName}" FontSize="20" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding JobTitle}" FontStyle="Italic" Foreground="Black"/>
+                        <TextBlock Text="{Binding EditableUser.DisplayName}" FontSize="20" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding EditableUser.JobTitle}" FontStyle="Italic" Foreground="Black"/>
                     </StackPanel>
                 </Grid>
 
                 <!-- Основная информация с вкладками -->
-                <TabControl Grid.Row="1" Margin="0,10,0,34" Padding="0">
+                <TabControl Grid.Row="1" Margin="0,10,0,10" Padding="0">
                     <TabItem Header="Общие" Background="#FFFBEEC1">
-                        <StackPanel>
+                        <StackPanel Margin="0,0,0,-29">
                             <!-- Основная информация -->
-                            <GroupBox Header="Основная информация" Height="174">
+                            <GroupBox Header="Основная информация" Height="223">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -89,42 +113,163 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FirstName, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Имя:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1"
+                                             Text="{Binding EditableUser.FirstName, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите имя пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Инициалы:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding Initials, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Инициалы:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="0" Grid.Column="4"
+                                             Text="{Binding EditableUser.Initials, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите инициалы пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Фамилия:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LastName, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Фамилия:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1"
+                                             Text="{Binding EditableUser.LastName, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите фамилию пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="День рождения:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding DateOfBirth, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="День рождения:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <DatePicker Grid.Row="1" Grid.Column="4"
+                                                SelectedDate="{Binding EditableUser.DateOfBirth, UpdateSourceTrigger=PropertyChanged}"
+                                                IsEnabled="{Binding IsInEditMode}"
+                                                SelectedDateFormat="Short"
+                                                Margin="0">
+                                        <DatePicker.Style>
+                                            <Style TargetType="DatePicker" BasedOn="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите дату рождения пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DatePicker.Style>
+                                    </DatePicker>
 
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Описание:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4" 
-                                               Text="{Binding Description, Converter={StaticResource NullToTextConverter}}" 
-                                               TextWrapping="Wrap" Margin="0,0,0,10"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Описание:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="4"
+                                             Text="{Binding EditableUser.Description, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}"
+                                             TextWrapping="Wrap"
+                                             Margin="0,0,0,10">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите описание пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Офис:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Office, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Офис:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1"
+                                             Text="{Binding EditableUser.Office, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите офис пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="3" Grid.Column="3" Text="Телефон:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="4" Text="{Binding WorkPhone, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="3" Text="Телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="3" Grid.Column="4"
+                                             Text="{Binding EditableUser.WorkPhone, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}"
+                                             PreviewTextInput="OnlyPhoneChars_PreviewTextInput"
+                                             DataObject.Pasting="OnlyPhoneChars_Pasting">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите рабочий телефон пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Email:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Email, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Email:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="4" Grid.Column="1"
+                                             Text="{Binding EditableUser.Email, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите email пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="4" Grid.Column="3" Text="Веб-страница:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="4" Text="{Binding WebPage, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="3" Text="Веб-страница:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="4" Grid.Column="4"
+                                             Text="{Binding EditableUser.WebPage, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите сайт пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
                     </TabItem>
 
                     <TabItem Header="Адрес" Background="Azure">
-                        <StackPanel>
-                            <GroupBox Header="Почтовый адрес">
+                        <StackPanel Margin="0,0,0,-29">
+                            <GroupBox Header="Почтовый адрес" Height="223">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -139,32 +284,99 @@
                                     </Grid.RowDefinitions>
 
                                     <!-- Страна -->
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Страна:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Country, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Страна:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1"
+                                             Text="{Binding EditableUser.Country, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите название страны" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
                                     <!-- Область/край -->
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Область/край:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding State, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Область/край:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1"
+                                             Text="{Binding EditableUser.State, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите наименование области" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
                                     <!-- Город -->
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Город:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding City, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Город:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1"
+                                             Text="{Binding EditableUser.City, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите название города" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
                                     <!-- Индекс -->
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Почтовый индекс:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PostalCode, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Почтовый индекс:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="3" Grid.Column="1"
+                                             Text="{Binding EditableUser.PostalCode, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}"
+                                             PreviewTextInput="OnlyDigits_PreviewTextInput"
+                                             DataObject.Pasting="OnlyDigits_Pasting">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите почтовый индекс" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
                                     <!-- Улица -->
-                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес:" FontWeight="Bold" Margin="0,0,10,0"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding Street, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="4" Grid.Column="1"
+                                             Text="{Binding EditableUser.Street, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите адрес" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
                     </TabItem>
 
                     <TabItem Header="Учетная запись" Background="#FFE1F5FE">
-                        <StackPanel Margin="0,0,0,-49">
-                            <GroupBox Header="Параметры учетной записи">
+                        <StackPanel Margin="0,0,0,-29">
+                            <GroupBox Header="Параметры учетной записи" Height="223">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -178,36 +390,126 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин пользователя:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding UserLogonName, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Логин пользователя:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1"
+                                             Text="{Binding EditableUser.UserLogonName, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите логин пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Первоначальный пароль:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" 
-                                               Text="{Binding InitialPassword}"
-                                               Foreground="{DynamicResource MahApps.Brushes.Text.Red}"
-                                               FontWeight="Bold"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Пароль пользователя:" FontWeight="Bold" Margin="0,10,10,0"/>
 
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата создания учетной записи:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding AccountCreated, Converter={StaticResource NullToTextConverter}}"/>
+                                    <!-- Только для чтения -->
+                                    <TextBlock Grid.Row="1" Grid.Column="1"
+                                               Text="{Binding EditableUser.InitialPassword, TargetNullValue='Первоначальный пароль отправлен пользователю по электронной почте!'}"
+                                               Visibility="{Binding IsInEditMode, Converter={StaticResource InverseBoolToVisibility}}"
+                                               Foreground="DarkRed"
+                                               FontWeight="SemiBold"
+                                               TextWrapping="Wrap" 
+                                               Margin="0,10,0,0"/>
 
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Статус активности пользователя:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="1" 
-                                                Text="{Binding Status, Converter={StaticResource NullToTextConverter}, ConverterParameter='Никогда'}"/>
+                                    <!-- Для редактирования -->
+                                    <PasswordBox Grid.Row="1" Grid.Column="1"
+                                                 Visibility="{Binding IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                                 PasswordChanged="PasswordBox_PasswordChanged"
+                                                 Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                                                 materialDesign:HintAssist.Hint="Введите пароль пользователя"
+                                                 Margin="0,0,0,5"/>
 
-                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Принадлежность к группе:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="1"
-                                                Text="{Binding ., Converter={StaticResource RoleFromGroupsConverter}}"/>
-                                    <!--Binding . — означает привязку к текущему объекту User-->
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата создания учетной записи:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding EditableUser.AccountCreated, Converter={StaticResource NullToTextConverter}}" Margin="0,10,0,0"/>
 
+                                    <!-- Статус активности пользователя -->
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Статус активности пользователя:" FontWeight="Bold" Margin="0,10,10,0"/>
 
+                                    <!-- Режим чтения -->
+                                    <TextBlock Grid.Row="3" Grid.Column="1"
+                                               Text="{Binding EditableUser.Status, Converter={StaticResource UserStatusToRussianConverter}}"
+                                               Visibility="{Binding IsInEditMode, Converter={StaticResource InverseBoolToVisibility}}" Margin="0,5,0,0">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignTextBlock}">
+                                                <Setter Property="Foreground" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding EditableUser.Status}" 
+                                                                 Value="{x:Static domain:UserStatus.Active}">
+                                                        <Setter Property="Foreground" Value="DarkGreen"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding EditableUser.Status}" 
+                                                                 Value="{x:Static domain:UserStatus.Inactive}">
+                                                        <Setter Property="Foreground" Value="DarkBlue"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding EditableUser.Status}" 
+                                                                 Value="{x:Static domain:UserStatus.Suspended}">
+                                                        <Setter Property="Foreground" Value="DarkRed"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+                                    <!-- Режим редактирования -->
+                                    <ComboBox Grid.Row="3" Grid.Column="1"
+                                              ItemsSource="{Binding Source={StaticResource UserStatusValues}}"
+                                              SelectedItem="{Binding EditableUser.Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Visibility="{Binding IsInEditMode, Converter={StaticResource BoolToVisibilityConverter}}"
+                                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                                              materialDesign:HintAssist.Hint="Выберите статус пользователя"
+                                              materialDesign:HintAssist.IsFloating="True"
+                                              VerticalContentAlignment="Center">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock>
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock">
+                                                            <Setter Property="Text" 
+                                                                    Value="{Binding Converter={StaticResource UserStatusToRussianConverter}}"/>
+                                                            <Setter Property="Foreground" Value="Black"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding}" 
+                                                                             Value="{x:Static domain:UserStatus.Active}">
+                                                                    <Setter Property="Foreground" Value="DarkGreen"/>
+                                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding}" 
+                                                                             Value="{x:Static domain:UserStatus.Inactive}">
+                                                                    <Setter Property="Foreground" Value="DarkBlue"/>
+                                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding}" 
+                                                                             Value="{x:Static domain:UserStatus.Suspended}">
+                                                                    <Setter Property="Foreground" Value="DarkRed"/>
+                                                                    <Setter Property="FontWeight" Value="Bold"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Принадлежность к группе:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding EditableUser, Converter={StaticResource UserRoleToGroupLabelConverter}}" Margin="0,10,0,0"/>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
                     </TabItem>
 
                     <TabItem Header="Контакты" Background="#FFF3E5F5">
-                        <StackPanel>
-                            <GroupBox Header="Контактные данные">
+                        <StackPanel Margin="0,0,0,-29">
+                            <GroupBox Header="Контактные данные" Height="223">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -222,34 +524,117 @@
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Компания:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Company, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Компания:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="0" Grid.Column="1"
+                                             Text="{Binding EditableUser.Company, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите название компании" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Рабочий телефон:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="0" Grid.Column="4" Text="{Binding WorkPhone, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="3" Text="Рабочий телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="0" Grid.Column="4"
+                                             Text="{Binding EditableUser.WorkPhone, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}"
+                                             PreviewTextInput="OnlyPhoneChars_PreviewTextInput"
+                                             DataObject.Pasting="OnlyPhoneChars_Pasting">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите рабочий телефон пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Отдел:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Department, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Отдел:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1"
+                                             Text="{Binding EditableUser.Department, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите наименование отдела" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="Мобильный телефон:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding MobilePhone, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="3" Text="Мобильный телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="1" Grid.Column="4"
+                                             Text="{Binding EditableUser.MobilePhone, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}"
+                                             PreviewTextInput="PhoneTextBox_PreviewTextInput"
+                                             TextChanged="PhoneTextBox_TextChanged"
+                                             MaxLength="19"
+                                             materialDesign:HintAssist.Hint="Введите телефон: +375 (__) ___-__-__">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите мобильный телефон пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Менеджер:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding ManagerName, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Менеджер:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="2" Grid.Column="1"
+                                             Text="{Binding EditableUser.ManagerName, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите email менеджера" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
 
-                                    <TextBlock Grid.Row="2" Grid.Column="3" Text="IP-телефон:" FontWeight="Bold"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="4" Text="{Binding IPPhone, Converter={StaticResource NullToTextConverter}}"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="3" Text="IP-телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
+                                    <TextBox Grid.Row="2" Grid.Column="4"
+                                             Text="{Binding EditableUser.IPPhone, UpdateSourceTrigger=PropertyChanged}"
+                                             IsReadOnly="{Binding IsInEditMode, Converter={StaticResource InverseBool}}">
+                                        <TextBox.Style>
+                                            <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+                                                <Setter Property="materialDesign:HintAssist.Hint" Value="{x:Null}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsInEditMode}" Value="True">
+                                                        <Setter Property="materialDesign:HintAssist.Hint" Value="Введите IP-телефон пользователя" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
                     </TabItem>
                 </TabControl>
 
-                <!-- Кнопки -->
                 <StackPanel Grid.Row="2"
                             Orientation="Horizontal"
                             HorizontalAlignment="Stretch"
-                            Margin="10,10,10,10">
+                            Margin="10,10,10,5">
 
                     <!-- Левая часть: Удалить / Редактировать -->
                     <StackPanel Orientation="Horizontal"
@@ -269,7 +654,8 @@
                                 Width="Auto"
                                 Height="35"
                                 Click="Edit_Click"
-                                Style="{StaticResource MahApps.Styles.Button}"                            
+                                IsEnabled="{Binding IsInEditMode, Converter={StaticResource InverseBool}}"
+                                Style="{StaticResource MahApps.Styles.Button}"
                                 Background="{DynamicResource PrimaryHueMidBrush}"
                                 Foreground="White"
                                 Margin="5"/>
@@ -293,6 +679,7 @@
                                 Width="100"
                                 Height="35"
                                 Click="Cancel_Click"
+                                IsEnabled="{Binding HasChanges}"
                                 Style="{StaticResource MahApps.Styles.Button}"
                                 Background="{DynamicResource PrimaryHueMidBrush}"
                                 Foreground="White"
@@ -302,6 +689,7 @@
                                 Width="100"
                                 Height="35"
                                 Click="Save_Click"
+                                IsEnabled="{Binding HasChanges}"
                                 Style="{StaticResource MahApps.Styles.Button}"
                                 Background="{DynamicResource PrimaryHueMidBrush}"
                                 Foreground="White"

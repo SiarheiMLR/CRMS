@@ -65,7 +65,7 @@
             <Viewbox Grid.Row="1" Stretch="Uniform" MaxWidth="600" Margin="0,0,0,1">
                 <StackPanel>
                     <materialDesign:PackIcon Kind="Headset" Foreground="{DynamicResource PrimaryHueMidBrush}" Width="120" Height="120" HorizontalAlignment="Center"/>
-                    <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Center" FontWeight="Bold" FontSize="22" Foreground="#FF4A4040" Height="71" Width="500"><Run/><LineBreak/><Run Text="Система управления клиентскими запросами"/></TextBlock>
+                    <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Center" FontWeight="Bold" FontSize="22" Foreground="#FF4A4040" Height="71" Width="500"><Run/><LineBreak/><Run Text="Система управления инцидентами"/></TextBlock>
                 </StackPanel>
             </Viewbox>
 
@@ -75,8 +75,10 @@
                     Command="{Binding OpenLoginWindowCommand}"  
                         Width="120" Height="40" 
                         FontSize="16" 
-                        Margin="10"
-                        Style="{StaticResource MahApps.Styles.Button}"/>
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Foreground="White"
+                        Margin="0 0 8 0"/>
             </StackPanel>
 
             <!-- Копириайт -->

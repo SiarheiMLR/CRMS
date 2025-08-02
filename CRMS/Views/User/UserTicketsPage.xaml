@@ -4,16 +4,16 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:conv="clr-namespace:CRMS.Converters"
+      xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
       mc:Ignorable="d"
       d:DesignHeight="600" d:DesignWidth="800"
       Title="My Tickets"
       >
 
     <Page.Resources>
-        <conv:StatusToColorConverter x:Key="StatusToColorConverter"/>
-        <conv:StatusToRussianConverter x:Key="StatusToRussianConverter"/>
-        <conv:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+        <converters:StatusToRussianConverter x:Key="StatusToRussianConverter"/>
+        <converters:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
     </Page.Resources>
 
     <Grid Margin="16">

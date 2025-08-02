@@ -3,6 +3,8 @@ using CommunityToolkit.Mvvm.Input;
 using CRMS.Business.Models;
 using CRMS.Business.Services.UserService;
 using CRMS.Domain.Entities;
+using CRMS.Views.Admin;
+using CRMS.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -103,5 +105,16 @@ namespace CRMS.ViewModels.Admin
         }
 
         private bool CanAddUser() => SelectedUser != null;
+
+        [RelayCommand]
+        private void Cancel()
+        {
+            // Вернуться на страницу UsersOverviewPage.xaml
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                mainWindow?.MainFrame.Navigate(new UsersOverviewPage());
+            });
+        }
     }
 }

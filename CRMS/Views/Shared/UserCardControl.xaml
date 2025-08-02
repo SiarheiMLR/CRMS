@@ -4,12 +4,14 @@
              xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
              xmlns:local="clr-namespace:CRMS.Views.Shared"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             Width="220" Height="300">
+             Width="220" Height="330">
 
     <UserControl.Resources>
         <converters:ByteArrayToImageConverter x:Key="AvatarConverter"/>
         <converters:UserRoleToGroupLabelConverter x:Key="UserRoleToGroupLabelConverter"/>
         <converters:UserRoleToBrushConverter x:Key="UserRoleToBrushConverter"/>
+        <converters:UserStatusToRussianConverter x:Key="UserStatusToRussianConverter"/>
+        <converters:UserStatusToBrushConverter x:Key="UserStatusToBrushConverter"/>
     </UserControl.Resources>
 
     <Border CornerRadius="16"
@@ -27,6 +29,14 @@
                     <ImageBrush ImageSource="{Binding Avatar, Converter={StaticResource AvatarConverter}}" Stretch="UniformToFill"/>
                 </Ellipse.Fill>
             </Ellipse>
+
+            <!-- Статус активности -->
+            <TextBlock Text="{Binding Status, Converter={StaticResource UserStatusToRussianConverter}}"
+                       Foreground="{Binding Status, Converter={StaticResource UserStatusToBrushConverter}}"
+                       FontWeight="Bold"
+                       FontSize="14"
+                       TextAlignment="Center"
+                       Margin="0,8,0,0"/>
 
             <!-- Имя в две строки при необходимости -->
             <TextBlock Text="{Binding DisplayName}" 

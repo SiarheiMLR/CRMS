@@ -58,7 +58,7 @@ namespace CRMS.ViewModels.Admin
                 }
                 else // Редактирование
                 {
-                    _userService.UpdateUser(CurrentUser);
+                    _userService.DeleteUserAsync(CurrentUser);
                 }
 
                 CloseWindow();

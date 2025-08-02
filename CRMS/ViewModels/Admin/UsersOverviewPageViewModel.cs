@@ -9,6 +9,8 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using CRMS.Views.AD;
 using CRMS.Business.Services.AuthService;
+using CRMS.ViewModels.AD;
+using CRMS.Views;
 
 namespace CRMS.ViewModels.Admin
 {
@@ -50,26 +52,36 @@ namespace CRMS.ViewModels.Admin
         [RelayCommand]
         private void OpenUserProfile(CRMS.Domain.Entities.User user)
         {
-            var window = new UserProfileWindow(user); // передаём данные
-            window.ShowDialog();
+            var userProfileWindow = new UserProfileWindow(user, _userService); // <-- используем _userService из DI
+            userProfileWindow.ShowDialog();
             LoadUsers(); // Всегда обновляем список после закрытия окна
         }
 
-        //[RelayCommand]
-        //private void CreateUser()
-        //{
-        //    var window = _serviceProvider.GetRequiredService<UserCreateWindow>();
-        //    window.ShowDialog();
-
-        //    // После создания обновляем список
-        //    LoadUsers();
-        //}
+        [RelayCommand]
+        private void CreateUser()
+        {
+            var window = new UserCreateWindow(_userService);
+            window.ShowDialog();
+            LoadUsers(); // Обновляем список пользователей после закрытия окна
+        }
 
         [RelayCommand]
         private void ImportUsers()
         {
-            var window = _serviceProvider.GetRequiredService<ADLoginWindow>();
-            window.ShowDialog();
+            //var window = _serviceProvider.GetRequiredService<ADLoginWindow>();
+            //window.ShowDialog();
+            if (ADLoginWindowViewModel.CachedUsers != null)
+            {
+                var users = ADLoginWindowViewModel.CachedUsers;
+                var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
+                mainWindow?.MainFrame.Navigate(new Views.Admin.UserListPage(users));
+                return;
+            }
+            else
+            {
+                var window = _serviceProvider.GetRequiredService<ADLoginWindow>();
+                window.ShowDialog();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CRMS.DAL.Data;
+using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -46,6 +47,20 @@ namespace CRMS.DAL.Repositories
         public async Task<TEntity?> GetByIdAsync(int id)
         {
             return await _entities.FindAsync(id);
+        }
+
+        public async Task<TEntity?> GetByIdAsync(int id, params string[] includes)
+        {
+            IQueryable<TEntity> query = _entities;
+
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            // Предполагается, что TEntity имеет свойство Id
+            return await query.FirstOrDefaultAsync(e =>
+                EF.Property<int>(e, "Id") == id);
         }
 
         public async Task<IEnumerable<TEntity>> GetWhereNoTrackingAsync(Expression<Func<TEntity, bool>> predicate)

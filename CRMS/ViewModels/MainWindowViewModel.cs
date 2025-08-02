@@ -29,17 +29,12 @@ namespace CRMS.ViewModels
 
         [ObservableProperty]
         private UserRole _currentRole;
+
         [ObservableProperty]
         private string _userName;
-        [RelayCommand]
-        private void ToggleMenu() => IsMenuOpen = !IsMenuOpen;
 
         [RelayCommand]
-        private void ManageUsers()
-        {
-            _navigationService.NavigateTo<UsersEditingPage>();
-            ToggleMenu();
-        }
+        private void ToggleMenu() => IsMenuOpen = !IsMenuOpen;             
 
         [RelayCommand]
         private void UserTicketPage()

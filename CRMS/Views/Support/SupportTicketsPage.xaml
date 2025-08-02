@@ -6,15 +6,15 @@
       xmlns:local="clr-namespace:CRMS.Views.Support"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:viewModels="clr-namespace:CRMS.ViewModels"
-      xmlns:conv="clr-namespace:CRMS.Converters"
+      xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       Title="Support Tickets">
 
-    <Page.Resources>
-        <conv:StatusToColorConverter x:Key="StatusToColorConverter"/>
-        <conv:StatusToRussianConverter x:Key="StatusToRussianConverter"/>
-        <conv:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
+    <Page.Resources>        
+        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
+        <converters:StatusToRussianConverter x:Key="StatusToRussianConverter"/>
+        <converters:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
         
         <Style TargetType="ListViewItem">
             <Setter Property="Template">
