@@ -33,5 +33,11 @@ namespace CRMS.Services
             // Переходим на страницу
             _frame.Navigate(page);
         }
+
+        public void NavigateToWithParameter<T>(object parameter) where T : Page
+        {
+            var page = App.ServiceProvider.GetRequiredService<T>();
+            _frame.Navigate(page, parameter);
+        }
     }
 }

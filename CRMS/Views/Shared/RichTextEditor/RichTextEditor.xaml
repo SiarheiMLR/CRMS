@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="CRMS.Views.Shared.RichTextEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:local="clr-namespace:CRMS.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:vm="clr-namespace:CRMS.ViewModels"
+             Width="1000" Height="600">
+
+    <UserControl.Resources>
+        <!-- Подключаем Material Design стили для элементов ToolBar -->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToolBar.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel>       
+        <!-- Панель инструментов в стиле Material Design -->
+        <ToolBar DockPanel.Dock="Top"
+                 ClipToBounds="False" Style="{StaticResource MaterialDesignToolBar}">
+
+            <!-- Сохранить -->
+            <Button Command="{Binding SaveCommand}" 
+                    ToolTip="Сохранить"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="ContentSave" Width="22" Height="22"/>
+            </Button>
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+
+            <!-- Вырезать, Копировать, Вставить -->
+            <Button Command="{Binding CutCommand}"                     
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Вырезать"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="ContentCut" Width="22" Height="22"/>
+            </Button>
+
+            <Button Command="{Binding CopyCommand}"
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Копировать"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="ContentCopy" Width="22" Height="22"/>
+            </Button>
+
+            <Button Command="{Binding PasteCommand}"
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Вставить"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="ContentPaste" Width="22" Height="22"/>
+            </Button>
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+
+            <!-- Кнопки выравнивания -->
+            <Button Command="{Binding AlignLeftCommand}" 
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Выровнять по левому краю"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="FormatAlignLeft" Width="22" Height="22"/>
+            </Button>
+
+            <Button Command="{Binding AlignCenterCommand}" 
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Выровнять по центру"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="FormatAlignCenter" Width="22" Height="22"/>
+            </Button>
+
+            <Button Command="{Binding AlignRightCommand}" 
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Выровнять по правому краю"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="FormatAlignRight" Width="22" Height="22"/>
+            </Button>
+
+            <Button Command="{Binding JustifyCommand}" 
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Выровнять по ширине"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="FormatAlignJustify" Width="22" Height="22"/>
+            </Button>
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+
+            <!-- Кнопки форматирования -->
+            <Button Command="{Binding BoldCommand}"
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Полужирный"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="FormatBold" Width="22" Height="22"/>
+            </Button>
+
+            <Button Command="{Binding ItalicCommand}" 
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Курсив"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="FormatItalic" Width="22" Height="22"/>
+            </Button>
+
+            <Button Command="{Binding UnderlineCommand}" 
+                    ToolBar.OverflowMode="AsNeeded"
+                    ToolTip="Подчеркнутый"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="FormatUnderline" Width="22" Height="22"/>
+            </Button>
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+
+            <!-- Размер шрифта -->
+            <Label VerticalAlignment="Center" Content="Размер шрифта:" />
+            <ComboBox Width="40"
+                      Margin="4 0"
+                      ItemsSource="{Binding FontSizes}"
+                      SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}"
+                      ToolTip="Font Size"
+                      Style="{StaticResource MaterialDesignComboBox}">
+                <ComboBoxItem Content="10" />
+                <ComboBoxItem Content="12" IsSelected="True" />
+                <ComboBoxItem Content="14" />
+                <ComboBoxItem Content="16" />
+            </ComboBox>  
+
+            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+
+            <!-- Дополнительные функции -->
+            <Button Command="{Binding InsertImageCommand}" 
+                    ToolTip="Insert Image"
+                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <materialDesign:PackIcon Kind="Image" Width="22" Height="22"/>
+            </Button>            
+        </ToolBar>
+          
+
+        <!-- Редактор -->
+        <RichTextBox Name="Editor"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     VerticalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"
+                     Margin="10"
+                     FontSize="14"
+                     SpellCheck.IsEnabled="True" />
+    </DockPanel>
+</UserControl>

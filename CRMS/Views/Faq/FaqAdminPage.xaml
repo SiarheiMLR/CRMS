@@ -1,0 +1,114 @@
+﻿<Page x:Class="CRMS.Views.Faq.FaqAdminPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:viewModels="clr-namespace:CRMS.ViewModels.Faq"
+      mc:Ignorable="d"
+      Background="{DynamicResource MaterialDesignPaper}">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="FAQ Админ-панель"
+                   FontSize="24"
+                   FontWeight="Bold"
+                   Margin="0 0 0 20"
+                   Foreground="{DynamicResource PrimaryHueMidBrush}" />
+
+        <TabControl Grid.Row="1" materialDesign:ColorZoneAssist.Mode="PrimaryLight">
+            <!-- Добавление FAQ -->
+            <TabItem Header="Добавить статью">
+                <ScrollViewer Margin="10">
+                    <StackPanel>
+                        <Expander Header="1. Введите вопрос" IsExpanded="True">
+                            <TextBox Text="{Binding NewQuestion}" 
+                                     materialDesign:HintAssist.Hint="Введите вопрос"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                        </Expander>
+
+                        <Expander Header="2. Введите ответ (Markdown)">
+                            <TextBox Text="{Binding NewAnswer}" 
+                                     AcceptsReturn="True"
+                                     VerticalScrollBarVisibility="Auto"
+                                     Height="200"
+                                     materialDesign:HintAssist.Hint="Введите ответ"
+                                     Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                        </Expander>
+
+                        <Expander Header="3. Выберите категорию и теги">
+                            <StackPanel Margin="0,4">
+                                <ComboBox ItemsSource="{Binding Categories}"
+                                          SelectedItem="{Binding SelectedCategory}"
+                                          DisplayMemberPath="Name"
+                                          materialDesign:HintAssist.Hint="Категория"
+                                          Style="{StaticResource MaterialDesignOutlinedComboBox}" />
+                                <TextBox Text="{Binding TagInput}" 
+                                         materialDesign:HintAssist.Hint="Теги через запятую"
+                                         Margin="0,6,0,0"
+                                         Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander Header="4. Публикация">
+                            <Button Content="Опубликовать"
+                                    Command="{Binding PublishCommand}"
+                                    Style="{StaticResource MaterialDesignRaisedButton}" />
+                        </Expander>
+
+                        <Expander Header="5. Добавить новую категорию">
+                            <StackPanel Margin="0,4">
+                                <TextBox Text="{Binding NewCategoryName, UpdateSourceTrigger=PropertyChanged}"
+                                 materialDesign:HintAssist.Hint="Название категории"
+                                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+                                <Button Content="Добавить категорию"
+                                Command="{Binding AddCategoryCommand}"
+                                Margin="0,8,0,0"
+                                Style="{StaticResource MaterialDesignRaisedButton}" />
+                            </StackPanel>
+                        </Expander>
+
+                        <materialDesign:Snackbar MessageQueue="{Binding SnackQueue}" Margin="0 20"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <!-- Популярные статьи -->
+            <TabItem Header="Популярные статьи">
+                <DataGrid ItemsSource="{Binding PopularFaqs}" AutoGenerateColumns="False" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Вопрос" Binding="{Binding Question}" Width="*"/>
+                        <DataGridTextColumn Header="Просмотры" Binding="{Binding Views}" Width="Auto"/>
+                        <DataGridTextColumn Header="Рейтинг" Binding="{Binding PositiveVotes}" Width="Auto"/>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding CreatedAt}" Width="Auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- Авторы -->
+            <TabItem Header="Авторы">
+                <DataGrid ItemsSource="{Binding TopAuthors}" AutoGenerateColumns="False" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="ФИО" Binding="{Binding AuthorName}" Width="*"/>
+                        <DataGridTextColumn Header="FAQ создано" Binding="{Binding Count}" Width="Auto"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- Статистика по категориям -->
+            <TabItem Header="Статистика по категориям">
+                <DataGrid ItemsSource="{Binding CategoryStats}" AutoGenerateColumns="False" Margin="10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Категория" Binding="{Binding CategoryName}" Width="*" />
+                        <DataGridTextColumn Header="Количество статей" Binding="{Binding FaqCount}" Width="Auto" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>

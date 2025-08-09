@@ -8,6 +8,7 @@ using CRMS.Views;
 using CRMS.Views.AD;
 using CRMS.Views.Admin;
 using CRMS.Views.Admin.Groups;
+using CRMS.Views.Faq;
 using CRMS.Views.Support;
 using CRMS.Views.User.TicketsPage;
 using Microsoft.Extensions.DependencyInjection;
@@ -107,6 +108,20 @@ namespace CRMS.ViewModels
             var userListPage = new UserListPage(users);
             var mainWindow = Application.Current.Windows.OfType<MainWindow>().FirstOrDefault();
             mainWindow?.MainFrame.Navigate(userListPage);
+        }
+
+        [RelayCommand]
+        private void OpenFaqPage()
+        {
+            _navigationService.NavigateTo<FaqPage>();
+            //ToggleMenu();
+        }
+
+        [RelayCommand]
+        private void OpenFaqAdminPage()
+        {
+            _navigationService.NavigateTo<FaqAdminPage>();
+            //ToggleMenu();
         }
     }
 }

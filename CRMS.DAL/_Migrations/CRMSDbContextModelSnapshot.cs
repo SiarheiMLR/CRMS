@@ -87,6 +87,9 @@ namespace CRMS.DAL.Migrations
                     b.Property<int>("CustomFieldId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("TicketId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Value")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -95,7 +98,171 @@ namespace CRMS.DAL.Migrations
 
                     b.HasIndex("CustomFieldId");
 
+                    b.HasIndex("TicketId");
+
                     b.ToTable("CustomFieldValues");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FaqCategories");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AnswerMarkdown")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("NegativeVotes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PositiveVotes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Question")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("Views")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("FaqItems");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqItemHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AnswerMarkdown")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("EditedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("EditedBy")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("FaqItemId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FaqItemId");
+
+                    b.ToTable("FaqItemHistories");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqItemTag", b =>
+                {
+                    b.Property<int>("FaqItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FaqTagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FaqItemId", "FaqTagId");
+
+                    b.HasIndex("FaqTagId");
+
+                    b.ToTable("FaqItemTags");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FaqTags");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqVote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("FaqItemId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPositive")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("VotedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FaqItemId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("FaqVotes");
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.Group", b =>
@@ -194,9 +361,76 @@ namespace CRMS.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("ParentQueueId")
+                        .HasColumnType("int");
+
+                    b.Property<TimeSpan?>("SlaResolutionTime")
+                        .HasColumnType("time(6)");
+
+                    b.Property<TimeSpan?>("SlaResponseTime")
+                        .HasColumnType("time(6)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentQueueId");
+
                     b.ToTable("Queues");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.QueueAutomationRule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Condition")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("QueueId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TriggerEvent")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QueueId");
+
+                    b.ToTable("QueueAutomationRule");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.QueuePermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Permission")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QueueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("QueueId");
+
+                    b.ToTable("QueuePermission");
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.Ticket", b =>
@@ -252,6 +486,28 @@ namespace CRMS.DAL.Migrations
                     b.ToTable("Tickets");
                 });
 
+            modelBuilder.Entity("CRMS.Domain.Entities.TicketStatusDefinition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("QueueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QueueId");
+
+                    b.ToTable("TicketStatusDefinition");
+                });
+
             modelBuilder.Entity("CRMS.Domain.Entities.Transaction", b =>
                 {
                     b.Property<int>("Id")
@@ -294,7 +550,7 @@ namespace CRMS.DAL.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<byte[]>("Avatar")
-                        .HasColumnType("LONGBLOB");
+                        .HasColumnType("longblob");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -312,7 +568,7 @@ namespace CRMS.DAL.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime(6)");
 
                     b.Property<string>("Department")
                         .IsRequired()
@@ -431,7 +687,7 @@ namespace CRMS.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            AccountCreated = new DateTime(2025, 7, 15, 20, 41, 26, 1, DateTimeKind.Utc).AddTicks(3545),
+                            AccountCreated = new DateTime(2025, 8, 7, 13, 41, 6, 659, DateTimeKind.Utc).AddTicks(2412),
                             City = "Malorita",
                             Company = "BIGFIRM",
                             Country = "Belarus",
@@ -448,8 +704,8 @@ namespace CRMS.DAL.Migrations
                             ManagerName = "не указан",
                             MobilePhone = "+375-29-7012884",
                             Office = "не указан",
-                            PasswordHash = "PXDTRF/Z3CN4oOV0akKuV1P8IFWO5DGremkHC4f+6/w=",
-                            PasswordSalt = "uWCMQXxdflfiztsyIZfR7w==",
+                            PasswordHash = "BakKGnGaKjiRVKVnlApPodR0kxQrltKzbGI4UIMG9vQ=",
+                            PasswordSalt = "5YNt82J0tC9y2cW9Oy9CHA==",
                             PostalCode = "225903",
                             Role = 2,
                             State = "Brest region",
@@ -464,7 +720,7 @@ namespace CRMS.DAL.Migrations
             modelBuilder.Entity("CRMS.Domain.Entities.Attachment", b =>
                 {
                     b.HasOne("CRMS.Domain.Entities.Ticket", "Ticket")
-                        .WithMany()
+                        .WithMany("Attachments")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -480,7 +736,79 @@ namespace CRMS.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("CRMS.Domain.Entities.Ticket", null)
+                        .WithMany("CustomFieldValues")
+                        .HasForeignKey("TicketId");
+
                     b.Navigation("CustomField");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqItem", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.User", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CRMS.Domain.Entities.FaqCategory", "Category")
+                        .WithMany("Items")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqItemHistory", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.FaqItem", "FaqItem")
+                        .WithMany("History")
+                        .HasForeignKey("FaqItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FaqItem");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqItemTag", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.FaqItem", "FaqItem")
+                        .WithMany("FaqItemTags")
+                        .HasForeignKey("FaqItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CRMS.Domain.Entities.FaqTag", "FaqTag")
+                        .WithMany("FaqItemTags")
+                        .HasForeignKey("FaqTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FaqItem");
+
+                    b.Navigation("FaqTag");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqVote", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.FaqItem", "FaqItem")
+                        .WithMany("Votes")
+                        .HasForeignKey("FaqItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CRMS.Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FaqItem");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.GroupMember", b =>
@@ -513,9 +841,48 @@ namespace CRMS.DAL.Migrations
                     b.Navigation("Group");
                 });
 
+            modelBuilder.Entity("CRMS.Domain.Entities.Queue", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.Queue", "ParentQueue")
+                        .WithMany("SubQueues")
+                        .HasForeignKey("ParentQueueId");
+
+                    b.Navigation("ParentQueue");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.QueueAutomationRule", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.Queue", "Queue")
+                        .WithMany("AutomationRules")
+                        .HasForeignKey("QueueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Queue");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.QueuePermission", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.Group", "Group")
+                        .WithMany()
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("CRMS.Domain.Entities.Queue", "Queue")
+                        .WithMany("Permissions")
+                        .HasForeignKey("QueueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Group");
+
+                    b.Navigation("Queue");
+                });
+
             modelBuilder.Entity("CRMS.Domain.Entities.Ticket", b =>
                 {
-                    b.HasOne("CRMS.Domain.Entities.Queue", null)
+                    b.HasOne("CRMS.Domain.Entities.Queue", "Queue")
                         .WithMany("Tickets")
                         .HasForeignKey("QueueId");
 
@@ -534,9 +901,22 @@ namespace CRMS.DAL.Migrations
                         .WithMany("Tickets")
                         .HasForeignKey("UserId");
 
+                    b.Navigation("Queue");
+
                     b.Navigation("Requestor");
 
                     b.Navigation("Supporter");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.TicketStatusDefinition", b =>
+                {
+                    b.HasOne("CRMS.Domain.Entities.Queue", "Queue")
+                        .WithMany("Statuses")
+                        .HasForeignKey("QueueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Queue");
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.Transaction", b =>
@@ -548,7 +928,7 @@ namespace CRMS.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("CRMS.Domain.Entities.Ticket", "Ticket")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -563,6 +943,25 @@ namespace CRMS.DAL.Migrations
                     b.Navigation("CustomFieldValues");
                 });
 
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqCategory", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqItem", b =>
+                {
+                    b.Navigation("FaqItemTags");
+
+                    b.Navigation("History");
+
+                    b.Navigation("Votes");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.FaqTag", b =>
+                {
+                    b.Navigation("FaqItemTags");
+                });
+
             modelBuilder.Entity("CRMS.Domain.Entities.Group", b =>
                 {
                     b.Navigation("GroupMembers");
@@ -573,7 +972,24 @@ namespace CRMS.DAL.Migrations
 
             modelBuilder.Entity("CRMS.Domain.Entities.Queue", b =>
                 {
+                    b.Navigation("AutomationRules");
+
+                    b.Navigation("Permissions");
+
+                    b.Navigation("Statuses");
+
+                    b.Navigation("SubQueues");
+
                     b.Navigation("Tickets");
+                });
+
+            modelBuilder.Entity("CRMS.Domain.Entities.Ticket", b =>
+                {
+                    b.Navigation("Attachments");
+
+                    b.Navigation("CustomFieldValues");
+
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.User", b =>

@@ -26,6 +26,15 @@ namespace CRMS.DAL.Data
         public DbSet<User> Users { get; set; }
         public DbSet<GroupRoleMapping> GroupRoleMappings { get; set; }
 
+        // Модель FAQ
+        public DbSet<FaqItem> FaqItems { get; set; }
+        public DbSet<FaqCategory> FaqCategories { get; set; }
+        public DbSet<FaqVote> FaqVotes { get; set; }
+        public DbSet<FaqTag> FaqTags { get; set; }
+        public DbSet<FaqItemTag> FaqItemTags { get; set; }
+        public DbSet<FaqItemHistory> FaqItemHistories { get; set; }
+
+
         /// <summary>
         /// Метод <see cref="OnConfiguring(DbContextOptionsBuilder)"/> используется для настройки параметров подключения к базе данных в Entity Framework Core.
         /// <para>
@@ -338,6 +347,20 @@ namespace CRMS.DAL.Data
             //    .WithMany()
             //    .HasForeignKey(m => m.GroupId)
             //    .OnDelete(DeleteBehavior.Cascade);
+
+            // Модель FAQ
+            modelBuilder.Entity<FaqItemTag>()
+                .HasKey(t => new { t.FaqItemId, t.FaqTagId });
+
+            modelBuilder.Entity<FaqItemTag>()
+                .HasOne(ft => ft.FaqItem)
+                .WithMany(fi => fi.FaqItemTags)
+                .HasForeignKey(ft => ft.FaqItemId);
+
+            modelBuilder.Entity<FaqItemTag>()
+                .HasOne(ft => ft.FaqTag)
+                .WithMany(t => t.FaqItemTags)
+                .HasForeignKey(ft => ft.FaqTagId);
         }
 
         public void EnsureAdminUser()

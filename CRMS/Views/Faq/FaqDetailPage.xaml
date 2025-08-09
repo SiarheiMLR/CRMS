@@ -1,0 +1,77 @@
+﻿<Page x:Class="CRMS.Views.Faq.FaqDetailPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:md="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+      xmlns:vm="clr-namespace:CRMS.ViewModels.Faq"
+      xmlns:local="clr-namespace:CRMS.Views.Faq"
+      Background="{DynamicResource MaterialDesignPaper}">
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <TextBlock Text="{Binding Item.Question}" 
+                       FontSize="26"
+                       FontWeight="Bold"
+                       TextWrapping="Wrap"
+                       Margin="0,0,0,12"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
+                <TextBlock Text="Категория:" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Item.Category.Title}" Margin="5,0,0,0"/>
+                <TextBlock Text="Автор:" FontWeight="Bold" Margin="20,0,0,0"/>
+                <TextBlock Text="{Binding Item.Author.DisplayName}" Margin="5,0,0,0"/>
+                <TextBlock Text="📅" Margin="20,0,0,0"/>
+                <TextBlock Text="{Binding Item.CreatedAt, StringFormat=\{0:dd.MM.yyyy\}}" Margin="5,0,0,0"/>
+            </StackPanel>
+
+            <WrapPanel Margin="0,0,0,8">
+                <ItemsControl ItemsSource="{Binding Item.FaqItemTags}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="2" Padding="4,2"
+                                    Background="{DynamicResource PrimaryHueMidBrush}" 
+                                    CornerRadius="4">
+                                <TextBlock Text="{Binding FaqTag.Name}" 
+                                           Foreground="White" FontSize="12"
+                                           FontWeight="SemiBold"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </WrapPanel>
+        </StackPanel>
+
+        <md:MarkdownViewer 
+            Grid.Row="1"
+            Markdown="{Binding Item.AnswerMarkdown}" 
+            FontSize="16"
+            Margin="0,12,0,80" />
+
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Margin="0,8,0,0">
+            <Button Command="{Binding VoteUpCommand}" 
+                    Content="👍"
+                    ToolTip="Полезный ответ"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" />
+            <TextBlock Text="{Binding Item.PositiveVotes}" Margin="8,0" VerticalAlignment="Center"/>
+            <Button Command="{Binding VoteDownCommand}" 
+                    Content="👎"
+                    ToolTip="Бесполезный ответ"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" />
+            <TextBlock Text="{Binding Item.NegativeVotes}" Margin="8,0" VerticalAlignment="Center"/>
+        </StackPanel>
+
+        <materialDesign:Snackbar
+            x:Name="Snackbar"
+            MessageQueue="{Binding SnackbarMessageQueue}"
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,12" />
+    </Grid>
+</Page>

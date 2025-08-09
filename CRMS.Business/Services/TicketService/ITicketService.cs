@@ -1,4 +1,5 @@
 ﻿using CRMS.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
 
 namespace CRMS.Business.Services.TicketService
@@ -17,5 +18,6 @@ namespace CRMS.Business.Services.TicketService
         public Task AssignTicket(Ticket ticket, int supportId);
         public Task CloseTicket(Ticket ticket);
         public Task UnassignTicket(Ticket ticket);
+        Task<IEnumerable<Ticket>> FindTicketsWithDetailsAsync(Expression<Func<Ticket, bool>> predicate, Func<IQueryable<Ticket>, IIncludableQueryable<Ticket, object>> include = null);
     }
 }

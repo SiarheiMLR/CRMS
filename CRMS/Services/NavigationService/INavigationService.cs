@@ -13,6 +13,8 @@ namespace CRMS.Services
         /// <typeparam name="T">Тип страницы, на которую нужно перейти. Должен быть производным от <see cref="Page"/>.</typeparam>
         void NavigateTo<T>() where T : Page;
 
+        void NavigateToWithParameter<T>(object parameter) where T : Page;
+
         /// <summary>
         /// Устанавливает фрейм, который будет использоваться для навигации.
         /// </summary>

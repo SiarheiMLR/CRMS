@@ -226,7 +226,17 @@
                                                     </StackPanel>
                                                 </Button>
 
-                                            <!-- Меню Отчеты и Статистика-->
+                                                <!-- Меню FAQ -->
+                                                <Button Command="{Binding OpenFaqAdminPageCommand}" 
+                                                        Style="{StaticResource MenuTextButtonStyle}"
+                                                        materialDesign:ButtonAssist.CornerRadius="8">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="HelpCircleOutline" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="FAQ"/>
+                                                    </StackPanel>
+                                                </Button>
+
+                                                <!-- Меню Отчеты и Статистика-->
                                                 <Expander Style="{StaticResource MenuExpanderStyle}">
                                                     <Expander.Header>
                                                         <StackPanel Orientation="Horizontal">
@@ -271,6 +281,13 @@
                                             <StackPanel>
                                                 <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
                                                 <Button Content="Тикеты" Command="{Binding SupportTicketsPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Command="{Binding OpenFaqAdminPageCommand}" 
+                                                        Style="{StaticResource MenuTextButtonStyle}">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="HelpCircleOutline" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="FAQ"/>
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>
@@ -283,6 +300,14 @@
                                             <StackPanel>
                                                 <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
                                                 <Button Content="Тикеты" Command="{Binding UserTicketPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Command="{Binding OpenFaqPageCommand}"
+                                                        Style="{StaticResource MenuTextButtonStyle}"
+                                                        materialDesign:ButtonAssist.CornerRadius="8">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="HelpCircleOutline" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="FAQ"/>
+                                                    </StackPanel>
+                                                </Button>
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>

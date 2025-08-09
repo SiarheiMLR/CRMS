@@ -16,7 +16,9 @@ using CRMS.Business.Services.UserService;
 using CRMS.Business.Services.TicketService;
 using CRMS.Business.Services.AttachmentService;
 using CRMS.Views.Admin;
+using CRMS.Views.Faq;
 using CRMS.ViewModels.Admin;
+using CRMS.ViewModels.Faq;
 using CRMS.Views.User.TicketsPage;
 using CRMS.ViewModels.UserVM;
 using CRMS.Views.User.TicketEdit;
@@ -30,6 +32,8 @@ using CRMS.Views.Admin.Groups;
 using CRMS.Infrastructure.Converters;
 using CRMS.Business.Services.EmailService;
 using CRMS.Views.Dialogs;
+using CRMS.Business.Services.FaqService;
+using CRMS.Business.ActiveDirectoryService;
 
 //admin@bigfirm.by
 //27011984Hp
@@ -82,6 +86,8 @@ namespace CRMS
                     services.AddScoped<IUserService, UserService>();
                     services.AddScoped<ITicketService, TicketService>();
                     services.AddScoped<IAttachmentService, AttachmentService>();
+                    services.AddScoped<IActiveDirectoryService, ActiveDirectoryService>();
+                    services.AddScoped<IFaqService, FaqService>();
 
                     services.AddScoped<INavigationService, NavigationService>();
                     services.AddSingleton<NullToBoolConverter>();
@@ -107,7 +113,9 @@ namespace CRMS
                     services.AddTransient<UserTicketsPage>();
                     services.AddTransient<UsersOverviewPage>();
                     services.AddTransient<GroupManagerPage>();
-
+                    services.AddTransient<FaqAdminPage>();
+                    services.AddTransient<FaqDetailPage>();
+                    services.AddTransient<FaqPage>();
 
                     // ViewModels
                     services.AddTransient<MainWindowViewModel>();
@@ -130,6 +138,10 @@ namespace CRMS
                     services.AddTransient<GroupOverviewViewModel>();
                     services.AddTransient<AddUserToGroupViewModel>();
                     services.AddTransient<EditDeleteGroupViewModel>();
+
+                    services.AddTransient<FaqAdminPageViewModel>();
+                    services.AddTransient<FaqDetailPageViewModel>();
+                    services.AddTransient<FaqPageViewModel>();
 
                 })
                 .Build();

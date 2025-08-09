@@ -80,6 +80,38 @@ namespace CRMS.Business.Services.UserService
                 await _unitOfWork.Users.AddAsync(user);
                 await _unitOfWork.SaveChangesAsync();
                 return user; // Возвращаем созданного пользователя
+
+                // 📤 Отправляем письмо пользователю
+                var userParams = new Dictionary<string, string>
+                {
+                    { "FirstName", user.FirstName ?? "пользователь" },
+                    { "Email", user.UserLogonName },
+                    { "Password", user.InitialPassword ?? "неизвестен" }
+                };
+
+                await _emailService.SendTemplateAsync(
+                    to: user.UserLogonName,
+                    subject: "Добро пожаловать в CRMS",
+                    template: Templates.UserCreatedFromAD,
+                    parameters: userParams
+                );
+
+                // 📤 Уведомление администратору
+                var adminParams = new Dictionary<string, string>
+                {
+                    { "DisplayName", user.DisplayName ?? $"{user.FirstName} {user.LastName}" },
+                    { "Email", user.UserLogonName },
+                    { "Password", user.InitialPassword ?? "неизвестен" },
+                    { "Source", "Active Directory" },
+                    { "Date", DateTime.UtcNow.ToString("g") }
+                };
+
+                await _emailService.SendTemplateAsync(
+                    to: "admin@bigfirm.by", // Можно заменить на список из конфигурации
+                    subject: $"[CRMS] Добавлен новый пользователь из AD",
+                    template: Templates.AdminNotificationUserCreated,
+                    parameters: adminParams
+                );
             }
             catch (DbUpdateException ex)
             {

@@ -11,6 +11,15 @@ namespace CRMS.Domain.Interfaces
         public EfUsersRepository Users { get; }
         //IRepository<CustomField> CustomFieldsRepository { get; }
         //IRepository<CustomFieldValue> CustomFieldValuesRepository { get; }
+
+        // Модель FAQ
+        public EfFaqItemsRepository FaqItemsRepository { get; }
+        public EfFaqCategoriesRepository FaqCategoriesRepository { get; }
+        public EfFaqTagsRepository FaqTagsRepository { get; }
+        public EfFaqVotesRepository FaqVotesRepository { get; }
+        public EfFaqItemTagsRepository FaqItemTagsRepository { get; }
+        public EfFaqItemHistoriesRepository FaqItemHistoriesRepository { get; }
+
         IRepository<Group> GroupsRepository { get; }
         IRepository<GroupMember> GroupMembersRepository { get; }
         IRepository<GroupRoleMapping> GroupRoleMappings { get; }

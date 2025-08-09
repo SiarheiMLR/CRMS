@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:CRMS.Views"
+        xmlns:local="clr-namespace:CRMS.Views.User"
         mc:Ignorable="d"
         Title="Панель пользователя"
         d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
+    <!-- Верхний отступ для меню -->
+    <Grid Margin="16,56,16,16">
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -24,12 +25,50 @@
             </StackPanel>
 
             <Viewbox Grid.Row="1" Stretch="Uniform" MaxWidth="600">
-                <StackPanel>
-                    <materialDesign:PackIcon Kind="User" Foreground="{DynamicResource PrimaryHueMidBrush}" Width="120" Height="120" HorizontalAlignment="Center"/>
-                    <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Center" FontWeight="Bold" FontSize="22" Foreground="#FF4A4040" Height="71" Width="500">
-                        <Run/> <LineBreak/> <Run Text="Панель пользователя"/>
-                    </TextBlock>
-                </StackPanel>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<StackPanel>
+                        <materialDesign:PackIcon Kind="User" Foreground="{DynamicResource PrimaryHueMidBrush}" Width="120" Height="120" HorizontalAlignment="Center"/>
+                        <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Center" FontWeight="Bold" FontSize="22" Foreground="#FF4A4040" Height="71" Width="500">
+                            <Run/> <LineBreak/> <Run Text="Панель пользователя"/>
+                        </TextBlock>
+                    </StackPanel>-->
+
+                    <!-- Просмотр открытых тикетов -->
+                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="8,0,0,16" VerticalAlignment="Stretch">
+                        <TextBlock Text="Открытые заявки" FontSize="18" FontWeight="Bold" Margin="0,0,0,8" Foreground="White"/>
+                        <local:OpenTicketsOverviewControl Background="Transparent" VerticalAlignment="Stretch"/>
+                    </StackPanel>
+
+                    <!-- Просмотр закрытых тикетов -->
+                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="8,0,0,16" VerticalAlignment="Stretch">
+                        <TextBlock Text="Закрытые заявки" FontSize="18" FontWeight="Bold" Margin="0,0,0,8" Foreground="White"/>
+                        <local:CloseTicketsOverviewControl Background="Transparent" VerticalAlignment="Stretch"/>
+                    </StackPanel>
+
+                    <!-- Создание тикета -->
+                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,8,16">
+                        <TextBlock Text="Создать заявку"
+                                   FontSize="18" FontWeight="Bold" Margin="0,0,0,8"
+                                   Foreground="White"/>
+                        <local:CreateTicketControl Background="Transparent"/>
+                    </StackPanel>
+
+                    <!-- Модуль FAQ -->
+                    <!--<StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,8,16" VerticalAlignment="Stretch">
+                        <TextBlock Text="Часто задаваемые вопросы"
+                                   FontSize="18" FontWeight="Bold" Margin="0,0,0,8"
+                                   Foreground="White"/>
+                        <local:FaqControl Background="Transparent"/>
+                    </StackPanel>-->
+                </Grid>
             </Viewbox>
 
             <TextBlock Text="Copyright © 2025 CRMS by Siarhei Kuzmich"

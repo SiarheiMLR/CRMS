@@ -2,7 +2,12 @@
 using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace CRMS.DAL.Repositories
 {
@@ -68,6 +73,29 @@ namespace CRMS.DAL.Repositories
             return await _entities.AsNoTracking().Where(predicate).ToListAsync();
         }
 
+        // Новый метод для получения IQueryable
+        public IQueryable<TEntity> AsQueryable()
+        {
+            return _entities.AsQueryable();
+        }
+
+        // Новый метод для загрузки с включением связанных данных
+        public async Task<IEnumerable<TEntity>> FindWithIncludesAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null)
+        {
+            IQueryable<TEntity> query = _entities;
+
+            if (includes != null)
+            {
+                query = includes(query);
+            }
+
+            return await query
+                .Where(predicate)
+                .AsNoTracking()
+                .ToListAsync();
+        }
 
         public async Task<IEnumerable<TEntity>> GetWhereAsync(Expression<Func<TEntity, bool>> predicate)
         {

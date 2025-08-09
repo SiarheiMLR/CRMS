@@ -1,5 +1,7 @@
 ﻿using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CRMS.Business.Services.TicketService
@@ -44,6 +46,13 @@ namespace CRMS.Business.Services.TicketService
         public async Task<IEnumerable<Ticket>> FindTicketsNoTrackingAsync(Expression<Func<Ticket, bool>> predicate)
         {
             return await _unitOfWork.Tickets.GetWhereNoTrackingAsync(predicate);
+        }
+
+        public async Task<IEnumerable<Ticket>> FindTicketsWithDetailsAsync(
+             Expression<Func<Ticket, bool>> predicate,
+             Func<IQueryable<Ticket>, IIncludableQueryable<Ticket, object>> include = null)
+        {
+            return await _unitOfWork.Tickets.FindWithIncludesAsync(predicate, include);
         }
 
         public async Task<IEnumerable<Ticket>> GetAllActiveTickets()
