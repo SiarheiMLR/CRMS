@@ -23,6 +23,7 @@ namespace CRMS.DAL.Repositories
             _context = context;
             Attachments = new EfAttachmentsRepository(_context);
             Tickets = new EfTicketsRepository(_context);
+            Queues = new EfQueuesRepository(_context);
             Users = new EfUsersRepository(_context);
             GroupsRepository = new EfGroupsRepository(_context);
             GroupMembersRepository = new EfGroupMembersRepository(_context);
@@ -39,6 +40,7 @@ namespace CRMS.DAL.Repositories
 
         public EfAttachmentsRepository Attachments { get; }
         public EfTicketsRepository Tickets { get; }
+        public EfQueuesRepository Queues { get; }
         public EfUsersRepository Users { get; }
 
         // Модель FAQ

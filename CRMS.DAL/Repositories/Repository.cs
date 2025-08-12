@@ -1,6 +1,7 @@
 ﻿using CRMS.DAL.Data;
 using CRMS.Domain.Entities;
 using CRMS.Domain.Interfaces;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using System;
@@ -121,6 +122,44 @@ namespace CRMS.DAL.Repositories
         {
             Update(entity); // обычный метод обновления
             return Task.CompletedTask;
+        }
+
+        public async Task<IEnumerable<Queue>> GetQueuesWithSlaAsync()
+        {
+            return await _context.Queues.ToListAsync();
+        }
+
+        public async Task<Queue> GetByEmailAsync(string address)
+        {
+            return await _context.Queues
+                .FirstOrDefaultAsync(q => q.CorrespondAddress == address || q.CommentAddress == address);
+        }
+
+        // Метод возвращает очереди, разрешенные для списка groupId
+        public async Task<List<Queue>> GetQueuesForGroupIdsAsync(IEnumerable<int> groupIds)
+        {
+            if (!groupIds?.Any() ?? true)
+                return new List<Queue>();
+
+            var ids = groupIds.Where(id => id > 0).Distinct().ToList();
+            if (ids.Count == 0) return new List<Queue>();
+
+            // Используем ручное построение OR-условий
+            var query = _context.Set<QueuePermission>().AsQueryable();
+            var predicate = PredicateBuilder.New<QueuePermission>(false);
+
+            foreach (var id in ids)
+            {
+                int tempId = id; // Для избежания замыкания
+                predicate = predicate.Or(p => p.GroupId == tempId);
+            }
+
+            return await query
+                .Where(predicate)
+                .Select(p => p.Queue)
+                .Distinct()
+                .AsNoTracking()
+                .ToListAsync();
         }
     }
 }

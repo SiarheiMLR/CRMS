@@ -34,6 +34,7 @@ using CRMS.Business.Services.EmailService;
 using CRMS.Views.Dialogs;
 using CRMS.Business.Services.FaqService;
 using CRMS.Business.ActiveDirectoryService;
+using CRMS.Business.Services.QueueService;
 
 //admin@bigfirm.by
 //27011984Hp
@@ -88,6 +89,7 @@ namespace CRMS
                     services.AddScoped<IAttachmentService, AttachmentService>();
                     services.AddScoped<IActiveDirectoryService, ActiveDirectoryService>();
                     services.AddScoped<IFaqService, FaqService>();
+                    services.AddScoped<IQueueService, QueueService>();
 
                     services.AddScoped<INavigationService, NavigationService>();
                     services.AddSingleton<NullToBoolConverter>();
@@ -161,6 +163,9 @@ namespace CRMS
             base.OnStartup(e);
             var mainWindow = ServiceProvider.GetRequiredService<StartUpWindow>();
             mainWindow.Show();
+
+            // Инициализация Material Design
+            MaterialDesignThemes.Wpf.ColorZoneAssist.SetMode(new DependencyObject(), MaterialDesignThemes.Wpf.ColorZoneMode.Standard);
 
             // Глобальный обработчик ошибок
             DispatcherUnhandledException += (sender, args) =>

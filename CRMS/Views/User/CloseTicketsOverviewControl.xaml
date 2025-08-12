@@ -17,6 +17,8 @@
         <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
         <converters:StatusToRussianConverter x:Key="StatusToRussianConverter"/>
         <converters:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
+        <converters:PriorityToRussianConverter x:Key="PriorityToRussianConverter"/>
+        <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
 
         <!-- Стиль для текста -->
         <Style TargetType="TextBlock" x:Key="CardTextStyle">
@@ -28,31 +30,34 @@
     <Border CornerRadius="8"
             BorderThickness="1"
             BorderBrush="{DynamicResource MaterialDesignDivider}"
-            Background="{DynamicResource MaterialDesignCardBackground}"
-            Padding="16">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            Background="Transparent"
+            Padding="10">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
             <ItemsControl ItemsSource="{Binding ClosedTickets}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type domain:Ticket}">
                         <materialDesign:Flipper Margin="8">
                             <!-- Лицевая сторона -->
                             <materialDesign:Flipper.FrontContent>
-                                <Border Width="300" Height="160" 
-                                        Margin="8" Padding="16"
+                                <Border Width="280" Height="195" 
+                                        Margin="0" Padding="16"
                                         Background="{DynamicResource MaterialDesignCardBackground}"
                                         CornerRadius="4"
                                         BorderBrush="{DynamicResource MaterialDesignDivider}"
                                         BorderThickness="1">
                                     <StackPanel>
-                                        <TextBlock Text="{Binding TicketNumber}" 
+                                        <TextBlock Text="{Binding TicketNumber, StringFormat='Заявка: {0}'}" 
                                                    FontWeight="Bold" 
                                                    FontSize="16"
                                                    Foreground="{DynamicResource MaterialDesignBody}"/>
-                                        <TextBlock Text="{Binding Subject}" 
-                                                   FontSize="14" 
-                                                   TextWrapping="Wrap"
-                                                   Foreground="{DynamicResource MaterialDesignBody}"
-                                                   Margin="0,8,0,0"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                            <TextBlock Text="Название: " 
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource MaterialDesignBody}"/>
+                                            <TextBlock Text="{Binding Subject}"                                                         
+                                                       TextWrapping="Wrap"
+                                                       Foreground="{DynamicResource MaterialDesignBody}"/>
+                                        </StackPanel>
 
                                         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
                                             <TextBlock Text="Статус: " 
@@ -66,7 +71,15 @@
                                             <TextBlock Text="Приоритет: " 
                                                        FontWeight="Bold"
                                                        Foreground="{DynamicResource MaterialDesignBody}"/>
-                                            <TextBlock Text="{Binding Priority}"
+                                            <TextBlock Text="{Binding Priority, Converter={StaticResource PriorityToRussianConverter}}"
+                                                       Foreground="{Binding Priority, Converter={StaticResource PriorityToColorConverter}}"/>
+                                        </StackPanel>
+                                        
+                                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                            <TextBlock Text="Очередь: " 
+                                                       FontWeight="Bold"
+                                                       Foreground="{DynamicResource MaterialDesignBody}"/>
+                                            <TextBlock Text="{Binding Queue.Name}"
                                                        Foreground="{DynamicResource MaterialDesignBody}"/>
                                         </StackPanel>
 
@@ -97,16 +110,17 @@
                                                 <Button Command="{x:Static materialDesign:Flipper.FlipCommand}"
                                                         Style="{StaticResource MaterialDesignToolForegroundButton}">
                                                     <materialDesign:PackIcon Kind="ArrowLeft" 
-                                                                             Foreground="White"/>
+                                                                             Foreground="Black"/>
                                                 </Button>
                                                 <TextBlock Text="Информация о заявке"
                                                            Margin="8,0,0,0"
                                                            VerticalAlignment="Center"
-                                                           Foreground="White"/>
+                                                           FontWeight="Bold"
+                                                           Foreground="Black"/>
                                             </StackPanel>
                                         </materialDesign:ColorZone>
 
-                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="16">
+                                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="16">
                                             <StackPanel>
                                                 <TextBlock Text="Описание:" 
                                                            FontWeight="Bold" 
@@ -117,11 +131,13 @@
                                                            Margin="0,4,0,8"
                                                            Style="{StaticResource CardTextStyle}"/>
 
-                                                <TextBlock Text="{Binding Created, StringFormat='Создано: {0:dd\\.MM\\.yyyy HH\\:mm\\:ss}'}"
-                                                           Style="{StaticResource CardTextStyle}"/>
-                                                <TextBlock Text="{Binding LastUpdated, StringFormat='Обновлено: {0:dd\\.MM\\.yyyy HH\\:mm\\:ss}'}"
-                                                           Margin="0,0,0,8"
-                                                           Style="{StaticResource CardTextStyle}"/>
+                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                    <TextBlock Text="Создана: " 
+                                                               FontWeight="Bold"
+                                                               Style="{StaticResource CardTextStyle}"/>
+                                                    <TextBlock Text="{Binding Created, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}"
+                                                               Style="{StaticResource CardTextStyle}"/>
+                                                </StackPanel>
 
                                                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                                                     <TextBlock Text="Автор: " 
@@ -137,15 +153,7 @@
                                                                Style="{StaticResource CardTextStyle}"/>
                                                     <TextBlock Text="{Binding Supporter.DisplayName}"
                                                                Style="{StaticResource CardTextStyle}"/>
-                                                </StackPanel>
-
-                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
-                                                    <TextBlock Text="Очередь: " 
-                                                               FontWeight="Bold"
-                                                               Style="{StaticResource CardTextStyle}"/>
-                                                    <TextBlock Text="{Binding Queue.Name}"
-                                                               Style="{StaticResource CardTextStyle}"/>
-                                                </StackPanel>
+                                                </StackPanel>                                                
                                             </StackPanel>
                                         </ScrollViewer>
                                     </Grid>

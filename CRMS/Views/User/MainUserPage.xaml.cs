@@ -1,4 +1,6 @@
 ﻿using CRMS.ViewModels;
+using CRMS.ViewModels.UserVM;
+using Microsoft.Extensions.DependencyInjection;
 using System.Windows.Controls;
 
 namespace CRMS.Views
@@ -11,6 +13,7 @@ namespace CRMS.Views
         public MainUserPage()
         {
             InitializeComponent();
+            DataContext = App.ServiceProvider.GetRequiredService<UserTicketsViewModel>();
         }
     }
 }

@@ -5,15 +5,15 @@ using System.Windows.Data;
 
 namespace CRMS.Infrastructure.Converters
 {
-    public class StatusToColorConverter : IValueConverter
+    public class PriorityToColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (TicketStatus)value switch
+            return (TicketPriority)value switch
             {
-                TicketStatus.Active => Brushes.Green,
-                TicketStatus.InProgress => Brushes.Orange,
-                TicketStatus.Closed => Brushes.MediumVioletRed,
+                TicketPriority.High => Brushes.Red,
+                TicketPriority.Mid => Brushes.Orange,
+                TicketPriority.Low => Brushes.Green,
                 _ => Brushes.Black
             };
         }

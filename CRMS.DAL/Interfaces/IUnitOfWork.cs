@@ -8,6 +8,7 @@ namespace CRMS.Domain.Interfaces
         // Свойства возвращают репозитории сущностей
         public EfAttachmentsRepository Attachments { get; }
         public EfTicketsRepository Tickets { get; }
+        public EfQueuesRepository Queues { get; }
         public EfUsersRepository Users { get; }
         //IRepository<CustomField> CustomFieldsRepository { get; }
         //IRepository<CustomFieldValue> CustomFieldValuesRepository { get; }

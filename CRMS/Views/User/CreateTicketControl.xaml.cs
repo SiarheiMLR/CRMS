@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CRMS.ViewModels.UserVM;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,7 @@ namespace CRMS.Views.User
         public CreateTicketControl()
         {
             InitializeComponent();
+            DataContext = App.ServiceProvider.GetRequiredService<UserTicketsViewModel>();
         }
     }
 }

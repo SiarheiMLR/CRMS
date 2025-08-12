@@ -5,77 +5,129 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:CRMS.Views.User"
+        xmlns:local="clr-namespace:CRMS.Views.User" xmlns:uservm="clr-namespace:CRMS.ViewModels.UserVM" d:DataContext="{d:DesignInstance Type=uservm:UserTicketsViewModel}"
         mc:Ignorable="d"
         Title="Панель пользователя"
         d:DesignHeight="450" d:DesignWidth="800">
 
-    <!-- Верхний отступ для меню -->
-    <Grid Margin="16,56,16,16">
-        <Grid Margin="10">
+    <!-- Верхний отступ для меню -->    
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- верхняя строка с датой -->
+            <RowDefinition Height="*"/>     <!-- основная панель -->
+            <RowDefinition Height="Auto"/>  <!-- футер/подвал -->
+        </Grid.RowDefinitions>
+
+        <!-- Текущая дата и врремя -->
+        <!--<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Width="Auto">
+            <TextBlock Text="{Binding CurrentDate}" FontSize="16" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
+        </StackPanel>-->
+
+        <!-- Основной контейнер. Центрируем и ограничиваем максимальную ширину -->
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" MaxWidth="3500" Margin="10,20,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Width="300">
-                <TextBlock Text="{Binding CurrentDate}" FontSize="16" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-            </StackPanel>
+            <!-- Ресурсы для стилей заголовков Expander -->
+            <Grid.Resources>
+                <Style x:Key="MainExpanderHeaderStyle" TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="18"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
 
-            <Viewbox Grid.Row="1" Stretch="Uniform" MaxWidth="600">
-                <Grid Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <Style x:Key="SubExpanderHeaderStyle" TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="16"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </Grid.Resources>
+
+            <!-- Общий Expander для всех заявок -->
+            <Expander Grid.Row="0" Grid.ColumnSpan="2"
+                      IsExpanded="True"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Margin="0,0,0,0">
+
+                <Expander.Header>
+                    <TextBlock Text="Ваши заявки" Style="{StaticResource MainExpanderHeaderStyle}"/>
+                </Expander.Header>
+
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <!--<StackPanel>
-                        <materialDesign:PackIcon Kind="User" Foreground="{DynamicResource PrimaryHueMidBrush}" Width="120" Height="120" HorizontalAlignment="Center"/>
-                        <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Center" FontWeight="Bold" FontSize="22" Foreground="#FF4A4040" Height="71" Width="500">
-                            <Run/> <LineBreak/> <Run Text="Панель пользователя"/>
-                        </TextBlock>
-                    </StackPanel>-->
 
-                    <!-- Просмотр открытых тикетов -->
-                    <StackPanel Grid.Row="0" Grid.Column="0" Margin="8,0,0,16" VerticalAlignment="Stretch">
-                        <TextBlock Text="Открытые заявки" FontSize="18" FontWeight="Bold" Margin="0,0,0,8" Foreground="White"/>
+                    <!-- Expander для открытых заявок -->
+                    <Expander Grid.Column="0"
+                              IsExpanded="True"
+                              Background="Transparent"
+                              BorderThickness="0"
+                              Margin="8">
+                        <Expander.Header>
+                            <TextBlock Text="Открытые" Style="{StaticResource SubExpanderHeaderStyle}"/>
+                        </Expander.Header>
                         <local:OpenTicketsOverviewControl Background="Transparent" VerticalAlignment="Stretch"/>
-                    </StackPanel>
+                    </Expander>
 
-                    <!-- Просмотр закрытых тикетов -->
-                    <StackPanel Grid.Row="0" Grid.Column="1" Margin="8,0,0,16" VerticalAlignment="Stretch">
-                        <TextBlock Text="Закрытые заявки" FontSize="18" FontWeight="Bold" Margin="0,0,0,8" Foreground="White"/>
+                    <!-- Expander для закрытых заявок -->
+                    <Expander Grid.Column="1"
+                              IsExpanded="True"
+                              Background="Transparent"
+                              BorderThickness="0"
+                              Margin="8">
+                        <Expander.Header>
+                            <TextBlock Text="Закрытые" Style="{StaticResource SubExpanderHeaderStyle}"/>
+                        </Expander.Header>
                         <local:CloseTicketsOverviewControl Background="Transparent" VerticalAlignment="Stretch"/>
-                    </StackPanel>
-
-                    <!-- Создание тикета -->
-                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,8,16">
-                        <TextBlock Text="Создать заявку"
-                                   FontSize="18" FontWeight="Bold" Margin="0,0,0,8"
-                                   Foreground="White"/>
-                        <local:CreateTicketControl Background="Transparent"/>
-                    </StackPanel>
-
-                    <!-- Модуль FAQ -->
-                    <!--<StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,8,16" VerticalAlignment="Stretch">
-                        <TextBlock Text="Часто задаваемые вопросы"
-                                   FontSize="18" FontWeight="Bold" Margin="0,0,0,8"
-                                   Foreground="White"/>
-                        <local:FaqControl Background="Transparent"/>
-                    </StackPanel>-->
+                    </Expander>
                 </Grid>
-            </Viewbox>
+            </Expander>
 
-            <TextBlock Text="Copyright © 2025 CRMS by Siarhei Kuzmich"
-                   FontSize="14"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Grid.Row="3" Height="20" Width="300" Foreground="#FF4A4040" FontStyle="Italic" FontWeight="Bold" />
+            <!-- Нижняя строка: создание заявки и FAQ -->
+            <Expander Grid.Row="1" Grid.Column="0"
+                      IsExpanded="True"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Margin="0">
+                <Expander.Header>
+                    <TextBlock Text="Создать заявку" Style="{StaticResource MainExpanderHeaderStyle}"/>
+                </Expander.Header>
+                <local:CreateTicketControl Background="Transparent" VerticalAlignment="Stretch"/>
+            </Expander>
+
+            <Expander Grid.Row="1" Grid.Column="1"
+                      IsExpanded="True"
+                      Background="Transparent"
+                      BorderThickness="0"
+                      Margin="0">
+                <Expander.Header>
+                    <TextBlock Text="Часто задаваемые вопросы" Style="{StaticResource MainExpanderHeaderStyle}"/>
+                </Expander.Header>
+                <StackPanel Background="Transparent" VerticalAlignment="Stretch">
+                    <TextBlock Text="Здесь можно разместить подсказки, FAQ, контактную информацию или статус системы."
+                       TextWrapping="Wrap" 
+                       Foreground="{DynamicResource MaterialDesignBody}"
+                       Margin="0,8,0,0"/>
+                </StackPanel>
+            </Expander>
         </Grid>
+
+        <!-- Футер например кнопки выхода или версия -->
+        <!--<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <TextBlock Text="Версия 1.0" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,8,0"/>
+            <TextBlock Text="Copyright © 2025 CRMS by Siarhei Kuzmich" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,8,0"/>
+        </StackPanel>-->
     </Grid>
+    
 </Page>

@@ -12,13 +12,13 @@ namespace CRMS.Infrastructure.Converters
             {
                 return status switch
                 {
-                    TicketStatus.Active => "Активный",
+                    TicketStatus.Active => "Активная",
                     TicketStatus.InProgress => "В работе",
-                    TicketStatus.Closed => "Закрыт",
+                    TicketStatus.Closed => "Закрыта",
                     _ => value.ToString()
                 };
             }
-            return value;
+            return value;            
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

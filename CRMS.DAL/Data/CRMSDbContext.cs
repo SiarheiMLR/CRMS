@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using Transaction = CRMS.Domain.Entities.Transaction;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using System.Diagnostics;
 
 namespace CRMS.DAL.Data
 {
@@ -113,11 +114,50 @@ namespace CRMS.DAL.Data
                     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                     .Build();
 
-                optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"),
-                    new MySqlServerVersion(new System.Version(10, 4))); // MariaDB 10.4
-                optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+                optionsBuilder.UseMySql(
+                    connectionString,
+                    new MySqlServerVersion(new Version(10, 4)), // MariaDB 10.4
+                    options =>
+                    {
+                        // Включаем поддержку примитивных коллекций для EF Core 8+
+                        options.EnablePrimitiveCollectionsSupport();
+
+                        // Дополнительные оптимизации
+                        options.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+                        options.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(30),
+                            errorNumbersToAdd: null);
+                    });
+
+                // Для отладки включаем детализированное логирование
+                optionsBuilder.LogTo(message => Debug.WriteLine(message))
+                             .EnableSensitiveDataLogging()
+                             .EnableDetailedErrors();
+
+                // Игнорируем предупреждение об изменениях модели
+                optionsBuilder.ConfigureWarnings(warnings => warnings
+                    .Ignore(RelationalEventId.PendingModelChangesWarning));
             }
         }
+
+        //// Старый вариант метода
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        var configuration = new ConfigurationBuilder()
+        //            .SetBasePath(Directory.GetCurrentDirectory())
+        //            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        //            .Build();
+
+        //        optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"),
+        //            new MySqlServerVersion(new System.Version(10, 4))); // MariaDB 10.4
+        //        optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+        //    }
+        //}
 
         ///-----Это альтернативный способ настройки, который может быть полезен для быстрого тестирования
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -361,6 +401,15 @@ namespace CRMS.DAL.Data
                 .HasOne(ft => ft.FaqTag)
                 .WithMany(t => t.FaqItemTags)
                 .HasForeignKey(ft => ft.FaqTagId);
+
+            modelBuilder.Entity<Queue>(b =>
+            {
+                b.Property(q => q.SlaResponseTime).HasColumnType("time");
+                b.Property(q => q.SlaResolutionTime).HasColumnType("time");
+
+                b.HasIndex(q => q.CorrespondAddress);
+                b.HasIndex(q => q.CommentAddress);
+            });
         }
 
         public void EnsureAdminUser()
