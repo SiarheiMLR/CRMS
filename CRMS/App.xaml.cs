@@ -35,6 +35,7 @@ using CRMS.Views.Dialogs;
 using CRMS.Business.Services.FaqService;
 using CRMS.Business.ActiveDirectoryService;
 using CRMS.Business.Services.QueueService;
+using System;
 
 //admin@bigfirm.by
 //27011984Hp
@@ -53,7 +54,7 @@ namespace CRMS
         public App()
         {
             LoadConfiguration();
-            
+
 
             AppHost = Host.CreateDefaultBuilder()
                 .ConfigureAppConfiguration(config =>
@@ -79,7 +80,7 @@ namespace CRMS
                         var emailSettings = sp.GetRequiredService<IOptions<EmailSettings>>().Value;
                         return new EmailService(emailSettings);
                     });
-                    
+
                     // Сервисы и инфраструктура
                     services.AddScoped<IUnitOfWork, EFUnitOfWork>();
                     services.AddScoped<IGroupService, GroupService>();
@@ -151,11 +152,19 @@ namespace CRMS
             ServiceProvider = AppHost.Services;
             ScopeFactory = ServiceProvider.GetRequiredService<IServiceScopeFactory>();
             AppHost.Start();
+            MigrateDatabaseAsync().Wait();
+        }
+
+        private async Task MigrateDatabaseAsync()
+        {
+            using var scope = ServiceProvider.CreateScope();
+            var ticketService = scope.ServiceProvider.GetRequiredService<ITicketService>();
+            await ticketService.MigrateTicketContentFormat();
         }
 
         //private void ConfigureServices(ServiceCollection services)
         //{
-                        
+
         //}
 
         protected override void OnStartup(StartupEventArgs e)

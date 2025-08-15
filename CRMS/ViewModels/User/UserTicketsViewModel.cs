@@ -12,6 +12,11 @@ using System.ComponentModel;
 using System.Windows.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using System.Windows.Documents;
+using System.IO;
+using System.Text;
+using CRMS.Views.User;
 
 namespace CRMS.ViewModels.UserVM
 {
@@ -45,14 +50,37 @@ namespace CRMS.ViewModels.UserVM
         // Список доступных очередей для создания тикета
         public ObservableCollection<Queue> Queues { get; } = new();
 
+        // Коллекция приоритетов
+        public ObservableCollection<TicketPriority> Priorities { get; } =
+            new ObservableCollection<TicketPriority>(
+                Enum.GetValues(typeof(TicketPriority)).Cast<TicketPriority>()
+            );
+
+        //[ObservableProperty]
+        //private Queue _selectedQueue; // привязка SelectedItem ComboBox
+
         [ObservableProperty]
-        private Queue _selectedQueue; // привязка SelectedItem ComboBox       
+        private Queue? _selectedQueue = null; // Явная инициализация null в ComboBox       
 
         [ObservableProperty]
         private ICollectionView _groupedTickets;
 
         [ObservableProperty]
         private User _currentUser;
+
+        [ObservableProperty]
+        private string _subject = string.Empty;
+
+        [ObservableProperty]
+        private FlowDocument _bodyDocument = RichTextEditor.DefaultDocument;
+
+        private TicketPriority? _selectedPriority = null;
+        public TicketPriority? SelectedPriority
+        {
+            get => _selectedPriority;
+            set => SetProperty(ref _selectedPriority, value);
+        }
+
 
         public UserTicketsViewModel(ITicketService ticketService, IAuthService authService,
             IUserService userService, IQueueService queueService)
@@ -68,6 +96,9 @@ namespace CRMS.ViewModels.UserVM
             _queueService = queueService;
 
             CurrentUser = _authService.CurrentUser;
+
+            // Инициализация по умолчанию
+            //_selectedPriority = TicketPriority.Mid;
 
             // Запускаем загрузку асинхронно
             _ = InitializeAsync();
@@ -93,12 +124,11 @@ namespace CRMS.ViewModels.UserVM
                 foreach (var q in queues)
                     Queues.Add(q);
 
-                // По умолчанию выберем первую очередь (если есть)
-                SelectedQueue = Queues.FirstOrDefault();
+                // УБРАТЬ выбор первой очереди по умолчанию!
+                // SelectedQueue = Queues.FirstOrDefault();
             }
             catch (Exception ex)
             {
-                // Логируй/обрабатывай по необходимости
                 MessageBox.Show($"Не удалось загрузить очереди: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -124,6 +154,24 @@ namespace CRMS.ViewModels.UserVM
 
             foreach (var ticket in tickets)
             {
+                // Безопасная инициализация документа
+                if (string.IsNullOrWhiteSpace(ticket.Content))
+                {
+                    ticket.Content = string.Empty;
+                }
+                else
+                {
+                    try
+                    {
+                        var _ = ticket.ContentDocument;
+                    }
+                    catch
+                    {
+                        // В случае ошибки сбрасываем содержимое
+                        ticket.Content = string.Empty;
+                    }
+                }
+
                 // Добавляем тикет только ОДИН раз
                 Tickets.Add(ticket);
 
@@ -167,7 +215,24 @@ namespace CRMS.ViewModels.UserVM
                 return;
             }
 
-            var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Minsk"); // Windows на Linux/Mac может быть "Europe/Moscow"
+            if (SelectedPriority is null)
+            {
+                MessageBox.Show("Пожалуйста, выберите приоритет.", "Не выбран приоритет",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(Subject))
+            {
+                MessageBox.Show("Пожалуйста, введите тему вашей заявки.", "Пустая тема заявки",
+                    MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Конвертируем FlowDocument в XAML
+            string bodyXaml = ConvertFlowDocumentToXaml(BodyDocument);
+
+            var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Minsk"); // Windows на Linux/Mac может быть "Europe/Minsk"
             var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
 
             var newTicket = new Ticket
@@ -177,17 +242,79 @@ namespace CRMS.ViewModels.UserVM
                 LastUpdated = local,               
                 QueueId = SelectedQueue.Id,        // <-- используем выбранную очередь
                 RequestorId = CurrentUser.Id,
+                Priority = SelectedPriority.Value, // т.к. nullable
                 SupporterId = null,
-                //Subject = this.Subject,           // предполагается, что Subject из биндинга в форме
-                //Content = this.Body               // Body — текст из RTE
+                Subject = this.Subject,           // Сохраняем тему
+                Content = string.Empty // Инициализируем пустой строкой
             };
 
-            var editWindow = new TicketEditWindow(newTicket);
-            if (editWindow.ShowDialog() == true)
+            // Устанавливаем документ ПОСЛЕ создания объекта
+            newTicket.ContentDocument = BodyDocument;
+
+            try
             {
-                Tickets.Add(newTicket);
-                OpenTickets.Add(newTicket); // Добавляем в коллекцию открытых
                 await _ticketService.AddTicketAsync(newTicket);
+
+                // Добавляем в коллекции
+                Tickets.Add(newTicket);
+                OpenTickets.Add(newTicket);
+
+                // Сбрасываем форму
+                SelectedQueue = null;
+                SelectedPriority = null;
+                Subject = string.Empty;
+                BodyDocument = new FlowDocument();
+
+                MessageBox.Show("Заявка успешно создана!", "Успех",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании заявки: {ex.Message}", "Ошибка",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string ConvertFlowDocumentToXaml(FlowDocument document)
+        {
+            if (document == null)
+                return string.Empty;
+
+            try
+            {
+                var range = new TextRange(document.ContentStart, document.ContentEnd);
+                using (var stream = new MemoryStream())
+                {
+                    range.Save(stream, DataFormats.Xaml);
+                    return Encoding.UTF8.GetString(stream.ToArray());
+                }
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
+        }
+
+        public static FlowDocument ConvertXamlToFlowDocument(string xaml)
+        {
+            if (string.IsNullOrWhiteSpace(xaml))
+                return new FlowDocument();
+
+            try
+            {
+                var document = new FlowDocument();
+                var range = new TextRange(document.ContentStart, document.ContentEnd);
+
+                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(xaml)))
+                {
+                    range.Load(stream, DataFormats.Xaml);
+                }
+                return document;
+            }
+            catch (Exception)
+            {
+                // Возвращаем пустой документ в случае ошибки
+                return new FlowDocument();
             }
         }
 

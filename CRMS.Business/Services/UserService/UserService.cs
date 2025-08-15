@@ -294,7 +294,6 @@ namespace CRMS.Business.Services.UserService
             }
         }
 
-
         public bool ValidatePassword(string password, string storedHash, string storedSalt)
         {
             using (var sha256 = SHA256.Create())
@@ -303,6 +302,16 @@ namespace CRMS.Business.Services.UserService
                 byte[] hashBytes = sha256.ComputeHash(combinedBytes);
                 return Convert.ToBase64String(hashBytes) == storedHash;
             }
-        }       
+        }
+
+        public async Task<Dictionary<int, User>> GetUsersDictionaryAsync(IEnumerable<int> userIds)
+        {
+            var ids = userIds.Distinct().ToList();
+            if (!ids.Any())
+                return new Dictionary<int, User>();
+
+            var users = await _unitOfWork.Users.FindAsync(u => ids.Contains(u.Id));
+            return users.ToDictionary(u => u.Id, u => u);
+        }
     }
 }

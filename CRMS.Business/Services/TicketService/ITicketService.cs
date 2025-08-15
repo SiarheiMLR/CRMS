@@ -19,5 +19,6 @@ namespace CRMS.Business.Services.TicketService
         public Task CloseTicket(Ticket ticket);
         public Task UnassignTicket(Ticket ticket);
         Task<IEnumerable<Ticket>> FindTicketsWithDetailsAsync(Expression<Func<Ticket, bool>> predicate, Func<IQueryable<Ticket>, IIncludableQueryable<Ticket, object>> include = null);
+        public Task MigrateTicketContentFormat();
     }
 }

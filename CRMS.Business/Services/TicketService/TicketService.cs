@@ -3,6 +3,7 @@ using CRMS.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Windows.Documents;
 
 namespace CRMS.Business.Services.TicketService
 {
@@ -15,6 +16,8 @@ namespace CRMS.Business.Services.TicketService
         }
         public async Task AddTicketAsync(Ticket ticket)
         {
+            // Конвертируем перед сохранением
+            ticket.Content = ticket.Content;
             await _unitOfWork.Tickets.AddAsync(ticket);
             await _unitOfWork.SaveChangesAsync();
         }
@@ -67,7 +70,13 @@ namespace CRMS.Business.Services.TicketService
 
         public async Task<Ticket> GetTicketByIdAsync(int id)
         {
-            return await _unitOfWork.Tickets.GetByIdAsync(id);
+            var ticket = await _unitOfWork.Tickets.GetByIdAsync(id);
+            if (ticket != null)
+            {
+                // Автоматически конвертируем при загрузке
+                var _ = ticket.ContentDocument;
+            }
+            return ticket;
         }
 
         public async Task<IEnumerable<Ticket>> GetTicketsByAssignee(int supportId)
@@ -85,6 +94,28 @@ namespace CRMS.Business.Services.TicketService
 
         public async void UpdateTicket(Ticket ticket)
         {
+            await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task MigrateTicketContentFormat()
+        {
+            var tickets = await _unitOfWork.Tickets.GetAllAsync();
+
+            foreach (var ticket in tickets)
+            {
+                // Если содержимое не является валидным XAML
+                if (!string.IsNullOrWhiteSpace(ticket.Content) &&
+            !           ticket.Content.TrimStart().StartsWith("<"))
+                {
+                    // Создаем FlowDocument из старого текста
+                    var document = new FlowDocument();
+                    document.Blocks.Add(new Paragraph(new Run(ticket.Content)));
+
+                    // Используем статический метод через класс Ticket
+                    ticket.Content = Ticket.ConvertFlowDocumentToXaml(document);
+                }
+            }
+
             await _unitOfWork.SaveChangesAsync();
         }
     }

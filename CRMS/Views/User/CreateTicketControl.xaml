@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
-             xmlns:local="clr-namespace:CRMS.Views.User"
+             xmlns:local="clr-namespace:CRMS.Views.User"             
              xmlns:viewModels="clr-namespace:CRMS.ViewModels.UserVM"
              xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
              xmlns:domain="clr-namespace:CRMS.Domain.Entities;assembly=CRMS.Domain"
@@ -13,10 +13,7 @@
              Background="Transparent"
              Height="Auto" Width="Auto">
 
-    <UserControl.Resources>
-        <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
-        <converters:StatusToRussianConverter x:Key="StatusToRussianConverter"/>
-        <converters:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
+    <UserControl.Resources>        
         <converters:PriorityToRussianConverter x:Key="PriorityToRussianConverter"/>
         <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
 
@@ -53,6 +50,8 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -63,27 +62,26 @@
 
                 <!-- Очередь -->
                 <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="Очередь:" 
+                           Text="Тип запроса:" 
                            VerticalAlignment="Center" 
                            FontWeight="Bold"
                            Foreground="White"
                            Margin="0,0,10,0"/>
-                <ComboBox Grid.Row="0" Grid.Column="1"
-                    materialDesign:HintAssist.Hint="Выберите группу"
-                    materialDesign:HintAssist.Foreground="LightGray"
-                    ItemsSource="{Binding Queues}" 
-                    SelectedItem="{Binding SelectedQueue}"
-                    DisplayMemberPath="Name"
-                    Style="{StaticResource MaterialDesignOutlinedComboBox}"
-                    Foreground="White"
-                    BorderBrush="#AAFFFFFF"
-                    Margin="0,0,0,16">
+                <ComboBox Grid.Row="0" Grid.Column="1"          
+                          materialDesign:HintAssist.Hint="Выберите тип вашего запроса"          
+                          ItemsSource="{Binding Queues}" 
+                          SelectedItem="{Binding SelectedQueue}"
+                          DisplayMemberPath="Name"
+                          Foreground="White"
+                          Margin="0,0,10,0"
+                          VerticalAlignment="Center"
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}">
                     <ComboBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <VirtualizingStackPanel />
                         </ItemsPanelTemplate>
                     </ComboBox.ItemsPanel>
-                </ComboBox>                
+                </ComboBox>
 
                 <!-- Приоритет -->
                 <TextBlock Grid.Row="1" Grid.Column="0"
@@ -94,15 +92,24 @@
                            Margin="0,0,10,0"/>
                 <ComboBox  Grid.Row="1" Grid.Column="1"
                            materialDesign:HintAssist.Hint="Задайте приоритет"
-                           ItemsSource="{Binding SelectedPriority}"
+                           ItemsSource="{Binding Priorities}"
+                           SelectedItem="{Binding SelectedPriority, Mode=TwoWay}"
                            Foreground="White"
+                           Margin="0,8,10,0"
                            VerticalAlignment="Center"
                            Style="{StaticResource MaterialDesignOutlinedComboBox}">
-                    <ComboBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <VirtualizingStackPanel />
-                        </ItemsPanelTemplate>
-                    </ComboBox.ItemsPanel>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="4">
+                                <Rectangle Width="12" Height="12" 
+                                           Fill="{Binding Converter={StaticResource PriorityToColorConverter}}"
+                                           Stroke="Black" StrokeThickness="0.5"
+                                           Margin="0,0,6,0"/>
+                                <TextBlock Text="{Binding Converter={StaticResource PriorityToRussianConverter}}"
+                                           Foreground="White"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
 
                 <!-- Заявитель -->
@@ -111,60 +118,61 @@
                            VerticalAlignment="Center" 
                            FontWeight="Bold" 
                            Foreground="White"
-                           Margin="0,5,10,0"/>
+                           Margin="0,0,10,0"/>
                 <TextBox Grid.Row="2" Grid.Column="1"
-                         Margin="0,5,0,0"
                          VerticalAlignment="Center"
-                         Text="{Binding RequestorEmail}"
-                         Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                         Text="{Binding CurrentUser.Email}"
+                         IsEnabled="False"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                         Foreground="White"
+                         Margin="0,8,10,0"/>
 
-                <!-- Cc -->
+                <!-- Копия заявки -->
                 <TextBlock Grid.Row="3" Grid.Column="0" 
-                           Text="Cc:" 
+                           Text="Копия заявки:" 
                            VerticalAlignment="Center" 
                            FontWeight="Bold" 
                            Foreground="White"
-                           Margin="0,5,10,0"/>
-                <TextBox Grid.Row="3" Grid.Column="1"
-                         Margin="0,5,0,0"
-                         Text="{Binding CcEmail}"
-                         Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                           Margin="0,0,10,0"/>
+                <TextBox Grid.Row="3" Grid.Column="1"                         
+                         VerticalAlignment="Center"
+                         Text="{Binding SelectedQueue.CorrespondAddress, FallbackValue='Необходимо выбрать тип запроса!'}"
+                         IsEnabled="False"
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"                         
+                         Foreground="White"
+                         Margin="0,8,10,0"/>
 
                 <!-- Тема заявки -->
                 <TextBlock Grid.Row="4" Grid.Column="0" 
                            Text="Тема заявки:" 
-                           VerticalAlignment="Top" 
+                           VerticalAlignment="Center" 
                            FontWeight="Bold" 
                            Foreground="White" 
-                           Margin="0,5,10,0"/>
-                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical" Margin="0,5,0,0">
-                    <TextBox Text="{Binding Subject}" 
-                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                           Margin="0,0,10,0"/>
+                <TextBox Grid.Row="4" Grid.Column="1"
+                         materialDesign:HintAssist.Hint="Введите краткое описание вашей заявки"
+                         VerticalAlignment="Center"
+                         Text="{Binding Subject}" 
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}"                         
+                         Foreground="White"
+                         Margin="0,8,10,0"/>
 
-                    <!-- Toolbar imitation -->
-                    <ToolBar Margin="0,5,0,0" Background="Transparent" Style="{StaticResource MaterialDesignToolBar}">
-                        <ComboBox Width="80" SelectedItem="{Binding SelectedStyle}">
-                            <ComboBoxItem Content="Styles"/>
-                        </ComboBox>
-                        <ComboBox Width="80" SelectedItem="{Binding SelectedFormat}">
-                            <ComboBoxItem Content="Format"/>
-                        </ComboBox>
-                        <Button Content="B" FontWeight="Bold"/>
-                        <Button Content="I" FontStyle="Italic"/>
-                        <Button Content="U" />
-                    </ToolBar>
-
-                    <!-- Placeholder for RichTextEditor -->
-                    <TextBox AcceptsReturn="True" Height="200"
-                             VerticalScrollBarVisibility="Auto"
-                             Text="{Binding Body}"
-                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
-                </StackPanel>
+                <!-- Тело заявки -->
+                <TextBlock Grid.Row="5" Grid.Column="0" 
+                           Text="Содержание заявки:" 
+                           VerticalAlignment="Center" 
+                           FontWeight="Bold" 
+                           Foreground="White" 
+                           Margin="0,0,10,0"/>
+                <local:RichTextEditor Grid.Row="5" Grid.Column="1"
+                                      Height="250"
+                                      Margin="0,8,10,0"
+                                      Document="{Binding BodyDocument, Mode=TwoWay, TargetNullValue={x:Static local:RichTextEditor.DefaultDocument}}"/>
 
                 <!-- Вложение файлов -->
-                <Border Grid.Row="5" Grid.ColumnSpan="2"
+                <Border Grid.Row="6" Grid.ColumnSpan="2"
                         BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}"
-                        Padding="10" Margin="0,10,0,0"
+                        Padding="10" Margin="0,20,10,0"
                         HorizontalAlignment="Stretch">
                     <TextBlock Text="Перетащите файлы сюда или нажмите чтобы добавить"
                                HorizontalAlignment="Center"
@@ -172,7 +180,7 @@
                 </Border>
 
                 <!-- Кнопка -->
-                <Button Grid.Row="6" Grid.ColumnSpan="2"
+                <Button Grid.Row="7" Grid.ColumnSpan="2"
                         Content="Создать"
                         HorizontalAlignment="Right"
                         Style="{StaticResource MaterialDesignRaisedButton}"

@@ -18,5 +18,6 @@ namespace CRMS.Business.Services.UserService
         public Task UpdateUserAsync(User user);
         public Task DeleteUserAsync(User user);
         public Task<IEnumerable<User>> FindUsersAsync(Expression<Func<User, bool>> predicate);
+        Task<Dictionary<int, User>> GetUsersDictionaryAsync(IEnumerable<int> userIds);
     }
 }
