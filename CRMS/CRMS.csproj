@@ -9,12 +9,2657 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Emojis\1f0cf.png" />
+    <None Remove="Resources\Emojis\1f170.png" />
+    <None Remove="Resources\Emojis\1f171.png" />
+    <None Remove="Resources\Emojis\1f191.png" />
+    <None Remove="Resources\Emojis\1f192.png" />
+    <None Remove="Resources\Emojis\1f193.png" />
+    <None Remove="Resources\Emojis\1f194.png" />
+    <None Remove="Resources\Emojis\1f195.png" />
+    <None Remove="Resources\Emojis\1f196.png" />
+    <None Remove="Resources\Emojis\1f197.png" />
+    <None Remove="Resources\Emojis\1f198.png" />
+    <None Remove="Resources\Emojis\1f199.png" />
+    <None Remove="Resources\Emojis\1f19a.png" />
+    <None Remove="Resources\Emojis\1f1e6-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1e6-1f1f2.png" />
+    <None Remove="Resources\Emojis\1f1e6-1f1f9.png" />
+    <None Remove="Resources\Emojis\1f1e6-1f1fa.png" />
+    <None Remove="Resources\Emojis\1f1e6.png" />
+    <None Remove="Resources\Emojis\1f1e7-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1e7-1f1ec.png" />
+    <None Remove="Resources\Emojis\1f1e7-1f1ef.png" />
+    <None Remove="Resources\Emojis\1f1e7-1f1f8.png" />
+    <None Remove="Resources\Emojis\1f1e7-1f1fb.png" />
+    <None Remove="Resources\Emojis\1f1e7-1f1fe.png" />
+    <None Remove="Resources\Emojis\1f1e7.png" />
+    <None Remove="Resources\Emojis\1f1e8-1f1e6.png" />
+    <None Remove="Resources\Emojis\1f1e8-1f1ed.png" />
+    <None Remove="Resources\Emojis\1f1e8-1f1ee.png" />
+    <None Remove="Resources\Emojis\1f1e8-1f1f3.png" />
+    <None Remove="Resources\Emojis\1f1e8-1f1f4.png" />
+    <None Remove="Resources\Emojis\1f1e8-1f1f5.png" />
+    <None Remove="Resources\Emojis\1f1e8-1f1ff.png" />
+    <None Remove="Resources\Emojis\1f1e8.png" />
+    <None Remove="Resources\Emojis\1f1e9-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1e9.png" />
+    <None Remove="Resources\Emojis\1f1ea-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1ea-1f1ec.png" />
+    <None Remove="Resources\Emojis\1f1ea-1f1ed.png" />
+    <None Remove="Resources\Emojis\1f1ea-1f1fa.png" />
+    <None Remove="Resources\Emojis\1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1eb-1f1ee.png" />
+    <None Remove="Resources\Emojis\1f1eb-1f1f2.png" />
+    <None Remove="Resources\Emojis\1f1eb-1f1f4.png" />
+    <None Remove="Resources\Emojis\1f1eb-1f1f7.png" />
+    <None Remove="Resources\Emojis\1f1eb.png" />
+    <None Remove="Resources\Emojis\1f1ec-1f1e7.png" />
+    <None Remove="Resources\Emojis\1f1ec-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1ec-1f1f2.png" />
+    <None Remove="Resources\Emojis\1f1ec-1f1f3.png" />
+    <None Remove="Resources\Emojis\1f1ec-1f1f6.png" />
+    <None Remove="Resources\Emojis\1f1ec-1f1f7.png" />
+    <None Remove="Resources\Emojis\1f1ec.png" />
+    <None Remove="Resources\Emojis\1f1ed-1f1fa.png" />
+    <None Remove="Resources\Emojis\1f1ed.png" />
+    <None Remove="Resources\Emojis\1f1ee-1f1e9.png" />
+    <None Remove="Resources\Emojis\1f1ee-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1ee-1f1f1.png" />
+    <None Remove="Resources\Emojis\1f1ee-1f1f8.png" />
+    <None Remove="Resources\Emojis\1f1ee-1f1f9.png" />
+    <None Remove="Resources\Emojis\1f1ee.png" />
+    <None Remove="Resources\Emojis\1f1ef-1f1f5.png" />
+    <None Remove="Resources\Emojis\1f1ef.png" />
+    <None Remove="Resources\Emojis\1f1f0-1f1f5.png" />
+    <None Remove="Resources\Emojis\1f1f0-1f1f7.png" />
+    <None Remove="Resources\Emojis\1f1f0-1f1ff.png" />
+    <None Remove="Resources\Emojis\1f1f0.png" />
+    <None Remove="Resources\Emojis\1f1f1-1f1f7.png" />
+    <None Remove="Resources\Emojis\1f1f1-1f1f9.png" />
+    <None Remove="Resources\Emojis\1f1f1-1f1fa.png" />
+    <None Remove="Resources\Emojis\1f1f1-1f1fb.png" />
+    <None Remove="Resources\Emojis\1f1f1-1f1fe.png" />
+    <None Remove="Resources\Emojis\1f1f1.png" />
+    <None Remove="Resources\Emojis\1f1f2-1f1e8.png" />
+    <None Remove="Resources\Emojis\1f1f2-1f1eb.png" />
+    <None Remove="Resources\Emojis\1f1f2-1f1ec.png" />
+    <None Remove="Resources\Emojis\1f1f2-1f1f1.png" />
+    <None Remove="Resources\Emojis\1f1f2-1f1fa.png" />
+    <None Remove="Resources\Emojis\1f1f2.png" />
+    <None Remove="Resources\Emojis\1f1f3-1f1f1.png" />
+    <None Remove="Resources\Emojis\1f1f3.png" />
+    <None Remove="Resources\Emojis\1f1f4.png" />
+    <None Remove="Resources\Emojis\1f1f5-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1f5-1f1f1.png" />
+    <None Remove="Resources\Emojis\1f1f5-1f1fc.png" />
+    <None Remove="Resources\Emojis\1f1f5.png" />
+    <None Remove="Resources\Emojis\1f1f6.png" />
+    <None Remove="Resources\Emojis\1f1f8-1f1ea.png" />
+    <None Remove="Resources\Emojis\1f1f8-1f1ee.png" />
+    <None Remove="Resources\Emojis\1f1f8-1f1ef.png" />
+    <None Remove="Resources\Emojis\1f1f8-1f1f4.png" />
+    <None Remove="Resources\Emojis\1f1f9-1f1ed.png" />
+    <None Remove="Resources\Emojis\1f1f9-1f1ef.png" />
+    <None Remove="Resources\Emojis\1f1f9.png" />
+    <None Remove="Resources\Emojis\1f1fa-1f1f3.png" />
+    <None Remove="Resources\Emojis\1f1fa-1f1f8.png" />
+    <None Remove="Resources\Emojis\1f1fa.png" />
+    <None Remove="Resources\Emojis\1f1fb.png" />
+    <None Remove="Resources\Emojis\1f1fc.png" />
+    <None Remove="Resources\Emojis\1f1fd.png" />
+    <None Remove="Resources\Emojis\1f1fe.png" />
+    <None Remove="Resources\Emojis\1f1ff.png" />
+    <None Remove="Resources\Emojis\1f201.png" />
+    <None Remove="Resources\Emojis\1f302.png" />
+    <None Remove="Resources\Emojis\1f308.png" />
+    <None Remove="Resources\Emojis\1f30d.png" />
+    <None Remove="Resources\Emojis\1f310.png" />
+    <None Remove="Resources\Emojis\1f31d.png" />
+    <None Remove="Resources\Emojis\1f324.png" />
+    <None Remove="Resources\Emojis\1f325.png" />
+    <None Remove="Resources\Emojis\1f326.png" />
+    <None Remove="Resources\Emojis\1f327.png" />
+    <None Remove="Resources\Emojis\1f328.png" />
+    <None Remove="Resources\Emojis\1f329.png" />
+    <None Remove="Resources\Emojis\1f32d.png" />
+    <None Remove="Resources\Emojis\1f32e.png" />
+    <None Remove="Resources\Emojis\1f32f.png" />
+    <None Remove="Resources\Emojis\1f33b.png" />
+    <None Remove="Resources\Emojis\1f33d.png" />
+    <None Remove="Resources\Emojis\1f349.png" />
+    <None Remove="Resources\Emojis\1f34a.png" />
+    <None Remove="Resources\Emojis\1f34b.png" />
+    <None Remove="Resources\Emojis\1f34c.png" />
+    <None Remove="Resources\Emojis\1f34d.png" />
+    <None Remove="Resources\Emojis\1f34e.png" />
+    <None Remove="Resources\Emojis\1f34f.png" />
+    <None Remove="Resources\Emojis\1f354.png" />
+    <None Remove="Resources\Emojis\1f355.png" />
+    <None Remove="Resources\Emojis\1f35f.png" />
+    <None Remove="Resources\Emojis\1f368.png" />
+    <None Remove="Resources\Emojis\1f36b.png" />
+    <None Remove="Resources\Emojis\1f36d.png" />
+    <None Remove="Resources\Emojis\1f36e.png" />
+    <None Remove="Resources\Emojis\1f377.png" />
+    <None Remove="Resources\Emojis\1f37a.png" />
+    <None Remove="Resources\Emojis\1f37b.png" />
+    <None Remove="Resources\Emojis\1f37e.png" />
+    <None Remove="Resources\Emojis\1f37f.png" />
+    <None Remove="Resources\Emojis\1f382.png" />
+    <None Remove="Resources\Emojis\1f383.png" />
+    <None Remove="Resources\Emojis\1f384.png" />
+    <None Remove="Resources\Emojis\1f385.png" />
+    <None Remove="Resources\Emojis\1f389.png" />
+    <None Remove="Resources\Emojis\1f392.png" />
+    <None Remove="Resources\Emojis\1f393.png" />
+    <None Remove="Resources\Emojis\1f396.png" />
+    <None Remove="Resources\Emojis\1f397.png" />
+    <None Remove="Resources\Emojis\1f399.png" />
+    <None Remove="Resources\Emojis\1f3a4.png" />
+    <None Remove="Resources\Emojis\1f3a5.png" />
+    <None Remove="Resources\Emojis\1f3a6.png" />
+    <None Remove="Resources\Emojis\1f3a7.png" />
+    <None Remove="Resources\Emojis\1f3a8.png" />
+    <None Remove="Resources\Emojis\1f3ac.png" />
+    <None Remove="Resources\Emojis\1f3ad.png" />
+    <None Remove="Resources\Emojis\1f3ae.png" />
+    <None Remove="Resources\Emojis\1f3af.png" />
+    <None Remove="Resources\Emojis\1f3b0.png" />
+    <None Remove="Resources\Emojis\1f3b1.png" />
+    <None Remove="Resources\Emojis\1f3b2.png" />
+    <None Remove="Resources\Emojis\1f3b3.png" />
+    <None Remove="Resources\Emojis\1f3b5.png" />
+    <None Remove="Resources\Emojis\1f3b6.png" />
+    <None Remove="Resources\Emojis\1f3b8.png" />
+    <None Remove="Resources\Emojis\1f3b9.png" />
+    <None Remove="Resources\Emojis\1f3be.png" />
+    <None Remove="Resources\Emojis\1f3c0.png" />
+    <None Remove="Resources\Emojis\1f3c1.png" />
+    <None Remove="Resources\Emojis\1f3c5.png" />
+    <None Remove="Resources\Emojis\1f3c6.png" />
+    <None Remove="Resources\Emojis\1f3ce.png" />
+    <None Remove="Resources\Emojis\1f3cf.png" />
+    <None Remove="Resources\Emojis\1f3d0.png" />
+    <None Remove="Resources\Emojis\1f3d1.png" />
+    <None Remove="Resources\Emojis\1f3d2.png" />
+    <None Remove="Resources\Emojis\1f3d3.png" />
+    <None Remove="Resources\Emojis\1f3d4.png" />
+    <None Remove="Resources\Emojis\1f3d5.png" />
+    <None Remove="Resources\Emojis\1f3d6.png" />
+    <None Remove="Resources\Emojis\1f3d7.png" />
+    <None Remove="Resources\Emojis\1f3db.png" />
+    <None Remove="Resources\Emojis\1f3dd.png" />
+    <None Remove="Resources\Emojis\1f3e1.png" />
+    <None Remove="Resources\Emojis\1f3e6.png" />
+    <None Remove="Resources\Emojis\1f3ef.png" />
+    <None Remove="Resources\Emojis\1f3f3-fe0f-200d-1f308.png" />
+    <None Remove="Resources\Emojis\1f3f3.png" />
+    <None Remove="Resources\Emojis\1f3f4-200d-2620-fe0f.png" />
+    <None Remove="Resources\Emojis\1f3f4-e0067-e0062-e0065-e006e-e0067-e007f.png" />
+    <None Remove="Resources\Emojis\1f3f4-e0067-e0062-e0077-e006c-e0073-e007f.png" />
+    <None Remove="Resources\Emojis\1f3f4.png" />
+    <None Remove="Resources\Emojis\1f3f7.png" />
+    <None Remove="Resources\Emojis\1f3f8.png" />
+    <None Remove="Resources\Emojis\1f3f9.png" />
+    <None Remove="Resources\Emojis\1f40b.png" />
+    <None Remove="Resources\Emojis\1f446.png" />
+    <None Remove="Resources\Emojis\1f447.png" />
+    <None Remove="Resources\Emojis\1f448.png" />
+    <None Remove="Resources\Emojis\1f449.png" />
+    <None Remove="Resources\Emojis\1f44a.png" />
+    <None Remove="Resources\Emojis\1f44b.png" />
+    <None Remove="Resources\Emojis\1f44c.png" />
+    <None Remove="Resources\Emojis\1f44d.png" />
+    <None Remove="Resources\Emojis\1f44e.png" />
+    <None Remove="Resources\Emojis\1f44f.png" />
+    <None Remove="Resources\Emojis\1f450.png" />
+    <None Remove="Resources\Emojis\1f45c.png" />
+    <None Remove="Resources\Emojis\1f45e.png" />
+    <None Remove="Resources\Emojis\1f45f.png" />
+    <None Remove="Resources\Emojis\1f47b.png" />
+    <None Remove="Resources\Emojis\1f47d.png" />
+    <None Remove="Resources\Emojis\1f480.png" />
+    <None Remove="Resources\Emojis\1f48a.png" />
+    <None Remove="Resources\Emojis\1f48b.png" />
+    <None Remove="Resources\Emojis\1f48c.png" />
+    <None Remove="Resources\Emojis\1f48d.png" />
+    <None Remove="Resources\Emojis\1f48e.png" />
+    <None Remove="Resources\Emojis\1f493.png" />
+    <None Remove="Resources\Emojis\1f494.png" />
+    <None Remove="Resources\Emojis\1f495.png" />
+    <None Remove="Resources\Emojis\1f496.png" />
+    <None Remove="Resources\Emojis\1f497.png" />
+    <None Remove="Resources\Emojis\1f498.png" />
+    <None Remove="Resources\Emojis\1f499.png" />
+    <None Remove="Resources\Emojis\1f49b.png" />
+    <None Remove="Resources\Emojis\1f49e.png" />
+    <None Remove="Resources\Emojis\1f49f.png" />
+    <None Remove="Resources\Emojis\1f4a1.png" />
+    <None Remove="Resources\Emojis\1f4a3.png" />
+    <None Remove="Resources\Emojis\1f4a4.png" />
+    <None Remove="Resources\Emojis\1f4a5.png" />
+    <None Remove="Resources\Emojis\1f4a6.png" />
+    <None Remove="Resources\Emojis\1f4a7.png" />
+    <None Remove="Resources\Emojis\1f4a9.png" />
+    <None Remove="Resources\Emojis\1f4aa.png" />
+    <None Remove="Resources\Emojis\1f4ac.png" />
+    <None Remove="Resources\Emojis\1f4af.png" />
+    <None Remove="Resources\Emojis\1f4b0.png" />
+    <None Remove="Resources\Emojis\1f4b2.png" />
+    <None Remove="Resources\Emojis\1f4b3.png" />
+    <None Remove="Resources\Emojis\1f4b4.png" />
+    <None Remove="Resources\Emojis\1f4b5.png" />
+    <None Remove="Resources\Emojis\1f4b6.png" />
+    <None Remove="Resources\Emojis\1f4b7.png" />
+    <None Remove="Resources\Emojis\1f4b8.png" />
+    <None Remove="Resources\Emojis\1f4b9.png" />
+    <None Remove="Resources\Emojis\1f4ba.png" />
+    <None Remove="Resources\Emojis\1f4bb.png" />
+    <None Remove="Resources\Emojis\1f4bc.png" />
+    <None Remove="Resources\Emojis\1f4bd.png" />
+    <None Remove="Resources\Emojis\1f4be.png" />
+    <None Remove="Resources\Emojis\1f4bf.png" />
+    <None Remove="Resources\Emojis\1f4c0.png" />
+    <None Remove="Resources\Emojis\1f4c1.png" />
+    <None Remove="Resources\Emojis\1f4c2.png" />
+    <None Remove="Resources\Emojis\1f4c3.png" />
+    <None Remove="Resources\Emojis\1f4c4.png" />
+    <None Remove="Resources\Emojis\1f4c5.png" />
+    <None Remove="Resources\Emojis\1f4c6.png" />
+    <None Remove="Resources\Emojis\1f4c7.png" />
+    <None Remove="Resources\Emojis\1f4c8.png" />
+    <None Remove="Resources\Emojis\1f4c9.png" />
+    <None Remove="Resources\Emojis\1f4ca.png" />
+    <None Remove="Resources\Emojis\1f4cb.png" />
+    <None Remove="Resources\Emojis\1f4cc.png" />
+    <None Remove="Resources\Emojis\1f4cd.png" />
+    <None Remove="Resources\Emojis\1f4ce.png" />
+    <None Remove="Resources\Emojis\1f4cf.png" />
+    <None Remove="Resources\Emojis\1f4d1.png" />
+    <None Remove="Resources\Emojis\1f4d2.png" />
+    <None Remove="Resources\Emojis\1f4d3.png" />
+    <None Remove="Resources\Emojis\1f4d4.png" />
+    <None Remove="Resources\Emojis\1f4d5.png" />
+    <None Remove="Resources\Emojis\1f4d6.png" />
+    <None Remove="Resources\Emojis\1f4d7.png" />
+    <None Remove="Resources\Emojis\1f4d8.png" />
+    <None Remove="Resources\Emojis\1f4d9.png" />
+    <None Remove="Resources\Emojis\1f4da.png" />
+    <None Remove="Resources\Emojis\1f4dd.png" />
+    <None Remove="Resources\Emojis\1f4de.png" />
+    <None Remove="Resources\Emojis\1f4df.png" />
+    <None Remove="Resources\Emojis\1f4e0.png" />
+    <None Remove="Resources\Emojis\1f4e1.png" />
+    <None Remove="Resources\Emojis\1f4e3.png" />
+    <None Remove="Resources\Emojis\1f4e4.png" />
+    <None Remove="Resources\Emojis\1f4e5.png" />
+    <None Remove="Resources\Emojis\1f4e6.png" />
+    <None Remove="Resources\Emojis\1f4e7.png" />
+    <None Remove="Resources\Emojis\1f4e8.png" />
+    <None Remove="Resources\Emojis\1f4e9.png" />
+    <None Remove="Resources\Emojis\1f4ea.png" />
+    <None Remove="Resources\Emojis\1f4eb.png" />
+    <None Remove="Resources\Emojis\1f4ec.png" />
+    <None Remove="Resources\Emojis\1f4f1.png" />
+    <None Remove="Resources\Emojis\1f4f2.png" />
+    <None Remove="Resources\Emojis\1f4f3.png" />
+    <None Remove="Resources\Emojis\1f4f4.png" />
+    <None Remove="Resources\Emojis\1f4f5.png" />
+    <None Remove="Resources\Emojis\1f4f6.png" />
+    <None Remove="Resources\Emojis\1f4f7.png" />
+    <None Remove="Resources\Emojis\1f4f8.png" />
+    <None Remove="Resources\Emojis\1f4f9.png" />
+    <None Remove="Resources\Emojis\1f4fa.png" />
+    <None Remove="Resources\Emojis\1f4fb.png" />
+    <None Remove="Resources\Emojis\1f4fc.png" />
+    <None Remove="Resources\Emojis\1f4fd.png" />
+    <None Remove="Resources\Emojis\1f500.png" />
+    <None Remove="Resources\Emojis\1f501.png" />
+    <None Remove="Resources\Emojis\1f502.png" />
+    <None Remove="Resources\Emojis\1f503.png" />
+    <None Remove="Resources\Emojis\1f504.png" />
+    <None Remove="Resources\Emojis\1f505.png" />
+    <None Remove="Resources\Emojis\1f506.png" />
+    <None Remove="Resources\Emojis\1f507.png" />
+    <None Remove="Resources\Emojis\1f508.png" />
+    <None Remove="Resources\Emojis\1f509.png" />
+    <None Remove="Resources\Emojis\1f50a.png" />
+    <None Remove="Resources\Emojis\1f50b.png" />
+    <None Remove="Resources\Emojis\1f50c.png" />
+    <None Remove="Resources\Emojis\1f50e.png" />
+    <None Remove="Resources\Emojis\1f50f.png" />
+    <None Remove="Resources\Emojis\1f510.png" />
+    <None Remove="Resources\Emojis\1f512.png" />
+    <None Remove="Resources\Emojis\1f513.png" />
+    <None Remove="Resources\Emojis\1f514.png" />
+    <None Remove="Resources\Emojis\1f515.png" />
+    <None Remove="Resources\Emojis\1f51a.png" />
+    <None Remove="Resources\Emojis\1f51b.png" />
+    <None Remove="Resources\Emojis\1f51c.png" />
+    <None Remove="Resources\Emojis\1f51d.png" />
+    <None Remove="Resources\Emojis\1f51e.png" />
+    <None Remove="Resources\Emojis\1f51f.png" />
+    <None Remove="Resources\Emojis\1f52f.png" />
+    <None Remove="Resources\Emojis\1f53c.png" />
+    <None Remove="Resources\Emojis\1f53d.png" />
+    <None Remove="Resources\Emojis\1f54a.png" />
+    <None Remove="Resources\Emojis\1f587.png" />
+    <None Remove="Resources\Emojis\1f590.png" />
+    <None Remove="Resources\Emojis\1f595.png" />
+    <None Remove="Resources\Emojis\1f596.png" />
+    <None Remove="Resources\Emojis\1f5a4.png" />
+    <None Remove="Resources\Emojis\1f5a5.png" />
+    <None Remove="Resources\Emojis\1f5a8.png" />
+    <None Remove="Resources\Emojis\1f5b1.png" />
+    <None Remove="Resources\Emojis\1f5c2.png" />
+    <None Remove="Resources\Emojis\1f5c3.png" />
+    <None Remove="Resources\Emojis\1f5c4.png" />
+    <None Remove="Resources\Emojis\1f5d1.png" />
+    <None Remove="Resources\Emojis\1f5d2.png" />
+    <None Remove="Resources\Emojis\1f5d3.png" />
+    <None Remove="Resources\Emojis\1f5e8.png" />
+    <None Remove="Resources\Emojis\1f5fa.png" />
+    <None Remove="Resources\Emojis\1f5fc.png" />
+    <None Remove="Resources\Emojis\1f5fd.png" />
+    <None Remove="Resources\Emojis\1f5ff.png" />
+    <None Remove="Resources\Emojis\1f600.png" />
+    <None Remove="Resources\Emojis\1f601.png" />
+    <None Remove="Resources\Emojis\1f602.png" />
+    <None Remove="Resources\Emojis\1f603.png" />
+    <None Remove="Resources\Emojis\1f604.png" />
+    <None Remove="Resources\Emojis\1f605.png" />
+    <None Remove="Resources\Emojis\1f606.png" />
+    <None Remove="Resources\Emojis\1f607.png" />
+    <None Remove="Resources\Emojis\1f608.png" />
+    <None Remove="Resources\Emojis\1f609.png" />
+    <None Remove="Resources\Emojis\1f60a.png" />
+    <None Remove="Resources\Emojis\1f60b.png" />
+    <None Remove="Resources\Emojis\1f60c.png" />
+    <None Remove="Resources\Emojis\1f60d.png" />
+    <None Remove="Resources\Emojis\1f60e.png" />
+    <None Remove="Resources\Emojis\1f60f.png" />
+    <None Remove="Resources\Emojis\1f610.png" />
+    <None Remove="Resources\Emojis\1f612.png" />
+    <None Remove="Resources\Emojis\1f613.png" />
+    <None Remove="Resources\Emojis\1f614.png" />
+    <None Remove="Resources\Emojis\1f615.png" />
+    <None Remove="Resources\Emojis\1f616.png" />
+    <None Remove="Resources\Emojis\1f617.png" />
+    <None Remove="Resources\Emojis\1f618.png" />
+    <None Remove="Resources\Emojis\1f619.png" />
+    <None Remove="Resources\Emojis\1f61a.png" />
+    <None Remove="Resources\Emojis\1f61b.png" />
+    <None Remove="Resources\Emojis\1f61c.png" />
+    <None Remove="Resources\Emojis\1f61d.png" />
+    <None Remove="Resources\Emojis\1f61e.png" />
+    <None Remove="Resources\Emojis\1f61f.png" />
+    <None Remove="Resources\Emojis\1f620.png" />
+    <None Remove="Resources\Emojis\1f621.png" />
+    <None Remove="Resources\Emojis\1f622.png" />
+    <None Remove="Resources\Emojis\1f623.png" />
+    <None Remove="Resources\Emojis\1f624.png" />
+    <None Remove="Resources\Emojis\1f625.png" />
+    <None Remove="Resources\Emojis\1f626.png" />
+    <None Remove="Resources\Emojis\1f627.png" />
+    <None Remove="Resources\Emojis\1f628.png" />
+    <None Remove="Resources\Emojis\1f629.png" />
+    <None Remove="Resources\Emojis\1f62a.png" />
+    <None Remove="Resources\Emojis\1f62b.png" />
+    <None Remove="Resources\Emojis\1f62c.png" />
+    <None Remove="Resources\Emojis\1f62d.png" />
+    <None Remove="Resources\Emojis\1f62e-200d-1f4a8.png" />
+    <None Remove="Resources\Emojis\1f62e.png" />
+    <None Remove="Resources\Emojis\1f62f.png" />
+    <None Remove="Resources\Emojis\1f630.png" />
+    <None Remove="Resources\Emojis\1f631.png" />
+    <None Remove="Resources\Emojis\1f632.png" />
+    <None Remove="Resources\Emojis\1f633.png" />
+    <None Remove="Resources\Emojis\1f634.png" />
+    <None Remove="Resources\Emojis\1f635-200d-1f4ab.png" />
+    <None Remove="Resources\Emojis\1f635.png" />
+    <None Remove="Resources\Emojis\1f636-200d-1f32b-fe0f.png" />
+    <None Remove="Resources\Emojis\1f636.png" />
+    <None Remove="Resources\Emojis\1f637.png" />
+    <None Remove="Resources\Emojis\1f641.png" />
+    <None Remove="Resources\Emojis\1f642.png" />
+    <None Remove="Resources\Emojis\1f643.png" />
+    <None Remove="Resources\Emojis\1f644.png" />
+    <None Remove="Resources\Emojis\1f645.png" />
+    <None Remove="Resources\Emojis\1f64a.png" />
+    <None Remove="Resources\Emojis\1f64c.png" />
+    <None Remove="Resources\Emojis\1f64f.png" />
+    <None Remove="Resources\Emojis\1f680.png" />
+    <None Remove="Resources\Emojis\1f681.png" />
+    <None Remove="Resources\Emojis\1f684.png" />
+    <None Remove="Resources\Emojis\1f691.png" />
+    <None Remove="Resources\Emojis\1f692.png" />
+    <None Remove="Resources\Emojis\1f693.png" />
+    <None Remove="Resources\Emojis\1f695.png" />
+    <None Remove="Resources\Emojis\1f6a0.png" />
+    <None Remove="Resources\Emojis\1f6a5.png" />
+    <None Remove="Resources\Emojis\1f6a6.png" />
+    <None Remove="Resources\Emojis\1f6a9.png" />
+    <None Remove="Resources\Emojis\1f6aa.png" />
+    <None Remove="Resources\Emojis\1f6ab.png" />
+    <None Remove="Resources\Emojis\1f6ad.png" />
+    <None Remove="Resources\Emojis\1f6b7.png" />
+    <None Remove="Resources\Emojis\1f6b8.png" />
+    <None Remove="Resources\Emojis\1f6be.png" />
+    <None Remove="Resources\Emojis\1f6d1.png" />
+    <None Remove="Resources\Emojis\1f6d2.png" />
+    <None Remove="Resources\Emojis\1f6df.png" />
+    <None Remove="Resources\Emojis\1f6e0.png" />
+    <None Remove="Resources\Emojis\1f7e0.png" />
+    <None Remove="Resources\Emojis\1f7e1.png" />
+    <None Remove="Resources\Emojis\1f7e2.png" />
+    <None Remove="Resources\Emojis\1f7e3.png" />
+    <None Remove="Resources\Emojis\1f7e4.png" />
+    <None Remove="Resources\Emojis\1f7e5.png" />
+    <None Remove="Resources\Emojis\1f7e6.png" />
+    <None Remove="Resources\Emojis\1f7e7.png" />
+    <None Remove="Resources\Emojis\1f7e8.png" />
+    <None Remove="Resources\Emojis\1f7e9.png" />
+    <None Remove="Resources\Emojis\1f7ea.png" />
+    <None Remove="Resources\Emojis\1f7eb.png" />
+    <None Remove="Resources\Emojis\1f7f0.png" />
+    <None Remove="Resources\Emojis\1f90c.png" />
+    <None Remove="Resources\Emojis\1f90e.png" />
+    <None Remove="Resources\Emojis\1f90f.png" />
+    <None Remove="Resources\Emojis\1f910.png" />
+    <None Remove="Resources\Emojis\1f911.png" />
+    <None Remove="Resources\Emojis\1f912.png" />
+    <None Remove="Resources\Emojis\1f913.png" />
+    <None Remove="Resources\Emojis\1f914.png" />
+    <None Remove="Resources\Emojis\1f915.png" />
+    <None Remove="Resources\Emojis\1f917.png" />
+    <None Remove="Resources\Emojis\1f918.png" />
+    <None Remove="Resources\Emojis\1f919.png" />
+    <None Remove="Resources\Emojis\1f91a.png" />
+    <None Remove="Resources\Emojis\1f91b.png" />
+    <None Remove="Resources\Emojis\1f91c.png" />
+    <None Remove="Resources\Emojis\1f91d.png" />
+    <None Remove="Resources\Emojis\1f91e.png" />
+    <None Remove="Resources\Emojis\1f91f.png" />
+    <None Remove="Resources\Emojis\1f920.png" />
+    <None Remove="Resources\Emojis\1f922.png" />
+    <None Remove="Resources\Emojis\1f923.png" />
+    <None Remove="Resources\Emojis\1f924.png" />
+    <None Remove="Resources\Emojis\1f925.png" />
+    <None Remove="Resources\Emojis\1f926.png" />
+    <None Remove="Resources\Emojis\1f927.png" />
+    <None Remove="Resources\Emojis\1f928.png" />
+    <None Remove="Resources\Emojis\1f929.png" />
+    <None Remove="Resources\Emojis\1f92a.png" />
+    <None Remove="Resources\Emojis\1f92b.png" />
+    <None Remove="Resources\Emojis\1f92c.png" />
+    <None Remove="Resources\Emojis\1f92d.png" />
+    <None Remove="Resources\Emojis\1f92e.png" />
+    <None Remove="Resources\Emojis\1f92f.png" />
+    <None Remove="Resources\Emojis\1f932.png" />
+    <None Remove="Resources\Emojis\1f933.png" />
+    <None Remove="Resources\Emojis\1f93f.png" />
+    <None Remove="Resources\Emojis\1f947.png" />
+    <None Remove="Resources\Emojis\1f948.png" />
+    <None Remove="Resources\Emojis\1f949.png" />
+    <None Remove="Resources\Emojis\1f94a.png" />
+    <None Remove="Resources\Emojis\1f94b.png" />
+    <None Remove="Resources\Emojis\1f94e.png" />
+    <None Remove="Resources\Emojis\1f970.png" />
+    <None Remove="Resources\Emojis\1f971.png" />
+    <None Remove="Resources\Emojis\1f972.png" />
+    <None Remove="Resources\Emojis\1f973.png" />
+    <None Remove="Resources\Emojis\1f974.png" />
+    <None Remove="Resources\Emojis\1f975.png" />
+    <None Remove="Resources\Emojis\1f976.png" />
+    <None Remove="Resources\Emojis\1f978.png" />
+    <None Remove="Resources\Emojis\1f979.png" />
+    <None Remove="Resources\Emojis\1f97a.png" />
+    <None Remove="Resources\Emojis\1f985.png" />
+    <None Remove="Resources\Emojis\1f988.png" />
+    <None Remove="Resources\Emojis\1f989.png" />
+    <None Remove="Resources\Emojis\1f99d.png" />
+    <None Remove="Resources\Emojis\1f9c1.png" />
+    <None Remove="Resources\Emojis\1f9cb.png" />
+    <None Remove="Resources\Emojis\1f9cd-1f3fb-200d-2640-fe0f.png" />
+    <None Remove="Resources\Emojis\1f9cd-1f3fb.png" />
+    <None Remove="Resources\Emojis\1f9cd-1f3fe.png" />
+    <None Remove="Resources\Emojis\1f9cd-1f3ff-200d-2640-fe0f.png" />
+    <None Remove="Resources\Emojis\1f9cd-1f3ff-200d-2642-fe0f.png" />
+    <None Remove="Resources\Emojis\1f9cd-200d-2642-fe0f.png" />
+    <None Remove="Resources\Emojis\1f9cd.png" />
+    <None Remove="Resources\Emojis\1f9cf-1f3fb-200d-2642-fe0f.png" />
+    <None Remove="Resources\Emojis\1f9cf-1f3fe-200d-2640-fe0f.png" />
+    <None Remove="Resources\Emojis\1f9cf.png" />
+    <None Remove="Resources\Emojis\1f9d0.png" />
+    <None Remove="Resources\Emojis\1f9d1-1f3fb-200d-1f33e.png" />
+    <None Remove="Resources\Emojis\1f9d1-1f3fb-200d-1f384.png" />
+    <None Remove="Resources\Emojis\1f9d1-1f3fb-200d-1f393.png" />
+    <None Remove="Resources\Emojis\1f9d1-1f3fb-200d-1f9bd.png" />
+    <None Remove="Resources\Emojis\1f9d1-1f3fc-200d-1f393.png" />
+    <None Remove="Resources\Emojis\1f9d1-200d-1f384.png" />
+    <None Remove="Resources\Emojis\1f9e0.png" />
+    <None Remove="Resources\Emojis\1f9e1.png" />
+    <None Remove="Resources\Emojis\1f9e2.png" />
+    <None Remove="Resources\Emojis\1f9e3.png" />
+    <None Remove="Resources\Emojis\1f9e4.png" />
+    <None Remove="Resources\Emojis\1f9e6.png" />
+    <None Remove="Resources\Emojis\1f9e9.png" />
+    <None Remove="Resources\Emojis\1f9ec.png" />
+    <None Remove="Resources\Emojis\1f9ed.png" />
+    <None Remove="Resources\Emojis\1f9ee.png" />
+    <None Remove="Resources\Emojis\1f9f2.png" />
+    <None Remove="Resources\Emojis\1f9f7.png" />
+    <None Remove="Resources\Emojis\1f9fb.png" />
+    <None Remove="Resources\Emojis\1fa99.png" />
+    <None Remove="Resources\Emojis\1faa9.png" />
+    <None Remove="Resources\Emojis\1faaa.png" />
+    <None Remove="Resources\Emojis\1faab.png" />
+    <None Remove="Resources\Emojis\1fae0.png" />
+    <None Remove="Resources\Emojis\1fae1.png" />
+    <None Remove="Resources\Emojis\1fae2.png" />
+    <None Remove="Resources\Emojis\1fae3.png" />
+    <None Remove="Resources\Emojis\1fae4.png" />
+    <None Remove="Resources\Emojis\1faf0.png" />
+    <None Remove="Resources\Emojis\1faf1.png" />
+    <None Remove="Resources\Emojis\1faf2.png" />
+    <None Remove="Resources\Emojis\1faf3.png" />
+    <None Remove="Resources\Emojis\1faf4.png" />
+    <None Remove="Resources\Emojis\1faf5.png" />
+    <None Remove="Resources\Emojis\1faf6.png" />
+    <None Remove="Resources\Emojis\203c.png" />
+    <None Remove="Resources\Emojis\2049.png" />
+    <None Remove="Resources\Emojis\2122.png" />
+    <None Remove="Resources\Emojis\2139.png" />
+    <None Remove="Resources\Emojis\2194.png" />
+    <None Remove="Resources\Emojis\2195.png" />
+    <None Remove="Resources\Emojis\2196.png" />
+    <None Remove="Resources\Emojis\2197.png" />
+    <None Remove="Resources\Emojis\2198.png" />
+    <None Remove="Resources\Emojis\2199.png" />
+    <None Remove="Resources\Emojis\21a9.png" />
+    <None Remove="Resources\Emojis\21aa.png" />
+    <None Remove="Resources\Emojis\23-20e3.png" />
+    <None Remove="Resources\Emojis\231b.png" />
+    <None Remove="Resources\Emojis\2328.png" />
+    <None Remove="Resources\Emojis\23cf.png" />
+    <None Remove="Resources\Emojis\23e9.png" />
+    <None Remove="Resources\Emojis\23ea.png" />
+    <None Remove="Resources\Emojis\23eb.png" />
+    <None Remove="Resources\Emojis\23ec.png" />
+    <None Remove="Resources\Emojis\23ed.png" />
+    <None Remove="Resources\Emojis\23ee.png" />
+    <None Remove="Resources\Emojis\23ef.png" />
+    <None Remove="Resources\Emojis\23f0.png" />
+    <None Remove="Resources\Emojis\23f3.png" />
+    <None Remove="Resources\Emojis\23f8.png" />
+    <None Remove="Resources\Emojis\23f9.png" />
+    <None Remove="Resources\Emojis\23fa.png" />
+    <None Remove="Resources\Emojis\24c2.png" />
+    <None Remove="Resources\Emojis\25b6.png" />
+    <None Remove="Resources\Emojis\25c0.png" />
+    <None Remove="Resources\Emojis\2600.png" />
+    <None Remove="Resources\Emojis\2601.png" />
+    <None Remove="Resources\Emojis\2602.png" />
+    <None Remove="Resources\Emojis\260e.png" />
+    <None Remove="Resources\Emojis\261d.png" />
+    <None Remove="Resources\Emojis\2620.png" />
+    <None Remove="Resources\Emojis\2622.png" />
+    <None Remove="Resources\Emojis\2623.png" />
+    <None Remove="Resources\Emojis\2639.png" />
+    <None Remove="Resources\Emojis\263a.png" />
+    <None Remove="Resources\Emojis\2640.png" />
+    <None Remove="Resources\Emojis\2642.png" />
+    <None Remove="Resources\Emojis\2665.png" />
+    <None Remove="Resources\Emojis\2666.png" />
+    <None Remove="Resources\Emojis\267b.png" />
+    <None Remove="Resources\Emojis\267e.png" />
+    <None Remove="Resources\Emojis\2692.png" />
+    <None Remove="Resources\Emojis\2693.png" />
+    <None Remove="Resources\Emojis\2695.png" />
+    <None Remove="Resources\Emojis\2696.png" />
+    <None Remove="Resources\Emojis\2699.png" />
+    <None Remove="Resources\Emojis\26a0.png" />
+    <None Remove="Resources\Emojis\26a1.png" />
+    <None Remove="Resources\Emojis\26bd.png" />
+    <None Remove="Resources\Emojis\26be.png" />
+    <None Remove="Resources\Emojis\26d4.png" />
+    <None Remove="Resources\Emojis\2702.png" />
+    <None Remove="Resources\Emojis\2705.png" />
+    <None Remove="Resources\Emojis\2709.png" />
+    <None Remove="Resources\Emojis\270a.png" />
+    <None Remove="Resources\Emojis\270b.png" />
+    <None Remove="Resources\Emojis\270c.png" />
+    <None Remove="Resources\Emojis\270d.png" />
+    <None Remove="Resources\Emojis\270f.png" />
+    <None Remove="Resources\Emojis\2714.png" />
+    <None Remove="Resources\Emojis\2716.png" />
+    <None Remove="Resources\Emojis\274c.png" />
+    <None Remove="Resources\Emojis\274e.png" />
+    <None Remove="Resources\Emojis\2753.png" />
+    <None Remove="Resources\Emojis\2754.png" />
+    <None Remove="Resources\Emojis\2755.png" />
+    <None Remove="Resources\Emojis\2757.png" />
+    <None Remove="Resources\Emojis\2763.png" />
+    <None Remove="Resources\Emojis\2764-fe0f-200d-1f525.png" />
+    <None Remove="Resources\Emojis\2764-fe0f-200d-1fa79.png" />
+    <None Remove="Resources\Emojis\2764.png" />
+    <None Remove="Resources\Emojis\2795.png" />
+    <None Remove="Resources\Emojis\2796.png" />
+    <None Remove="Resources\Emojis\2797.png" />
+    <None Remove="Resources\Emojis\27bf.png" />
+    <None Remove="Resources\Emojis\2934.png" />
+    <None Remove="Resources\Emojis\2935.png" />
+    <None Remove="Resources\Emojis\2a-20e3.png" />
+    <None Remove="Resources\Emojis\2b05.png" />
+    <None Remove="Resources\Emojis\2b06.png" />
+    <None Remove="Resources\Emojis\2b07.png" />
+    <None Remove="Resources\Emojis\2b50.png" />
+    <None Remove="Resources\Emojis\2b55.png" />
+    <None Remove="Resources\Emojis\30-20e3.png" />
+    <None Remove="Resources\Emojis\31-20e3.png" />
+    <None Remove="Resources\Emojis\32-20e3.png" />
+    <None Remove="Resources\Emojis\33-20e3.png" />
+    <None Remove="Resources\Emojis\34-20e3.png" />
+    <None Remove="Resources\Emojis\35-20e3.png" />
+    <None Remove="Resources\Emojis\36-20e3.png" />
+    <None Remove="Resources\Emojis\37-20e3.png" />
+    <None Remove="Resources\Emojis\38-20e3.png" />
+    <None Remove="Resources\Emojis\39-20e3.png" />
+    <None Remove="Resources\Emojis\a9.png" />
+    <None Remove="Resources\Emojis\ae.png" />
+    <None Remove="Resources\Images\Avatars\k.kuzmich.jpg" />
     <None Remove="Resources\Images\background-pattern.png" />
     <None Remove="Resources\Images\no-avatar.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\Emojis\1f0cf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f170.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f171.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f191.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f192.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f193.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f194.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f195.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f196.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f197.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f198.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f199.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f19a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e6-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e6-1f1f2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e6-1f1f9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e6-1f1fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e7-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e7-1f1ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e7-1f1ef.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e7-1f1f8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e7-1f1fb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e7-1f1fe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8-1f1e6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8-1f1ed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8-1f1ee.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8-1f1f3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8-1f1f4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8-1f1f5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8-1f1ff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e9-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1e9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ea-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ea-1f1ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ea-1f1ed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ea-1f1fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1eb-1f1ee.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1eb-1f1f2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1eb-1f1f4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1eb-1f1f7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1eb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ec-1f1e7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ec-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ec-1f1f2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ec-1f1f3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ec-1f1f6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ec-1f1f7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ed-1f1fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ee-1f1e9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ee-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ee-1f1f1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ee-1f1f8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ee-1f1f9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ee.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ef-1f1f5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ef.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f0-1f1f5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f0-1f1f7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f0-1f1ff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f1-1f1f7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f1-1f1f9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f1-1f1fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f1-1f1fb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f1-1f1fe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f2-1f1e8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f2-1f1eb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f2-1f1ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f2-1f1f1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f2-1f1fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f3-1f1f1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f5-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f5-1f1f1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f5-1f1fc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f8-1f1ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f8-1f1ee.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f8-1f1ef.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f8-1f1f4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f9-1f1ed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f9-1f1ef.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1f9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1fa-1f1f3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1fa-1f1f8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1fb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1fc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1fd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1fe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f1ff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f201.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f302.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f308.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f30d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f310.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f31d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f324.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f325.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f326.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f327.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f328.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f329.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f32d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f32e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f32f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f33b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f33d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f349.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f34a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f34b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f34c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f34d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f34e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f34f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f354.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f355.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f35f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f368.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f36b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f36d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f36e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f377.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f37a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f37b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f37e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f37f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f382.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f383.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f384.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f385.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f389.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f392.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f393.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f396.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f397.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f399.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3a4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3a5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3a6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3a7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3a8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3ac.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3ad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3ae.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3af.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3b9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3be.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3c0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3c1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3c5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3c6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3ce.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3cf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3d7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3db.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3dd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3e1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3e6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3ef.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f3-fe0f-200d-1f308.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f4-200d-2620-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f4-e0067-e0062-e0065-e006e-e0067-e007f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f4-e0067-e0062-e0077-e006c-e0073-e007f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f3f9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f40b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f446.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f447.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f448.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f449.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f44a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f44b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f44c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f44d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f44e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f44f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f450.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f45c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f45e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f45f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f47b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f47d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f480.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f48a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f48b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f48c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f48d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f48e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f493.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f494.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f495.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f496.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f497.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f498.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f499.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f49b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f49e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f49f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4a1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4a3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4a4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4a5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4a6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4a7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4a9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4aa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4ac.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4af.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4b9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4ba.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4bb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4bc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4bd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4be.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4bf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4c9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4ca.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4cb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4cc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4cd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4ce.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4cf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4d9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4da.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4dd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4de.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4df.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4e9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4eb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4f9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4fb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4fc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f4fd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f500.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f501.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f502.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f503.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f504.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f505.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f506.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f507.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f508.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f509.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f50a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f50b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f50c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f50e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f50f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f510.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f512.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f513.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f514.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f515.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f51a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f51b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f51c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f51d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f51e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f51f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f52f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f53c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f53d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f54a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f587.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f590.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f595.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f596.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5a4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5a5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5a8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5b1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5c2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5c3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5c4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5d1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5d2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5d3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5e8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5fc.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5fd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f5ff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f600.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f601.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f602.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f603.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f604.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f605.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f606.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f607.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f608.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f609.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f60a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f60b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f60c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f60d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f60e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f60f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f610.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f612.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f613.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f614.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f615.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f616.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f617.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f618.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f619.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f61a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f61b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f61c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f61d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f61e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f61f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f620.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f621.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f622.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f623.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f624.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f625.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f626.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f627.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f628.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f629.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f62a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f62b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f62c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f62d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f62e-200d-1f4a8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f62e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f62f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f630.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f631.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f632.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f633.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f634.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f635-200d-1f4ab.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f635.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f636-200d-1f32b-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f636.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f637.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f641.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f642.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f643.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f644.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f645.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f64a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f64c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f64f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f680.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f681.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f684.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f691.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f692.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f693.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f695.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6a0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6a5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6a6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6a9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6aa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6ab.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6ad.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6b7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6b8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6be.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6d1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6d2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6df.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f6e0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7e9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7eb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f7f0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f90c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f90e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f90f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f910.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f911.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f912.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f913.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f914.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f915.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f917.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f918.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f919.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f91a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f91b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f91c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f91d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f91e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f91f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f920.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f922.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f923.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f924.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f925.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f926.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f927.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f928.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f929.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f92a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f92b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f92c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f92d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f92e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f92f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f932.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f933.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f93f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f947.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f948.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f949.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f94a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f94b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f94e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f970.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f971.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f972.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f973.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f974.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f975.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f976.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f978.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f979.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f97a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f985.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f988.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f989.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f99d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9c1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cd-1f3fb-200d-2640-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cd-1f3fb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cd-1f3fe.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cd-1f3ff-200d-2640-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cd-1f3ff-200d-2642-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cd-200d-2642-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cf-1f3fb-200d-2642-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cf-1f3fe-200d-2640-fe0f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9cf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9d0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9d1-1f3fb-200d-1f33e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9d1-1f3fb-200d-1f384.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9d1-1f3fb-200d-1f393.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9d1-1f3fb-200d-1f9bd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9d1-1f3fc-200d-1f393.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9d1-200d-1f384.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9e0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9e1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9e2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9e4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9e6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9e9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9ed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9ee.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9f2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9f7.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1f9fb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1fa99.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faa9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faaa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faab.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1fae0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1fae1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1fae2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1fae3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1fae4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faf0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faf1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faf2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faf3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faf4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faf5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\1faf6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\203c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2049.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2122.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2139.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2194.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2195.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2196.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2197.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2198.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2199.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\21a9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\21aa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\231b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2328.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23cf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23e9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23ea.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23eb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23ec.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23ed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23ee.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23ef.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23f0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23f3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23f8.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23f9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\23fa.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\24c2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\25b6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\25c0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2600.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2601.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2602.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\260e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\261d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2620.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2622.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2623.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2639.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\263a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2640.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2642.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2665.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2666.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\267b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\267e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2692.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2693.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2695.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2696.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2699.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\26a0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\26a1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\26bd.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\26be.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\26d4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2702.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2705.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2709.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\270a.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\270b.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\270c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\270d.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\270f.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2714.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2716.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\274c.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\274e.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2753.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2754.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2755.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2757.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2763.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2764-fe0f-200d-1f525.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2764-fe0f-200d-1fa79.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2764.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2795.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2796.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2797.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\27bf.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2934.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2935.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2a-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2b05.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2b06.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2b07.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2b50.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\2b55.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\30-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\31-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\32-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\33-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\34-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\35-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\36-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\37-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\38-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\39-20e3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\a9.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Emojis\ae.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\Avatars\k.kuzmich.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="itext" Version="9.2.0" />
+    <PackageReference Include="itext.commons" Version="9.2.0" />
     <PackageReference Include="LiveCharts.Core" Version="0.9.8" />
     <PackageReference Include="LiveCharts.Wpf.Core" Version="0.9.8" />
     <PackageReference Include="LiveChartsCore" Version="2.0.0-rc5.1" />
@@ -52,6 +2697,7 @@
     <PackageReference Include="NLog.Database" Version="5.4.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.4.0" />
     <PackageReference Include="NLog.Schema" Version="5.4.0" />
+    <PackageReference Include="PDFsharp" Version="6.2.1" />
     <PackageReference Include="ShowMeTheXAML" Version="2.0.0" />
     <PackageReference Include="ShowMeTheXAML.AvalonEdit" Version="2.0.0" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" Version="2.0.0" />
@@ -67,12 +2713,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\Images\background-pattern.png">
+    <Content Include="Resources\Images\background-pattern.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Resources\Images\no-avatar.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </Content>
+    <Content Include="Resources\Images\no-avatar.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

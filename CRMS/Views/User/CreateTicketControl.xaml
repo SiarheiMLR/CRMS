@@ -17,6 +17,9 @@
         <converters:PriorityToRussianConverter x:Key="PriorityToRussianConverter"/>
         <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
 
+        <!-- Конвертер для FlowDocument -->
+        <converters:FlowDocumentConverter x:Key="FlowDocumentConverter"/>
+
         <!-- Стиль для текста -->
         <Style TargetType="TextBlock" x:Key="CardTextStyle">
             <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
@@ -167,16 +170,47 @@
                 <local:RichTextEditor Grid.Row="5" Grid.Column="1"
                                       Height="250"
                                       Margin="0,8,10,0"
-                                      Document="{Binding BodyDocument, Mode=TwoWay, TargetNullValue={x:Static local:RichTextEditor.DefaultDocument}}"/>
+                                      Document="{Binding BodyDocument, Converter={StaticResource FlowDocumentConverter}, Mode=TwoWay}"
+                                      SaveCommand="{Binding SaveCommand}"/>
 
-                <!-- Вложение файлов -->
+                <!-- Вложение файлов: панель с возможностью клика и Drag&Drop -->
                 <Border Grid.Row="6" Grid.ColumnSpan="2"
                         BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}"
                         Padding="10" Margin="0,20,10,0"
-                        HorizontalAlignment="Stretch">
-                    <TextBlock Text="Перетащите файлы сюда или нажмите чтобы добавить"
-                               HorizontalAlignment="Center"
-                               Foreground="White"/>
+                        HorizontalAlignment="Stretch"
+                        AllowDrop="True"
+                        Drop="AttachmentsDrop"
+                        MouseLeftButtonUp="AttachmentsClick">
+                    <StackPanel>
+                        <TextBlock Text="Перетащите файлы сюда или нажмите, чтобы выбрать"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   Margin="0,0,0,8"/>
+                        
+                        <!-- Список прикреплённых файлов -->
+                    <ItemsControl ItemsSource="{Binding Attachments}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type domain:Attachment}">
+                                <StackPanel Orientation="Horizontal" Margin="0,2">
+                                    <TextBlock Text="{Binding FileName}" 
+                                               Foreground="White" 
+                                               VerticalAlignment="Center"/>
+                                    <Button Content="×"
+                                            Command="{Binding DataContext.RemoveAttachmentCommand, 
+                                    RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                            CommandParameter="{Binding}"
+                                            Foreground="Red"
+                                            ToolTip="Удалить файл"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            FontWeight="Bold"
+                                            Margin="8,0,0,0"
+                                            Cursor="Hand"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    </StackPanel>
                 </Border>
 
                 <!-- Кнопка -->

@@ -327,6 +327,33 @@ namespace CRMS.DAL.Data
                     .OnDelete(DeleteBehavior.Cascade);
 
             });
+
+            modelBuilder.Entity<Attachment>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+
+                entity.Property(a => a.FileName)
+                      .IsRequired()
+                      .HasMaxLength(255);
+
+                entity.Property(a => a.ContentType)
+                      .HasMaxLength(100);
+
+                entity.Property(a => a.FileData)
+                      .HasColumnType("LONGBLOB")
+                      .IsRequired();
+
+                entity.HasOne(a => a.Ticket)
+                      .WithMany(t => t.Attachments)
+                      .HasForeignKey(a => a.TicketId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(a => a.UploadedBy)
+                      .WithMany()
+                      .HasForeignKey(a => a.UploadedById)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
             // Создание или обновление в базе дынных учетной записи Administrator
             var adminEmail = "admin@bigfirm.by";
             var adminUserName = "administrator@bigfirm.by";

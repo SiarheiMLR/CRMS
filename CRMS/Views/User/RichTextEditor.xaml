@@ -6,143 +6,302 @@
              xmlns:local="clr-namespace:CRMS.Views.User"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:vm="clr-namespace:CRMS.ViewModels"
+             x:Name="root"
              Width="739" Height="300">
 
     <UserControl.Resources>
-        <!-- Подключаем Material Design стили для элементов ToolBar -->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToolBar.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Светлый стиль для ToolBar -->
+            <Style x:Key="LightMaterialDesignToolBar" BasedOn="{StaticResource MaterialDesignToolBar}" TargetType="ToolBar">
+                <Setter Property="Background" Value="{DynamicResource MaterialDesignPaper}"/>
+                <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesignToolBarBorder}"/>
+            </Style>
+
+            <!-- Стиль для сепаратора -->
+            <Style x:Key="BlackToolBarSeparator" TargetType="Separator">
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="BorderBrush" Value="Black"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Separator">
+                            <Border 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="2"
+                                Width="1"
+                                Margin="4,5,4,5"
+                                SnapsToDevicePixels="true"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Светлые цвета -->
+            <SolidColorBrush x:Key="MaterialDesignPaper" Color="White"/>
+            <SolidColorBrush x:Key="MaterialDesignToolBarBorder" Color="#FFE0E0E0"/>
+            <SolidColorBrush x:Key="MaterialDesignBody" Color="Black"/>            
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <DockPanel>       
-        <!-- Панель инструментов в стиле Material Design -->
+    <DockPanel>
+        <!-- Панель инструментов в СВЕТЛОМ стиле Material Design -->
         <ToolBar DockPanel.Dock="Top"
-                 ClipToBounds="False" Style="{StaticResource MaterialDesignToolBar}">
+                 ClipToBounds="False"
+                 Style="{StaticResource LightMaterialDesignToolBar}">
+            <!-- UniformGrid для равномерного распределения -->
+            <ToolBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1"/>
+                </ItemsPanelTemplate>
+            </ToolBar.ItemsPanel>
 
             <!-- Сохранить -->
-            <Button Command="{Binding SaveCommand}" 
-                    ToolTip="Сохранить"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="ContentSave" Width="12" Height="12"/>
+            <Button Command="{Binding SaveCommand, ElementName=root}" 
+                    ToolTip="Сохранить копию"                    
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="ContentSave" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+            <!-- Сепаратор -->
+            <Separator Style="{StaticResource BlackToolBarSeparator}"/>
 
             <!-- Вырезать, Копировать, Вставить -->
-            <Button Command="{Binding CutCommand}"                     
+            <Button Command="ApplicationCommands.Cut"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Вырезать"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="ContentCut" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="ContentCut" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Button Command="{Binding CopyCommand}"
+            <Button Command="ApplicationCommands.Copy"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Копировать"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="ContentCopy" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="ContentCopy" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Button Command="{Binding PasteCommand}"
+            <Button Command="ApplicationCommands.Paste"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Вставить"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="ContentPaste" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="ContentPaste" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+            <Separator Style="{StaticResource BlackToolBarSeparator}"/>
 
             <!-- Кнопки выравнивания -->
-            <Button Command="{Binding AlignLeftCommand}" 
+            <Button Command="EditingCommands.AlignLeft"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Выровнять по левому краю"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="FormatAlignLeft" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="FormatAlignLeft" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Button Command="{Binding AlignCenterCommand}" 
+            <Button Command="EditingCommands.AlignCenter"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Выровнять по центру"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="FormatAlignCenter" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="FormatAlignCenter" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Button Command="{Binding AlignRightCommand}" 
+            <Button Command="EditingCommands.AlignRight"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Выровнять по правому краю"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="FormatAlignRight" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                   
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="FormatAlignRight" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Button Command="{Binding JustifyCommand}" 
+            <Button Command="EditingCommands.AlignJustify"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Выровнять по ширине"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="FormatAlignJustify" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="FormatAlignJustify" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+            <Separator Style="{StaticResource BlackToolBarSeparator}"/>
 
             <!-- Кнопки форматирования -->
-            <Button Command="{Binding BoldCommand}"
+            <Button Command="EditingCommands.ToggleBold"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Полужирный"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="FormatBold" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="FormatBold" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Button Command="{Binding ItalicCommand}" 
+            <Button Command="EditingCommands.ToggleItalic"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Курсив"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="FormatItalic" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="FormatItalic" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Button Command="{Binding UnderlineCommand}" 
+            <Button Command="EditingCommands.ToggleUnderline"
+                    CommandTarget="{Binding ElementName=Editor}"
                     ToolBar.OverflowMode="AsNeeded"
                     ToolTip="Подчеркнутый"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="FormatUnderline" Width="12" Height="12"/>
+                    Style="{StaticResource MaterialDesignFlatButton}"                    
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="FormatUnderline" Foreground="Black"/>
+                </Viewbox>
             </Button>
 
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+            <Separator Style="{StaticResource BlackToolBarSeparator}"/>
 
             <!-- Размер шрифта -->
-            <Label VerticalAlignment="Center" Content="Размер:" />
-            <ComboBox Width="30"
-                      Margin="4 0"
-                      ItemsSource="{Binding FontSizes}"
-                      SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}"
-                      ToolTip="Font Size"
-                      Style="{StaticResource MaterialDesignComboBox}">
-                <ComboBoxItem Content="10" />
-                <ComboBoxItem Content="12" IsSelected="True" />
-                <ComboBoxItem Content="14" />
-                <ComboBoxItem Content="16" />
-            </ComboBox>  
+            <Label VerticalAlignment="Center" Content="Размер шрифта:" Foreground="Black" FontWeight="Bold" />
+            <ComboBox Width="40"
+                      Margin="1 0"
+                      ItemsSource="{Binding FontSizes, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                      SelectedItem="{Binding SelectedFontSize, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}"
+                      SelectionChanged="FontSizeComboBox_SelectionChanged"
+                      ToolTip="Размер шрифта"
+                      Foreground="Black"
+                      FontWeight="Bold"
+                      Style="{StaticResource MaterialDesignComboBox}">               
+            </ComboBox>
 
-            <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}"/>
+            <Separator Style="{StaticResource BlackToolBarSeparator}"/>
 
-            <!-- Дополнительные функции -->
-            <Button Command="{Binding InsertImageCommand}" 
-                    ToolTip="Insert Image"
-                    Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
-                <materialDesign:PackIcon Kind="Image" Width="12" Height="12"/>
-            </Button>            
+            <!-- Кнопка смайликов -->
+            <ToggleButton x:Name="EmojiToggleButton"
+                          ToolTip="Вставить смайлик"
+                          Style="{StaticResource MaterialDesignFlatButton}"
+                          Margin="2,0,2,0"
+                          Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="EmoticonHappy" Foreground="Black"/>
+                </Viewbox>
+            </ToggleButton>            
+
+            <Popup IsOpen="{Binding IsChecked, ElementName=EmojiToggleButton}"
+                   PlacementTarget="{Binding ElementName=EmojiToggleButton}"
+                   Placement="Bottom"
+                   StaysOpen="False"
+                   x:Name="EmojiPopup">
+                <Border Background="SlateGray"
+                        BorderBrush="LightGray"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="5">
+                    <!-- Ограничиваем высоту, чтобы появилась вертикальная полоса прокрутки -->
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300" HorizontalScrollBarVisibility="Disabled">
+                        <ItemsControl ItemsSource="{Binding Emojis, ElementName=root}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <!-- UniformGrid гарантирует ровно 10 элементов в строке -->
+                                    <UniformGrid Columns="10" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <!-- Задаём фиксированный размер кнопки, чтобы сетка была ровной -->
+                                    <Button Width="34"
+                                            Height="34"
+                                            Margin="2"
+                                            Padding="4"
+                                            Click="EmojiButton_Click"
+                                            ToolTip="Вставить смайлик"
+                                            Style="{StaticResource MaterialDesignFlatButton}">
+                                        <Image Source="{Binding ImagePath}"
+                                               Width="20"
+                                               Height="20"
+                                               Stretch="Uniform"/>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Border>
+            </Popup>
+
+            <!-- Вставить изображение -->
+            <Button Click="InsertImageButton_Click" 
+                    ToolTip="Вставить изображение"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Margin="2,0,2,0"
+                    Padding="5,5,5,5">
+                <Viewbox Stretch="Uniform">
+                    <materialDesign:PackIcon Kind="Image" Foreground="Black"/>
+                </Viewbox>
+            </Button>
         </ToolBar>
-          
+
 
         <!-- Редактор -->
-        <RichTextBox Name="Editor"
+        <RichTextBox x:Name="Editor"
                      AcceptsReturn="True"
-                     AcceptsTab="True"
+                     AcceptsTab="True"                     
+                     VerticalContentAlignment="Top"
                      VerticalScrollBarVisibility="Auto"
                      HorizontalScrollBarVisibility="Auto"
                      Margin="10"
                      FontSize="14"
-                     SpellCheck.IsEnabled="True" />
+                     FontFamily="Segoe UI Emoji, Segoe UI"
+                     Foreground="White"
+                     SpellCheck.IsEnabled="True" >
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="LineHeight" Value="14"/>
+                </Style>
+            </RichTextBox.Resources>
+        </RichTextBox>
     </DockPanel>
 </UserControl>

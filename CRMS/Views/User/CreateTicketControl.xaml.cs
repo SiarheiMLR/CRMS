@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Win32;
+using System.IO;
 
 namespace CRMS.Views.User
 {
@@ -26,6 +28,31 @@ namespace CRMS.Views.User
         {
             InitializeComponent();
             DataContext = App.ServiceProvider.GetRequiredService<UserTicketsViewModel>();
+        }
+
+        private void AttachmentsDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                if (DataContext is CRMS.ViewModels.UserVM.UserTicketsViewModel vm)
+                    vm.AddFiles(files);
+            }
+        }
+
+        private void AttachmentsClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var dlg = new OpenFileDialog
+            {
+                Multiselect = true,
+                Filter = "Все файлы (*.*)|*.*"
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                if (DataContext is CRMS.ViewModels.UserVM.UserTicketsViewModel vm)
+                    vm.AddFiles(dlg.FileNames);
+            }
         }
     }
 }

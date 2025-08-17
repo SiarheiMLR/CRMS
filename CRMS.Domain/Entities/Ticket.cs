@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Text;
@@ -26,7 +27,11 @@ namespace CRMS.Domain.Entities
         public string Content { get; set; } = string.Empty; // Храним XAML
         public string Subject { get; set; } = string.Empty;
         public DateTime Created { get; set; } = DateTime.UtcNow;
-        public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+        //public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+
+        // Новые поля для статистики
+        public DateTime? StartedAt { get; set; }
+        public DateTime? CompletedAt { get; set; }
 
         public TicketStatus Status { get; set; }
         public TicketPriority Priority { get; set; }

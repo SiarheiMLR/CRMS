@@ -1,15 +1,18 @@
 ﻿using CRMS.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using System.Linq.Expressions;
 
 namespace CRMS.Business.Services.AttachmentService
 {
     public interface IAttachmentService
     {
-        public Task<IEnumerable<Attachment>> GetAllAttachmentsAsync();
-        public Task<Attachment> GetAttachmentByIdAsync(int id);
-        public Task AddAttachmentAsync(Attachment attachment);
-        public void UpdateAttachment(Attachment attachment);
-        public void DeleteAttachment(Attachment attachment);
-        public Task<IEnumerable<Attachment>> FindAttachmentsAsync(Expression<Func<Attachment, bool>> predicate);
+        Task<IEnumerable<Attachment>> GetAllAttachmentsAsync();
+        Task<Attachment?> GetAttachmentByIdAsync(int id);
+        Task AddAttachmentAsync(Attachment attachment);
+        Task AddAttachmentFromFileAsync(IFormFile file, int ticketId);
+        Task<byte[]?> DownloadAttachmentAsync(int id);
+        Task UpdateAttachmentAsync(Attachment attachment);
+        Task DeleteAttachmentAsync(Attachment attachment);
+        Task<IEnumerable<Attachment>> FindAttachmentsAsync(Expression<Func<Attachment, bool>> predicate);
     }
 }
