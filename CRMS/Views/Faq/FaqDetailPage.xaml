@@ -5,8 +5,15 @@
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:md="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
       xmlns:vm="clr-namespace:CRMS.ViewModels.Faq"
-      xmlns:local="clr-namespace:CRMS.Views.Faq"
-      Background="{DynamicResource MaterialDesignPaper}">
+      xmlns:local="clr-namespace:CRMS.Views.Faq">
+
+    <Page.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF6C5B7B" Offset="0"/>
+            <GradientStop Color="#FFC06C84" Offset="0.5"/>
+            <GradientStop Color="#FF355C7D" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
     <Grid Margin="24">
         <Grid.RowDefinitions>

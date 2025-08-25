@@ -1,0 +1,53 @@
+﻿<metro:MetroWindow x:Class="CRMS.Views.User.FullContentDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
+        Title="{Binding TicketNumber, StringFormat='Заявка {0}'}"
+        Width="Auto"
+        Height="Auto"
+        WindowStartupLocation="CenterOwner">
+
+    <Window.Resources>
+        <converters:XamlToFlowDocumentConverter x:Key="XamlToFlowDocumentConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Исправляем привязку -->
+        <FlowDocumentScrollViewer 
+                Document="{Binding Content, Converter={StaticResource XamlToFlowDocumentConverter}}"
+                VerticalScrollBarVisibility="Auto"
+                HorizontalScrollBarVisibility="Auto"
+                Padding="16"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch">
+            <FlowDocumentScrollViewer.Resources>
+                <Style TargetType="{x:Type Image}">
+                    <Setter Property="Source" Value="{Binding Source, RelativeSource={RelativeSource Self}}"/>
+                    <Style.Triggers>
+                        <!-- Исправлено: используем триггер данных для проверки на null -->
+                        <DataTrigger Binding="{Binding Source, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                            <Setter Property="ToolTip" Value="Изображение не может быть загружено"/>
+                            <Setter Property="Source" Value="/Resources/Images/placeholder.png"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </FlowDocumentScrollViewer.Resources>
+        </FlowDocumentScrollViewer>
+
+        <Button Grid.Row="1"
+                Content="Закрыть"
+                HorizontalAlignment="Center"
+                Margin="10"
+                Padding="20,5"
+                Click="CloseButton_Click"
+                Style="{StaticResource MaterialDesignOutlinedButton}"
+                Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+    </Grid>
+</metro:MetroWindow>

@@ -19,9 +19,7 @@ using CRMS.Views.Admin;
 using CRMS.Views.Faq;
 using CRMS.ViewModels.Admin;
 using CRMS.ViewModels.Faq;
-using CRMS.Views.User.TicketsPage;
 using CRMS.ViewModels.UserVM;
-using CRMS.Views.User.TicketEdit;
 using CRMS.Views.Support;
 using CRMS.ViewModels.Support;
 using CRMS.Views.AD;
@@ -36,6 +34,8 @@ using CRMS.Business.Services.FaqService;
 using CRMS.Business.ActiveDirectoryService;
 using CRMS.Business.Services.QueueService;
 using System;
+using CommunityToolkit.Mvvm.Messaging;
+using CRMS.Business.Services.DocumentService;
 
 //admin@bigfirm.by
 //27011984Hp
@@ -91,8 +91,9 @@ namespace CRMS
                     services.AddScoped<IActiveDirectoryService, ActiveDirectoryService>();
                     services.AddScoped<IFaqService, FaqService>();
                     services.AddScoped<IQueueService, QueueService>();
-
+                    services.AddScoped<IMessenger, WeakReferenceMessenger>();
                     services.AddScoped<INavigationService, NavigationService>();
+                    services.AddScoped<IDocumentConverter, DocumentConverter>();
                     services.AddSingleton<NullToBoolConverter>();
                     // services.AddScoped<IEmailService, EmailService>();
 
@@ -100,8 +101,7 @@ namespace CRMS
                     services.AddTransient<StartUpWindow>();
                     services.AddTransient<LoginWindow>();
                     services.AddTransient<MainWindow>();
-                    services.AddTransient<ADLoginWindow>(); // ✅            
-                    services.AddTransient<TicketEditWindow>();
+                    services.AddTransient<ADLoginWindow>(); // ✅ 
                     services.AddTransient<AddUserToGroupWindow>();
                     services.AddTransient<UserProfileWindow>();
                     services.AddTransient<UserCreateWindow>();
@@ -112,8 +112,7 @@ namespace CRMS
                     services.AddTransient<MainAdminPage>();
                     services.AddTransient<MainSupportPage>();
                     services.AddTransient<SupportTicketsPage>();
-                    services.AddTransient<MainUserPage>();
-                    services.AddTransient<UserTicketsPage>();
+                    services.AddTransient<MainUserPage>();                    
                     services.AddTransient<UsersOverviewPage>();
                     services.AddTransient<GroupManagerPage>();
                     services.AddTransient<FaqAdminPage>();
@@ -127,8 +126,7 @@ namespace CRMS
 
                     services.AddTransient<UserEditWindowViewModel>();
 
-                    services.AddTransient<UserTicketsViewModel>();
-                    services.AddTransient<TicketEditViewModel>();
+                    services.AddTransient<UserTicketsViewModel>();                    
                     services.AddTransient<SupportTicketsViewModel>();
 
                     services.AddTransient<ADLoginWindowViewModel>();
@@ -172,6 +170,9 @@ namespace CRMS
             base.OnStartup(e);
             var mainWindow = ServiceProvider.GetRequiredService<StartUpWindow>();
             mainWindow.Show();
+
+            // Устанавливаем главное окно приложения
+            Application.Current.MainWindow = mainWindow;
 
             // Инициализация Material Design
             MaterialDesignThemes.Wpf.ColorZoneAssist.SetMode(new DependencyObject(), MaterialDesignThemes.Wpf.ColorZoneMode.Standard);

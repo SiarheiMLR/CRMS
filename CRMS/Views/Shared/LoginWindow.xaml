@@ -39,20 +39,19 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Добро пожаловать" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"
-                           Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"/>
+            <TextBlock Text="Добро пожаловать" FontSize="20" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
 
             <!-- Поле Email -->
             <TextBox Grid.Row="1" materialDesign:HintAssist.Hint="Логин/Email:" Margin="0,0,0,5"
                          Style="{StaticResource MaterialDesignOutlinedTextBox}"
                          Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
-                         HorizontalAlignment="Center" Height="50" Width="200"/>
+                         HorizontalAlignment="Center" Height="50" Width="200" Foreground="White"/>
 
             <!-- Поле Пароль -->
             <PasswordBox Grid.Row="2" materialDesign:HintAssist.Hint="Пароль:" Margin="0,0,0,0"
                              Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
                              helpers:PasswordHelper.BoundPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                             HorizontalAlignment="Center" Height="50" Width="200"/>
+                             HorizontalAlignment="Center" Height="50" Width="200" Foreground="White"/>
 
             <!-- Кнопка "Забыли пароль?" выглядит как гиперссылка -->
             <Button Grid.Row="3"

@@ -9,13 +9,19 @@ namespace CRMS.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (TicketPriority)value switch
+            if (value is TicketPriority priority)
             {
-                TicketPriority.High => Brushes.Red,
-                TicketPriority.Mid => Brushes.Orange,
-                TicketPriority.Low => Brushes.Green,
-                _ => Brushes.Black
-            };
+                return priority switch
+                {
+                    TicketPriority.High => Brushes.Red,
+                    TicketPriority.Mid => Brushes.Orange,
+                    TicketPriority.Low => Brushes.Green,
+                    _ => Brushes.Gray // Используйте нейтральный цвет вместо черного
+                };
+            }
+
+            // Возвращаем значение по умолчанию для некорректных данных
+            return Brushes.Gray;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -305,6 +305,7 @@ namespace CRMS.DAL.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Ticket>(entity =>
             {
                 modelBuilder.Entity<Ticket>()
@@ -320,6 +321,16 @@ namespace CRMS.DAL.Data
                     .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired(false);
 
+                modelBuilder.Entity<Ticket>()
+                            .HasMany(t => t.Attachments)
+                            .WithOne(a => a.Ticket)
+                            .HasForeignKey(a => a.TicketId)
+                            .OnDelete(DeleteBehavior.Cascade);
+
+                modelBuilder.Entity<Ticket>()
+                            .Property(t => t.Priority)
+                            .HasConversion<int>(); // Явное указание конвертации в int
+
                 modelBuilder.Entity<Group>()
                     .HasOne(g => g.GroupRoleMapping)
                     .WithOne(m => m.Group)
@@ -328,8 +339,11 @@ namespace CRMS.DAL.Data
 
             });
 
+            // Конфигурация Attachment
             modelBuilder.Entity<Attachment>(entity =>
             {
+                entity.ToTable("Attachments");
+
                 entity.HasKey(a => a.Id);
 
                 entity.Property(a => a.FileName)
@@ -340,14 +354,21 @@ namespace CRMS.DAL.Data
                       .HasMaxLength(100);
 
                 entity.Property(a => a.FileData)
-                      .HasColumnType("LONGBLOB")
+                      .HasColumnType("LONGBLOB") // Для MySQL
                       .IsRequired();
 
+                entity.Property(a => a.FileSize);
+
+                entity.Property(a => a.UploadedAt)
+                      .HasDefaultValueSql("UTC_TIMESTAMP()");
+
+                // Связь с Ticket
                 entity.HasOne(a => a.Ticket)
                       .WithMany(t => t.Attachments)
                       .HasForeignKey(a => a.TicketId)
                       .OnDelete(DeleteBehavior.Cascade);
 
+                // Связь с User (кто загрузил)
                 entity.HasOne(a => a.UploadedBy)
                       .WithMany()
                       .HasForeignKey(a => a.UploadedById)

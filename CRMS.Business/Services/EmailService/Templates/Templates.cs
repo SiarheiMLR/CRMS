@@ -51,6 +51,17 @@ namespace CRMS.Business.Services.EmailService.Templates
             border-radius: 5px;
             margin: 15px 0;
             border-left: 3px solid #4a90e2;
+        }
+        .no-attachments {
+            color: #999;
+            font-style: italic;
+        }
+        .image-placeholder {
+            background-color: #f0f0f0;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            color: #999;
+            text-align: center;
         }";
 
         // Метод WrapTemplate для генерации общей структуры
@@ -127,19 +138,54 @@ namespace CRMS.Business.Services.EmailService.Templates
             <p>Пользователю отправлено письмо с данными для входа в систему.</p>"
          );
 
-        public static string TicketCreated => WrapTemplate(
-            "В системе CRMS зарегистрирован новый запрос",
-            @"
-            <p>Здравствуйте, {UserName}!</p>
-            <p>Вы успешно создали новый тикет в системе CRMS.</p>
+        // ✅ Новый вариант для пользователя
+        public static string TicketCreated(string ticketBodyHtml, string attachmentsHtml) => WrapTemplate(
+            "Ваша заявка с номером {TicketNumber} успешно зарегистрирована в системе CRMS!",
+            $@"
+                <p>Здравствуйте, <b>{{UserName}}</b>!</p>
+                <p>Вы успешно создали новую заявку с номером <b>{{TicketNumber}}</b> в системе CRMS <b>{{Created}}</b>!</p>
+
+                <div class=""highlight"">
+                    <p><b>Тип заявки:</b> {{Queue}}</p>
+                    <p><b>Тема заявки:</b> {{Subject}}</p>                    
+                    <p><b>Приоритет:</b> <span style='color: {{PriorityColor}}; font-weight: bold;'>{{Priority}}</span></p>
+                </div>
+
+                <h3>Содержание заявки:</h3>
+                <div>{ticketBodyHtml}</div>
+
+                
+                <h3>Прикрепленные вами файлы:</h3>
+                <ul>
+                    {attachmentsHtml}
+                </ul>
             
-            <div class=""highlight"">
-                <p><b>Тема:</b> {Subject}</p>
-                <p><b>Описание:</b><br/>{Description}</p>
-            </div>
-            
-            <p>Ваш запрос принят в обработку. Мы уведомим вас об изменениях его статуса.</p>
-            <p>Номер вашего тикета: <b>#{TicketId}</b></p>"
+            <p>Ваш запрос принят в обработку. Мы уведомим вас об изменениях его статуса.</p>"
+        );
+
+        // ✅ Новый вариант для службы поддержки
+        public static string TicketCreatedForSupport(string ticketBodyHtml, string attachmentsHtml) => WrapTemplate(
+            "В системе CRMS зарегистрирована новая заявка под номером {TicketNumber}!",
+            $@"
+                <p>В системе CRMS <b>{{Created}}</b> зарегистрирована новая заявка  от пользователя <b>{{UserName}} ({{UserEmail}})</b> </p>
+
+                <div class=""highlight"">
+                    <p><b>Номер заявки:</b> {{TicketNumber}}</p>
+                    <p><b>Пользователь:</b> {{UserName}} ({{UserEmail}})</p>
+                    <p><b>Тип заявки:</b> {{Queue}}</p>
+                    <p><b>Тема заявки:</b> {{Subject}}</p>
+                    <p><b>Приоритет:</b> <span style='color: {{PriorityColor}}; font-weight: bold;'>{{Priority}}</span></p>
+                </div>
+
+                <h3>Содержание заявки:</h3>
+                <div>{ticketBodyHtml}</div>
+
+                <h3>Прикрепленные пользователем файлы:</h3>
+                <ul>
+                    {attachmentsHtml}
+                </ul>
+
+            <p>Пожалуйста, примите заявку в работу в установленные сроки.</p>"
         );
 
         public static string TicketNotification => WrapTemplate(
@@ -152,7 +198,7 @@ namespace CRMS.Business.Services.EmailService.Templates
                 <li><b>Пользователь:</b> {UserName}</li>
                 <li><b>Время создания:</b> {CreatedAt}</li>
                 <li><b>Категория:</b> {Category}</li>
-                <li><b>Приоритет:</b> {Priority}</li>
+                <li><b>Приоритет:</b> <span style='color: {PriorityColor}; font-weight: bold;'>{Priority}</span></li>
                 <li><b>Описание:</b><br/>{Description}</li>
             </ul>
             

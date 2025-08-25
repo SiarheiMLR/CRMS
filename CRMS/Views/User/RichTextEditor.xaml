@@ -287,15 +287,15 @@
         <!-- Редактор -->
         <RichTextBox x:Name="Editor"
                      AcceptsReturn="True"
-                     AcceptsTab="True"                     
+                     AcceptsTab="True"
                      VerticalContentAlignment="Top"
                      VerticalScrollBarVisibility="Auto"
-                     HorizontalScrollBarVisibility="Auto"
+                     HorizontalScrollBarVisibility="Auto"                     
                      Margin="10"
                      FontSize="14"
                      FontFamily="Segoe UI Emoji, Segoe UI"
                      Foreground="White"
-                     SpellCheck.IsEnabled="True" >
+                     SpellCheck.IsEnabled="True">
             <RichTextBox.Resources>
                 <Style TargetType="{x:Type Paragraph}">
                     <Setter Property="Margin" Value="0"/>

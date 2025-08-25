@@ -140,7 +140,11 @@
     <metro:MetroWindow.RightWindowCommands>
         <metro:WindowCommands>
             <TextBlock Text="{Binding UserName}" VerticalAlignment="Center"/>
-            <Button Command="{Binding LogoutCommand}" Content="🏠︎" ToolTip="Выйти"/>
+            <Button Command="{Binding LogoutCommand}" ToolTip="Выйти">
+                <StackPanel Orientation="Horizontal">
+                    <materialDesign:PackIcon Kind="ExitRun" Width="20" Height="20" Margin="0,0,5,0"/>                    
+                </StackPanel>
+            </Button>
         </metro:WindowCommands>
     </metro:MetroWindow.RightWindowCommands>
 
@@ -201,7 +205,7 @@
                                                         Style="{StaticResource MenuTextButtonStyle}"
                                                         materialDesign:ButtonAssist.CornerRadius="8">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="HomeAnalytics" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <materialDesign:PackIcon Kind="HomeImportOutline" Width="20" Height="20" Margin="0,0,5,0"/>
                                                         <TextBlock Text="Главная"/>
                                                     </StackPanel>
                                                 </Button>
@@ -297,9 +301,15 @@
                                 <DataTrigger Binding="{Binding CurrentRole}" Value="{x:Static enums:UserRole.User}">
                                     <Setter Property="Content">
                                         <Setter.Value>
-                                            <StackPanel>
-                                                <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
-                                                <Button Content="Тикеты" Command="{Binding UserTicketPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                            <StackPanel>                                                
+                                                <Button Command="{Binding MainPageCommand}"
+                                                        Style="{StaticResource MenuTextButtonStyle}"
+                                                        materialDesign:ButtonAssist.CornerRadius="8">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="HomeImportOutline" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="Главная"/>
+                                                    </StackPanel>
+                                                </Button>
                                                 <Button Command="{Binding OpenFaqPageCommand}"
                                                         Style="{StaticResource MenuTextButtonStyle}"
                                                         materialDesign:ButtonAssist.CornerRadius="8">

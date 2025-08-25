@@ -10,7 +10,6 @@ using CRMS.Views.Admin;
 using CRMS.Views.Admin.Groups;
 using CRMS.Views.Faq;
 using CRMS.Views.Support;
-using CRMS.Views.User.TicketsPage;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -35,14 +34,7 @@ namespace CRMS.ViewModels
         private string _userName;
 
         [RelayCommand]
-        private void ToggleMenu() => IsMenuOpen = !IsMenuOpen;             
-
-        [RelayCommand]
-        private void UserTicketPage()
-        {
-            _navigationService.NavigateTo<UserTicketsPage>();
-            ToggleMenu();
-        }
+        private void ToggleMenu() => IsMenuOpen = !IsMenuOpen;          
 
         [RelayCommand]
         private void SupportTicketsPage()

@@ -36,7 +36,7 @@ namespace CRMS.Views.User
             {
                 var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                 if (DataContext is CRMS.ViewModels.UserVM.UserTicketsViewModel vm)
-                    vm.AddFiles(files);
+                    vm.AddFilesAsync(files);
             }
         }
 
@@ -51,7 +51,7 @@ namespace CRMS.Views.User
             if (dlg.ShowDialog() == true)
             {
                 if (DataContext is CRMS.ViewModels.UserVM.UserTicketsViewModel vm)
-                    vm.AddFiles(dlg.FileNames);
+                    vm.AddFilesAsync(dlg.FileNames);
             }
         }
     }

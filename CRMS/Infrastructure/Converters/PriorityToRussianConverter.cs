@@ -15,10 +15,12 @@ namespace CRMS.Infrastructure.Converters
                     TicketPriority.High => "Высокий",
                     TicketPriority.Mid => "Средний",
                     TicketPriority.Low => "Низкий",
-                    _ => value.ToString()
+                    _ => "Неизвестно" // Более понятное значение по умолчанию
                 };
             }
-            return value;
+
+            // Возвращаем понятное сообщение вместо исходного значения
+            return "Ошибка типа";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

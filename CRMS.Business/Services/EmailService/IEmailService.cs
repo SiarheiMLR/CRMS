@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRMS.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace CRMS.Business.Services.EmailService
     public interface IEmailService
     {
         Task SendEmailAsync(string to, string subject, string body, string? fromName = null, string? fromEmail = null);
-        Task SendTemplateAsync(string to, string subject, string template, Dictionary<string, string> parameters);
+        Task SendTemplateAsync(string to, string subject, string template, Dictionary<string, string> parameters);        
+        Task SendEmailWithAttachmentsAsync(string to, string subject, string bodyHtml, IEnumerable<Attachment> attachments, string? fromName = null, string? fromEmail = null);
     }
 }

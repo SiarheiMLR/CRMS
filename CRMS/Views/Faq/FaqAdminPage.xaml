@@ -6,8 +6,15 @@
       xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:viewModels="clr-namespace:CRMS.ViewModels.Faq"
-      mc:Ignorable="d"
-      Background="{DynamicResource MaterialDesignPaper}">
+      mc:Ignorable="d">
+
+    <Page.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF6C5B7B" Offset="0"/>
+            <GradientStop Color="#FFC06C84" Offset="0.5"/>
+            <GradientStop Color="#FF355C7D" Offset="1"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
     <Grid Margin="20">
         <Grid.RowDefinitions>

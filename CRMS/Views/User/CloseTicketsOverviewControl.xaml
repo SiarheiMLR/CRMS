@@ -19,11 +19,19 @@
         <converters:StatusToVisibilityConverter x:Key="StatusToVisibilityConverter"/>
         <converters:PriorityToRussianConverter x:Key="PriorityToRussianConverter"/>
         <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
+        <converters:XamlToFlowDocumentConverter x:Key="XamlToFlowDocumentConverter"/>
+        <converters:XamlToTextConverter x:Key="XamlToTextConverter"/>
 
         <!-- Стиль для текста -->
         <Style TargetType="TextBlock" x:Key="CardTextStyle">
             <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
             <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Стиль для FlowDocument -->
+        <Style x:Key="CardTextStyleFlowDocument" TargetType="FlowDocumentScrollViewer">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
         </Style>
     </UserControl.Resources>
 
@@ -87,7 +95,7 @@
                                                 Command="{x:Static materialDesign:Flipper.FlipCommand}"
                                                 Margin="0,12,0,0"
                                                 Style="{StaticResource MaterialDesignOutlinedButton}"
-                                                Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                                                Foreground="White"/>
                                     </StackPanel>
                                 </Border>
                             </materialDesign:Flipper.FrontContent>
@@ -126,10 +134,76 @@
                                                            FontWeight="Bold" 
                                                            Margin="0,8,0,0"
                                                            Style="{StaticResource CardTextStyle}"/>
-                                                <TextBlock Text="{Binding Content}" 
+                                                <!-- Краткое текстовое представление -->
+                                                <TextBlock Text="{Binding Content, Converter={StaticResource XamlToTextConverter}}" 
                                                            TextWrapping="Wrap" 
                                                            Margin="0,4,0,8"
-                                                           Style="{StaticResource CardTextStyle}"/>
+                                                           Foreground="White">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="TextBlock" BasedOn="{StaticResource CardTextStyle}">
+                                                            <Setter Property="MaxHeight" Value="60"/>
+                                                            <!-- Примерная высота для 3 строк -->
+                                                            <Setter Property="TextTrimming" Value="WordEllipsis"/>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+
+                                                <!-- Кнопка для открытия полного описания -->
+                                                <Button Content="Открыть описание" 
+                                                        Command="{Binding DataContext.ShowFullContentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                        CommandParameter="{Binding}"
+                                                        HorizontalAlignment="Center"
+                                                        Margin="0,12,0,0"
+                                                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                        Foreground="White"/>
+
+                                                <!-- Секция для вложений -->
+                                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                                    <TextBlock Text="Вложения:" 
+                                                               FontWeight="Bold"                                                               
+                                                               Style="{StaticResource CardTextStyle}"/>
+
+                                                    <ItemsControl ItemsSource="{Binding Attachments}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate>
+                                                                <Button Content="{Binding FileName}" 
+                                                                        Command="{Binding DataContext.DownloadAttachmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                                        CommandParameter="{Binding}"
+                                                                        Style="{StaticResource MaterialDesignFlatButton}"
+                                                                        Foreground="LightBlue"
+                                                                        Margin="0,-5,0,0"
+                                                                        HorizontalAlignment="Left"/>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+
+                                                        <ItemsControl.Style>
+                                                            <Style TargetType="ItemsControl">
+                                                                <Setter Property="Visibility" Value="Visible"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Attachments.Count}" Value="0">
+                                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </ItemsControl.Style>
+                                                    </ItemsControl>
+
+                                                    <TextBlock Text="Отсутствуют"
+                                                               Margin="5,0,0,8"
+                                                               FontSize="14"
+                                                               Foreground="{DynamicResource MaterialDesignBody}">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Attachments.Count}" Value="0">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </StackPanel>
 
                                                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
                                                     <TextBlock Text="Создана: " 
@@ -137,6 +211,22 @@
                                                                Style="{StaticResource CardTextStyle}"/>
                                                     <TextBlock Text="{Binding Created, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}'}"
                                                                Style="{StaticResource CardTextStyle}"/>
+                                                </StackPanel>
+
+                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                    <TextBlock Text="Взята на выполнение: " 
+                                                            FontWeight="Bold"
+                                                            Style="{StaticResource CardTextStyle}"/>
+                                                    <TextBlock Text="{Binding StartedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}', TargetNullValue='Неизвестно'}"
+                                                            Style="{StaticResource CardTextStyle}"/>
+                                                </StackPanel>
+
+                                                <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                                    <TextBlock Text="Выполнена: " 
+                                                            FontWeight="Bold"
+                                                            Style="{StaticResource CardTextStyle}"/>
+                                                    <TextBlock Text="{Binding CompletedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm:ss}', TargetNullValue='Неизвестно'}"
+                                                            Style="{StaticResource CardTextStyle}"/>
                                                 </StackPanel>
 
                                                 <StackPanel Orientation="Horizontal" Margin="0,4,0,0">

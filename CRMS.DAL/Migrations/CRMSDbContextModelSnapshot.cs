@@ -51,7 +51,9 @@ namespace CRMS.DAL.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UploadedAt")
-                        .HasColumnType("datetime(6)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValueSql("UTC_TIMESTAMP()");
 
                     b.Property<int>("UploadedById")
                         .HasColumnType("int");
@@ -62,7 +64,7 @@ namespace CRMS.DAL.Migrations
 
                     b.HasIndex("UploadedById");
 
-                    b.ToTable("Attachments");
+                    b.ToTable("Attachments", (string)null);
                 });
 
             modelBuilder.Entity("CRMS.Domain.Entities.CustomField", b =>
@@ -707,7 +709,7 @@ namespace CRMS.DAL.Migrations
                         new
                         {
                             Id = 1,
-                            AccountCreated = new DateTime(2025, 8, 15, 14, 12, 0, 0, DateTimeKind.Utc),
+                            AccountCreated = new DateTime(2025, 8, 17, 19, 23, 18, 268, DateTimeKind.Utc).AddTicks(3554),
                             City = "Malorita",
                             Company = "BIGFIRM",
                             Country = "Belarus",
@@ -724,8 +726,8 @@ namespace CRMS.DAL.Migrations
                             ManagerName = "не указан",
                             MobilePhone = "+375-29-7012884",
                             Office = "не указан",
-                            PasswordHash = "X98Pu89+LyujpK7Gx57QU8ZHzE+mc1GCJWeUeIqQh4I=",
-                            PasswordSalt = "oOkyzHao0zCj7DCUoD1m/A==",
+                            PasswordHash = "uwFCOQCCCJJAYrNFao+iSqgtoSISArrifOpce9dRJvQ=",
+                            PasswordSalt = "w5xlVHGzFMmvzD05qD8Diw==",
                             PostalCode = "225903",
                             Role = 2,
                             State = "Brest region",

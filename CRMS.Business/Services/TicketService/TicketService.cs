@@ -16,9 +16,55 @@ namespace CRMS.Business.Services.TicketService
         }
         public async Task AddTicketAsync(Ticket ticket)
         {
+            const int maxSingleFileSize = 30 * 1024 * 1024; // 30MB
+            const int maxTotalSize = 150 * 1024 * 1024; // 150MB
+
+            // Проверка размеров файлов
+            foreach (var attachment in ticket.Attachments)
+            {
+                if (attachment.FileData.Length > maxSingleFileSize)
+                    throw new Exception($"Файл {attachment.FileName} превышает лимит 30MB");
+            }
+
+            if (ticket.Attachments.Sum(a => a.FileData.Length) > maxTotalSize)
+                throw new Exception("Общий размер вложений превышает 150MB");
+
             // Конвертируем перед сохранением
             ticket.Content = ticket.Content;
+            
+            // Добавляем основной тикет
             await _unitOfWork.Tickets.AddAsync(ticket);
+
+            // Добавляем вложения
+            foreach (var attachment in ticket.Attachments)
+            {
+                attachment.TicketId = ticket.Id; // Устанавливаем связь
+                await _unitOfWork.Attachments.AddAsync(attachment);
+            }
+
+            // Добавляем кастомные поля
+            //foreach (var field in ticket.CustomFieldValues)
+            //{
+            //    field.TicketId = ticket.Id;
+            //    await _unitOfWork.CustomFieldValues.AddAsync(field);
+            //}
+
+            //try
+            //{
+            //    using var transaction = await _unitOfWork.BeginTransactionAsync();
+
+            //    // ... код добавления ...
+
+            //    await _unitOfWork.SaveChangesAsync();
+            //    await transaction.CommitAsync();
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Откат транзакции и логирование
+            //    _logger.LogError(ex, "Ошибка при создании тикета");
+            //    throw;
+            //}
+
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -118,6 +164,7 @@ namespace CRMS.Business.Services.TicketService
 
             await _unitOfWork.SaveChangesAsync();
         }
+
     }
 }
 

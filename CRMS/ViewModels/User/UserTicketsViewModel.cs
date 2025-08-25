@@ -5,7 +5,6 @@ using CRMS.Business.Services.QueueService;
 using CRMS.Business.Services.TicketService;
 using CRMS.Business.Services.UserService;
 using CRMS.Domain.Entities;
-using CRMS.Views.User.TicketEdit;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -24,7 +23,14 @@ using System.Windows.Xps.Packaging;
 using PdfSharp.Pdf;
 using PdfSharp.Drawing;
 using System.Windows.Media;                                             // Visual, PixelFormats
-using System.Windows.Media.Imaging;                                     // RenderTargetBitmap, PngBitmapEncoder
+using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Windows.Input;
+using CRMS.Business.Services.DocumentService;
+using CRMS.Business.Services.EmailService;
+using CRMS.Business.Services.EmailService.Templates;
+using CRMS.Helpers;
+using System.Diagnostics;
 
 namespace CRMS.ViewModels.UserVM
 {
@@ -34,6 +40,12 @@ namespace CRMS.ViewModels.UserVM
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
         private readonly IQueueService _queueService;
+        private readonly IDocumentConverter _documentConverter;
+        private readonly IEmailService _emailService;
+
+        private readonly IMessenger _messenger;
+
+        public ICommand ShowFullContentCommand { get; }
 
         // Правильный формат даты и времени
         private string _currentDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
@@ -88,6 +100,14 @@ namespace CRMS.ViewModels.UserVM
             LineHeight = 14 // Размер межстрочного интервала
         };
 
+        [ObservableProperty]
+        private string _attachmentsSummary = "Общий размер: 0 MB из 150 MB";
+
+        private const long MaxTotalSize = 150 * 1024 * 1024; // 150 MB
+
+        [ObservableProperty]
+        private Brush _attachmentsSummaryColor = Brushes.White;
+
         private TicketPriority? _selectedPriority = null;
         public TicketPriority? SelectedPriority
         {
@@ -97,7 +117,8 @@ namespace CRMS.ViewModels.UserVM
 
         // Конструктор класса
         public UserTicketsViewModel(ITicketService ticketService, IAuthService authService,
-            IUserService userService, IQueueService queueService)
+            IUserService userService, IQueueService queueService, IEmailService emailService, IDocumentConverter documentConverter,
+                            IMessenger messenger = null)
         {
             // Проверка на режим дизайна
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
@@ -108,6 +129,8 @@ namespace CRMS.ViewModels.UserVM
             _authService = authService;
             _userService = userService;
             _queueService = queueService;
+            _documentConverter = documentConverter;
+            _emailService = emailService;
 
             CurrentUser = _authService.CurrentUser;
 
@@ -117,8 +140,22 @@ namespace CRMS.ViewModels.UserVM
                 LineHeight = 14 // Одинарный интервал
             };
 
+            ShowFullContentCommand = new RelayCommand<Ticket>(ShowFullContent);
+
             // Запускаем загрузку асинхронно
             _ = InitializeAsync();
+
+            _messenger = messenger;
+
+            // Подписка на сообщения об обновлении тикетов
+            if (_messenger != null)
+            {
+                _messenger.Register<TicketUpdatedMessage>(this, (recipient, message) =>
+                {
+                    // Обновляем список тикетов при получении сообщения
+                    _ = LoadTicketsAsync();
+                });
+            }
         }
 
         // Вынесем инициализацию в отдельный метод
@@ -126,6 +163,30 @@ namespace CRMS.ViewModels.UserVM
         {
             await LoadQueuesForCurrentUserAsync();
             await LoadTicketsAsync();
+        }
+
+        public class TicketUpdatedMessage { }
+
+        private void ShowFullContent(Ticket ticket)
+        {
+            var dialog = new FullContentDialog
+            {
+                DataContext = ticket
+            };
+
+            // Проверяем, можно ли использовать главное окно как Owner
+            if (Application.Current.MainWindow != null &&
+                Application.Current.MainWindow.IsVisible)
+            {
+                dialog.Owner = Application.Current.MainWindow;
+                dialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+            else
+            {
+                dialog.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
+
+            dialog.ShowDialog();
         }
 
         // Загружаем очереди доступные пользователю
@@ -159,6 +220,7 @@ namespace CRMS.ViewModels.UserVM
                     .Include(t => t.Requestor)
                     .Include(t => t.Supporter)
                     .Include(t => t.Queue)
+                    .Include(t => t.Attachments)
             );
 
             // Очищаем коллекции
@@ -239,62 +301,141 @@ namespace CRMS.ViewModels.UserVM
         }
 
         [RelayCommand]
-        private async void CreateNewTicket()
-        {
-            if (SelectedQueue == null)
-            {
-                MessageBox.Show("Пожалуйста, выберите очередь.", "Не выбрана очередь", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (SelectedPriority is null)
-            {
-                MessageBox.Show("Пожалуйста, выберите приоритет.", "Не выбран приоритет",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(Subject))
-            {
-                MessageBox.Show("Пожалуйста, введите тему вашей заявки.", "Пустая тема заявки",
-                    MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            // Конвертируем FlowDocument в XAML
-            string bodyXaml = ConvertFlowDocumentToXaml(BodyDocument);
-
-            var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Minsk"); // Windows на Linux/Mac может быть "Europe/Minsk"
-            var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
-
-            var newTicket = new Ticket
-            {
-                Status = TicketStatus.Active,
-                Created = local,
-                //LastUpdated = local,               
-                QueueId = SelectedQueue.Id,        // <-- используем выбранную очередь
-                RequestorId = CurrentUser.Id,
-                Priority = SelectedPriority.Value, // т.к. nullable
-                SupporterId = null,
-                Subject = this.Subject,           // Сохраняем тему
-                ContentDocument = BodyDocument // Используем текущий документ
-            };
-
-            // Устанавливаем документ ПОСЛЕ создания объекта
-            //newTicket.ContentDocument = BodyDocument;
-
-            // Сохраняем вложения при создании тикета
-            newTicket.Attachments = Attachments.ToList();
-
+        private async Task CreateNewTicket()
+        {            
             try
             {
-                await _ticketService.AddTicketAsync(newTicket);
+                // 1. Проверки заполнения полей заявки
+                if (SelectedQueue == null)
+                {
+                    MessageBox.Show("Пожалуйста, выберите очередь.", "Не выбрана очередь", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
 
-                // Добавляем в коллекции
+                if (SelectedPriority is null)
+                {
+                    MessageBox.Show("Пожалуйста, выберите приоритет.", "Не выбран приоритет",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Новая проверка типа приоритета
+                if (SelectedPriority.HasValue && SelectedPriority.Value.GetType() != typeof(TicketPriority))
+                {
+                    MessageBox.Show("Некорректный тип приоритета", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(Subject))
+                {
+                    MessageBox.Show("Пожалуйста, введите тему вашей заявки.", "Пустая тема заявки",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                // Проверка на пустое тело заявки
+                string bodyText = new TextRange(BodyDocument.ContentStart, BodyDocument.ContentEnd).Text;
+                if (string.IsNullOrWhiteSpace(bodyText))
+                {
+                    MessageBox.Show("Пожалуйста, заполните содержание заявки.", "Пустое содержание",
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Minsk"); // Windows на Linux/Mac может быть "Europe/Minsk"
+                var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+
+                // 🔥 ВАЖНО: нормализуем изображения до сохранения чтобы все картинки в FlowDocument были inline base64
+                Ticket.NormalizeImagesInFlowDocument(BodyDocument);
+
+                // 2. Создание заявки
+                var newTicket = new Ticket
+                {
+                    Status = TicketStatus.Active,
+                    Created = local,
+                    //LastUpdated = local,               
+                    QueueId = SelectedQueue.Id,        // <-- используем выбранную очередь                
+                    RequestorId = CurrentUser.Id,
+                    Requestor = CurrentUser,
+                    Priority = SelectedPriority.Value, // т.к. nullable
+                    SupporterId = null,
+                    Subject = this.Subject,           // Сохраняем тему
+                    ContentDocument = BodyDocument // Используем уже нормализованный документ                
+                };
+
+                // 3. Добавляем вложения перед сохранением
+                foreach (var attachment in Attachments)
+                {
+                    newTicket.Attachments.Add(new Attachment
+                    {
+                        FileName = attachment.FileName,
+                        ContentType = attachment.ContentType,
+                        FileData = attachment.FileData,
+                        FileSize = attachment.FileData.Length,
+                        UploadedById = CurrentUser.Id
+                    });
+                }
+
+                // 4. Сохраняем тикет (async/await строго последовательно)
+                await _ticketService.AddTicketAsync(newTicket);
+                                
+                // 5. Добавляем в коллекции
                 Tickets.Add(newTicket);
                 OpenTickets.Add(newTicket);
 
-                // Сбрасываем форму                
+                // 6. Отправляем сообщение другим VM об обновлении
+                _messenger?.Send(new TicketUpdatedMessage());
+
+                // 7. Отправка email
+                // 7.1. Формируем HTML для писем
+                string ticketBodyHtml = _documentConverter.FlowDocumentToHtml(newTicket.ContentDocument);
+
+                // 7.2. Формируем список вложений в HTML
+                string attachmentsHtml;
+                if (newTicket.Attachments.Any())
+                {
+                    attachmentsHtml = string.Join("", newTicket.Attachments.Select(a =>
+                        $"<li>{a.FileName} ({GetFileSize(a.FileData.Length)})</li>"));
+                }
+                else
+                {
+                    attachmentsHtml = "<li class='no-attachments'>Отсутствуют</li>";
+                }
+
+                // 7.3. Параметры
+                var baseParams = new Dictionary<string, string>
+                {
+                    { "UserName", newTicket.Requestor.DisplayName ?? newTicket.Requestor.Email },
+                    { "UserEmail", newTicket.Requestor.Email },
+                    { "Subject", newTicket.Subject },
+                    { "Queue", SelectedQueue.Name },
+                    { "Priority", GetPriorityText(newTicket.Priority) }, // <-- перевод в русский
+                    { "PriorityColor", GetPriorityColor(newTicket.Priority) }, // <-- цвет
+                    { "Created", newTicket.Created.ToString("g") },
+                    { "TicketNumber", newTicket.TicketNumber }
+                };                               
+
+                // 7.4. Генерируем письмо для пользователя
+                string userBody = Templates.TicketCreated(ticketBodyHtml, attachmentsHtml);
+                foreach (var p in baseParams)
+                    userBody = userBody.Replace('{' + p.Key + '}', p.Value);               
+
+                // Отправляем пользователю
+                await _emailService.SendEmailWithAttachmentsAsync(CurrentUser.Email,
+                    $"Ваша заявка с номером {newTicket.TicketNumber} зарегистрирована в системе CRMS!", userBody, newTicket.Attachments);
+
+                // 7.5. Генерируем письмо поддержке
+                string supportBody = Templates.TicketCreatedForSupport(ticketBodyHtml, attachmentsHtml);
+                foreach (var p in baseParams)
+                    supportBody = supportBody.Replace('{' + p.Key + '}', p.Value);
+                Debug.WriteLine(supportBody);
+
+                // Отправляем поддержке
+                await _emailService.SendEmailWithAttachmentsAsync(SelectedQueue.CorrespondAddress,
+                    $"В системе CRMS зарегистрирована новая заявка с номером {newTicket.TicketNumber}!", supportBody, newTicket.Attachments);
+
+                // 8. Сброс формы                
                 ResetForm();
 
                 MessageBox.Show("Заявка успешно создана!", "Успех",
@@ -304,8 +445,45 @@ namespace CRMS.ViewModels.UserVM
             {
                 MessageBox.Show($"Ошибка при создании заявки: {ex.Message}", "Ошибка",
                     MessageBoxButton.OK, MessageBoxImage.Error);
-            }            
+            }  
         }
+
+        // Вспомогательный метод для форматирования размера файла
+        private string GetFileSize(long bytes)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB" };
+            int order = 0;
+            double len = bytes;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+            return $"{len:0.##} {sizes[order]}";
+        }
+
+        private string GetPriorityText(TicketPriority priority)
+        {
+            return priority switch
+            {
+                TicketPriority.Low => "Низкий",
+                TicketPriority.Mid => "Средний",
+                TicketPriority.High => "Высокий",
+                _ => "Не указан"
+            };
+        }
+
+        private string GetPriorityColor(TicketPriority priority)
+        {
+            return priority switch
+            {
+                TicketPriority.Low => "#008000",     // зелёный
+                TicketPriority.Mid => "#FFA500",  // оранжевый
+                TicketPriority.High => "#FF0000",    // красный
+                _ => "#000000"                       // чёрный по умолчанию
+            };
+        }
+
 
         private void ResetForm()
         {
@@ -318,49 +496,9 @@ namespace CRMS.ViewModels.UserVM
                 LineHeight = 14 // Одинарный интервал
             };
             Attachments.Clear();
-        }
 
-        private string ConvertFlowDocumentToXaml(FlowDocument document)
-        {
-            if (document == null)
-                return string.Empty;
-
-            try
-            {
-                var range = new TextRange(document.ContentStart, document.ContentEnd);
-                using (var stream = new MemoryStream())
-                {
-                    range.Save(stream, DataFormats.Xaml);
-                    return Encoding.UTF8.GetString(stream.ToArray());
-                }
-            }
-            catch (Exception)
-            {
-                return string.Empty;
-            }
-        }
-
-        public static FlowDocument ConvertXamlToFlowDocument(string xaml)
-        {
-            if (string.IsNullOrWhiteSpace(xaml))
-                return new FlowDocument();
-
-            try
-            {
-                var document = new FlowDocument();
-                var range = new TextRange(document.ContentStart, document.ContentEnd);
-
-                using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(xaml)))
-                {
-                    range.Load(stream, DataFormats.Xaml);
-                }
-                return document;
-            }
-            catch (Exception)
-            {
-                // Возвращаем пустой документ в случае ошибки
-                return new FlowDocument();
-            }
+            // Обновляем строку с общим размером
+            UpdateAttachmentsSummary();
         }
 
         [RelayCommand]
@@ -370,7 +508,7 @@ namespace CRMS.ViewModels.UserVM
         }
 
         // Метод для добавления файлов
-        public void AddFiles(string[] filePaths)
+        public async Task AddFilesAsync(string[] filePaths)
         {
             // Белый список расширений
             var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
@@ -378,6 +516,9 @@ namespace CRMS.ViewModels.UserVM
                 ".pdf", ".doc", ".docx", ".xls", ".xlsx",
                 ".png", ".jpg", ".jpeg", ".gif", ".txt", ".rtf", ".zip"
             };
+
+            const long maxFileSize = 30 * 1024 * 1024; // 30 MB
+            const long maxTotalSize = 150 * 1024 * 1024;  // 150 MB на все вложения
 
             foreach (var filePath in filePaths)
             {
@@ -389,17 +530,67 @@ namespace CRMS.ViewModels.UserVM
                     continue;
                 }
 
+                var fileInfo = new FileInfo(filePath);
+
+                // Проверка размера одного файла
+                if (fileInfo.Length > maxFileSize)
+                {
+                    MessageBox.Show(
+                        $"Файл {fileInfo.Name} превышает допустимый размер ({maxFileSize / 1024 / 1024} MB).",
+                        "Слишком большой файл",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    continue;
+                }
+
+                // Проверка суммарного размера
+                long currentTotal = Attachments.Sum(a => a.FileData?.Length ?? 0);
+                if (currentTotal + fileInfo.Length > maxTotalSize)
+                {
+                    MessageBox.Show(
+                        $"Нельзя добавить {fileInfo.Name}: суммарный размер вложений превысит {maxTotalSize / 1024 / 1024} MB.",
+                        "Превышение общего лимита",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    continue;
+                }
+
                 var bytes = File.ReadAllBytes(filePath);
+                string fileName = Path.GetFileName(filePath);
+
+                // Проверка на дубликат по имени и размеру
+                bool duplicate = Attachments.Any(a =>
+                    string.Equals(a.FileName, fileName, StringComparison.OrdinalIgnoreCase) &&
+                    a.FileData != null &&
+                    a.FileData.Length == bytes.Length);
+
+                if (duplicate)
+                {
+                    MessageBox.Show(
+                        $"Файл {fileName} уже был добавлен ранее.",
+                        "Дубликат вложения",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    continue;
+                }
+
+                using var stream = File.OpenRead(filePath);
+                using var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream); // Потоковое чтение
 
                 var attachment = new Attachment
                 {
                     FileName = Path.GetFileName(filePath),
                     ContentType = GetMimeType(ext),
-                    FileData = bytes
+                    FileData = memoryStream.ToArray(),
+                    FileSize = memoryStream.Length,
+                    UploadedById = CurrentUser.Id
                 };
 
                 Attachments.Add(attachment);
             }
+
+            UpdateAttachmentsSummary();
         }
 
         // Метод для получения MIME-типа (простейший словарь)
@@ -518,7 +709,6 @@ namespace CRMS.ViewModels.UserVM
             return clone;
         }
 
-        // Конвертация XPS → PDF через PdfSharp
         // Конвертация XPS → PDF через PdfSharp: рендерим каждую FixedPage в PNG и кладём как изображение
         private void ConvertXpsToPdf(string xpsPath, string pdfPath)
         {
@@ -581,14 +771,53 @@ namespace CRMS.ViewModels.UserVM
             pdfDoc.Save(pdfPath);
         }
 
-
         [RelayCommand]
         private void RemoveAttachment(Attachment attachment)
         {
             if (attachment != null && Attachments.Contains(attachment))
                 Attachments.Remove(attachment);
+
+            UpdateAttachmentsSummary();
         }
 
+        private void UpdateAttachmentsSummary()
+        {
+            long totalSize = Attachments.Sum(a => a.FileData?.Length ?? 0);
+            double sizeInMb = totalSize / (1024.0 * 1024.0);
+            double maxInMb = MaxTotalSize / (1024.0 * 1024.0);
+
+            AttachmentsSummary = $"Общий размер: {sizeInMb:F1} MB из {maxInMb:F0} MB";
+
+            // Меняем цвет при превышении
+            AttachmentsSummaryColor = totalSize > MaxTotalSize ? Brushes.Red : Brushes.White;
+        }
+
+        [RelayCommand]
+        private void DownloadAttachment(Attachment attachment)
+        {
+            if (attachment == null) return;
+
+            var saveFileDialog = new SaveFileDialog
+            {
+                FileName = attachment.FileName,
+                Filter = $"Файлы (*{Path.GetExtension(attachment.FileName)})|*{Path.GetExtension(attachment.FileName)}|Все файлы (*.*)|*.*"
+            };
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    File.WriteAllBytes(saveFileDialog.FileName, attachment.FileData);
+                    MessageBox.Show("Файл успешно сохранен", "Успех",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при сохранении файла: {ex.Message}", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
 
         // Вспомогательный проверочный метод (чтобы не забыть _authService в коде)
         private void _auth_service_check(IAuthService auth) { /* no-op, просто для соблюдения порядка параметров */ }

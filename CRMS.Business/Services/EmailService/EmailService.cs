@@ -28,7 +28,9 @@ namespace CRMS.Business.Services.EmailService
             var message = new MimeMessage();
 
             // Устанавливаем отображаемое имя и подменяемый адрес (it-support@bigfirm.by)
-            message.From.Add(new MailboxAddress(fromName ?? "Служба поддержки пользователей системы CRMS", fromEmail ?? _settings.From));
+            message.From.Add(new MailboxAddress(
+                fromName ?? "Служба поддержки пользователей системы CRMS",
+                fromEmail ?? _settings.From));
             message.To.Add(MailboxAddress.Parse(to));
             message.Subject = subject;
 
@@ -44,7 +46,44 @@ namespace CRMS.Business.Services.EmailService
             client.ServerCertificateValidationCallback = (s, c, h, e) => true;
 
             await client.ConnectAsync(_settings.SmtpServer, _settings.SmtpPort, SecureSocketOptions.SslOnConnect);
-            await client.AuthenticateAsync(_settings.Username, _settings.Password); // crms-relay@bigfirm.by
+            await client.AuthenticateAsync(_settings.Username, _settings.Password);
+            await client.SendAsync(message);
+            await client.DisconnectAsync(true);
+        }
+
+        public async Task SendEmailWithAttachmentsAsync(
+            string to,
+            string subject,
+            string bodyHtml,
+            IEnumerable<CRMS.Domain.Entities.Attachment> attachments,
+            string? fromName = null,
+            string? fromEmail = null)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(
+                fromName ?? _settings.FromDisplayName,
+                fromEmail ?? _settings.From));
+            message.To.Add(MailboxAddress.Parse(to));
+            message.Subject = subject;
+
+            var bodyBuilder = new BodyBuilder
+            {
+                HtmlBody = bodyHtml
+            };
+
+            // Прикрепляем файлы тикета
+            foreach (var attachment in attachments)
+            {
+                bodyBuilder.Attachments.Add(attachment.FileName, attachment.FileData, ContentType.Parse(attachment.ContentType));
+            }
+
+            message.Body = bodyBuilder.ToMessageBody();
+
+            using var client = new SmtpClient();
+            client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+            await client.ConnectAsync(_settings.SmtpServer, _settings.SmtpPort, SecureSocketOptions.SslOnConnect);
+            await client.AuthenticateAsync(_settings.Username, _settings.Password);
             await client.SendAsync(message);
             await client.DisconnectAsync(true);
         }
@@ -53,7 +92,7 @@ namespace CRMS.Business.Services.EmailService
         {
             foreach (var pair in parameters)
             {
-                template = template.Replace("{" + pair.Key + "}", pair.Value);
+                template = template.Replace('{' + pair.Key + '}', pair.Value);
             }
             return template;
         }
