@@ -8,6 +8,9 @@ namespace CRMS.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return "Все приоритеты";
+
             if (value is TicketPriority priority)
             {
                 return priority switch

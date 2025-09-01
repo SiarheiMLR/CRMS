@@ -16,12 +16,11 @@ namespace CRMS.Infrastructure.Converters
                     TicketPriority.High => Brushes.Red,
                     TicketPriority.Mid => Brushes.Orange,
                     TicketPriority.Low => Brushes.Green,
-                    _ => Brushes.Gray // Используйте нейтральный цвет вместо черного
+                    _ => Brushes.White // Белый для "Все"
                 };
             }
 
-            // Возвращаем значение по умолчанию для некорректных данных
-            return Brushes.Gray;
+            return Brushes.White; // Белый для null значений
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

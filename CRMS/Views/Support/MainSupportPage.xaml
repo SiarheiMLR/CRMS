@@ -1,41 +1,76 @@
 ﻿<Page x:Class="CRMS.Views.Support.MainSupportPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:metro="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:CRMS.Views.Admin"
-      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"        
-      mc:Ignorable="d" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:CRMS.Views.Support"
+      xmlns:uservm="clr-namespace:CRMS.ViewModels.Support" 
+      d:DataContext="{d:DesignInstance Type=uservm:SupportTicketsViewModel}"
+      mc:Ignorable="d"
+      Title="Панель службы поддержки"
       d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
-        <Grid Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+    <!-- Верхний отступ для меню -->
+    <Grid Margin="45,16,16,16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>            <!-- верхняя строка с датой -->
+            <RowDefinition Height="*"/>            <!-- основная панель -->
+            <RowDefinition Height="Auto"/>            <!-- футер/подвал -->
+        </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Width="300">
-                <TextBlock Text="{Binding CurrentDate}" FontSize="16" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
-            </StackPanel>
+        <!-- Ресурсы для стилей заголовков Expander -->
+        <Grid.Resources>
+            <Style x:Key="MainTabItemHeaderStyle" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+            </Style>            
+        </Grid.Resources>
 
-            <Viewbox Grid.Row="1" Stretch="Uniform" MaxWidth="600">
-                <StackPanel>
-                    <materialDesign:PackIcon Kind="Support" Foreground="{DynamicResource PrimaryHueMidBrush}" Width="120" Height="120" HorizontalAlignment="Center"/>
-                    <TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" TextAlignment="Center" FontWeight="Bold" FontSize="22" Foreground="#FF4A4040" Height="71" Width="500">
-                <Run/> <LineBreak/> <Run Text="Панель службы технической поддержки"/>
-                    </TextBlock>
-                </StackPanel>
-            </Viewbox>
+        <!-- Текущая дата и врремя -->
+        <!--<StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Width="Auto">
+            <TextBlock Text="{Binding CurrentDate}" FontSize="16" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"/>
+        </StackPanel>-->
 
-            <TextBlock Text="Copyright © 2025 CRMS by Siarhei Kuzmich"
-           FontSize="14"
-           HorizontalAlignment="Center"
-           VerticalAlignment="Center"
-           Grid.Row="3" Height="20" Width="300" Foreground="#FF4A4040" FontStyle="Italic" FontWeight="Bold" />
-        </Grid>
+        <!-- Вкладки -->
+        <TabControl Grid.Row="1" HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
+            <TabItem  Margin="10">
+                <TabItem.Header>
+                    <TextBlock Text="Ваши заявки" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
+                </TabItem.Header>
+                <local:MyTicketsView/>
+            </TabItem>
+
+            <TabItem Margin="10">
+                <TabItem.Header>
+                    <TextBlock Text="Все новые" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
+                </TabItem.Header>
+                <local:NewTicketsView/>
+            </TabItem>
+
+            <TabItem Margin="10">
+                <TabItem.Header>
+                    <TextBlock Text="Закрытые" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
+                </TabItem.Header>
+                <local:ClosedTicketsView/>                
+            </TabItem>
+
+            <TabItem Margin="10">
+
+                <TabItem.Header>
+                    <TextBlock Text="Статистика" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
+                </TabItem.Header>
+                <local:TicketsStatsView/>
+            </TabItem>
+        </TabControl>
+        
+        <!-- Футер например кнопки выхода или версия -->
+        <!--<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,8,0,0">
+            <TextBlock Text="Версия 1.0" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,8,0"/>
+            <TextBlock Text="Copyright © 2025 CRMS by Siarhei Kuzmich" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,8,0"/>
+        </StackPanel>-->
     </Grid>
 </Page>

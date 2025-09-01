@@ -4,12 +4,14 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using System.Windows.Documents;
+using CRMS.Business.Services.DocumentService;
 
 namespace CRMS.Business.Services.TicketService
 {
     public class TicketService : ITicketService
     {
         private readonly IUnitOfWork _unitOfWork;
+
         public TicketService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -31,7 +33,7 @@ namespace CRMS.Business.Services.TicketService
 
             // Конвертируем перед сохранением
             ticket.Content = ticket.Content;
-            
+
             // Добавляем основной тикет
             await _unitOfWork.Tickets.AddAsync(ticket);
 
@@ -151,7 +153,7 @@ namespace CRMS.Business.Services.TicketService
             {
                 // Если содержимое не является валидным XAML
                 if (!string.IsNullOrWhiteSpace(ticket.Content) &&
-            !           ticket.Content.TrimStart().StartsWith("<"))
+            !ticket.Content.TrimStart().StartsWith("<"))
                 {
                     // Создаем FlowDocument из старого текста
                     var document = new FlowDocument();
@@ -167,4 +169,3 @@ namespace CRMS.Business.Services.TicketService
 
     }
 }
-

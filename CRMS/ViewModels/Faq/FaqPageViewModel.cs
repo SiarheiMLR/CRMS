@@ -31,13 +31,20 @@ namespace CRMS.ViewModels.Faq
 
         private async void LoadCategoriesAsync()
         {
-            var categories = await _faqService.GetAllCategoriesAsync();
-            Application.Current.Dispatcher.Invoke(() =>
+            try
             {
-                Categories.Clear();
-                foreach (var cat in categories)
-                    Categories.Add(cat);
-            });
+                var categories = await _faqService.GetAllCategoriesAsync();
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Categories.Clear();
+                    foreach (var cat in categories)
+                        Categories.Add(cat);
+                });
+            }
+            catch (Exception ex)
+            {
+                SnackbarMessageQueue.Enqueue($"Ошибка загрузки: {ex.Message}");
+            }
         }
 
         [RelayCommand]

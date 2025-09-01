@@ -8,17 +8,21 @@ namespace CRMS.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return "Все статусы";
+
             if (value is TicketStatus status)
             {
                 return status switch
                 {
                     TicketStatus.Active => "Активная",
                     TicketStatus.InProgress => "В работе",
-                    TicketStatus.Closed => "Закрыта",
-                    _ => value.ToString()
+                    TicketStatus.Closed => "Закрытая",
+                    _ => status.ToString()
                 };
             }
-            return value;            
+
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

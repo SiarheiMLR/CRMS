@@ -283,7 +283,14 @@
                                     <Setter Property="Content">
                                         <Setter.Value>
                                             <StackPanel>
-                                                <Button Content="Главная" Command="{Binding MainPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                <Button Command="{Binding MainPageCommand}"
+                                                        Style="{StaticResource MenuTextButtonStyle}"
+                                                        materialDesign:ButtonAssist.CornerRadius="8">
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <materialDesign:PackIcon Kind="HomeImportOutline" Width="20" Height="20" Margin="0,0,5,0"/>
+                                                        <TextBlock Text="Главная"/>
+                                                    </StackPanel>
+                                                </Button>
                                                 <Button Content="Тикеты" Command="{Binding SupportTicketsPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
                                                 <Button Command="{Binding OpenFaqAdminPageCommand}" 
                                                         Style="{StaticResource MenuTextButtonStyle}">
@@ -309,15 +316,7 @@
                                                         <materialDesign:PackIcon Kind="HomeImportOutline" Width="20" Height="20" Margin="0,0,5,0"/>
                                                         <TextBlock Text="Главная"/>
                                                     </StackPanel>
-                                                </Button>
-                                                <Button Command="{Binding OpenFaqPageCommand}"
-                                                        Style="{StaticResource MenuTextButtonStyle}"
-                                                        materialDesign:ButtonAssist.CornerRadius="8">
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <materialDesign:PackIcon Kind="HelpCircleOutline" Width="20" Height="20" Margin="0,0,5,0"/>
-                                                        <TextBlock Text="FAQ"/>
-                                                    </StackPanel>
-                                                </Button>
+                                                </Button>                                                
                                             </StackPanel>
                                         </Setter.Value>
                                     </Setter>

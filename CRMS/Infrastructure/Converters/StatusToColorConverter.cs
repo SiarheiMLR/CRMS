@@ -9,13 +9,18 @@ namespace CRMS.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (TicketStatus)value switch
+            if (value is TicketStatus status)
             {
-                TicketStatus.Active => Brushes.Green,
-                TicketStatus.InProgress => Brushes.Orange,
-                TicketStatus.Closed => Brushes.MediumVioletRed,
-                _ => Brushes.Black
-            };
+                return status switch
+                {
+                    TicketStatus.Active => Brushes.Green,
+                    TicketStatus.InProgress => Brushes.Orange,
+                    TicketStatus.Closed => Brushes.MediumVioletRed,
+                    _ => Brushes.White // Белый для "Все"
+                };
+            }
+
+            return Brushes.White; // Белый для null значений
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

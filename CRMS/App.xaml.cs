@@ -116,8 +116,7 @@ namespace CRMS
                     services.AddTransient<UsersOverviewPage>();
                     services.AddTransient<GroupManagerPage>();
                     services.AddTransient<FaqAdminPage>();
-                    services.AddTransient<FaqDetailPage>();
-                    services.AddTransient<FaqPage>();
+                    services.AddTransient<FaqDetailPage>();                    
 
                     // ViewModels
                     services.AddTransient<MainWindowViewModel>();

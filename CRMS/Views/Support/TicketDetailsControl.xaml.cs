@@ -1,4 +1,5 @@
 ﻿using CRMS.ViewModels.Support;
+using CRMS.ViewModels.UserVM;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -18,11 +19,11 @@ using System.Windows.Shapes;
 namespace CRMS.Views.Support
 {
     /// <summary>
-    /// Логика взаимодействия для MainSupportPage.xaml
+    /// Логика взаимодействия для TicketDetailsControl.xaml
     /// </summary>
-    public partial class MainSupportPage : Page
+    public partial class TicketDetailsControl : UserControl
     {
-        public MainSupportPage()
+        public TicketDetailsControl()
         {
             InitializeComponent();
             DataContext = App.ServiceProvider.GetRequiredService<SupportTicketsViewModel>();

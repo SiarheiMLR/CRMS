@@ -66,12 +66,12 @@
             <Button Command="{Binding VoteUpCommand}" 
                     Content="👍"
                     ToolTip="Полезный ответ"
-                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" />
+                    Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}" />
             <TextBlock Text="{Binding Item.PositiveVotes}" Margin="8,0" VerticalAlignment="Center"/>
             <Button Command="{Binding VoteDownCommand}" 
                     Content="👎"
                     ToolTip="Бесполезный ответ"
-                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" />
+                    Style="{StaticResource MaterialDesignFloatingActionMiniSecondaryButton}" />
             <TextBlock Text="{Binding Item.NegativeVotes}" Margin="8,0" VerticalAlignment="Center"/>
         </StackPanel>
 

@@ -18,11 +18,11 @@ using System.Windows.Shapes;
 namespace CRMS.Views.Support
 {
     /// <summary>
-    /// Логика взаимодействия для MainSupportPage.xaml
+    /// Логика взаимодействия для TicketStatsControl.xaml
     /// </summary>
-    public partial class MainSupportPage : Page
+    public partial class TicketStatsControl : UserControl
     {
-        public MainSupportPage()
+        public TicketStatsControl()
         {
             InitializeComponent();
             DataContext = App.ServiceProvider.GetRequiredService<SupportTicketsViewModel>();

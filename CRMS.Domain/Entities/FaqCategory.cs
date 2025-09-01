@@ -13,9 +13,9 @@ namespace CRMS.Domain.Entities
         public int Id { get; set; }
 
         [Required]
-        public string Title { get; set; } = string.Empty;
+        public string Title { get; set; } = "";
         public string? Description { get; set; }
-        public virtual ICollection<FaqItem> Items { get; set; } = new List<FaqItem>();
+        public ICollection<FaqItem> Items { get; set; } = new List<FaqItem>();
     }
 
 }

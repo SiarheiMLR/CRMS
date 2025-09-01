@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:local="clr-namespace:CRMS.Views.User" xmlns:uservm="clr-namespace:CRMS.ViewModels.UserVM" d:DataContext="{d:DesignInstance Type=uservm:UserTicketsViewModel}"
+        xmlns:local="clr-namespace:CRMS.Views.User"
+        xmlns:faq="clr-namespace:CRMS.Views.Faq"
+        xmlns:uservm="clr-namespace:CRMS.ViewModels.UserVM" 
+        d:DataContext="{d:DesignInstance Type=uservm:UserTicketsViewModel}"
         mc:Ignorable="d"
         Title="Панель пользователя"
         d:DesignHeight="450" d:DesignWidth="800">
@@ -59,7 +62,7 @@
                       Margin="0,0,0,0">
 
                 <Expander.Header>
-                    <TextBlock Text="Ваши заявки" Style="{StaticResource MainExpanderHeaderStyle}"/>
+                    <TextBlock Text="Ваши заявки" Style="{StaticResource MainExpanderHeaderStyle}" HorizontalAlignment="Center"/>
                 </Expander.Header>
 
                 <Grid>
@@ -99,7 +102,7 @@
                       IsExpanded="True"
                       Background="Transparent"
                       BorderThickness="0"
-                      Margin="0">
+                      Margin="8">
                 <Expander.Header>
                     <TextBlock Text="Создать заявку" Style="{StaticResource MainExpanderHeaderStyle}"/>
                 </Expander.Header>
@@ -110,16 +113,11 @@
                       IsExpanded="True"
                       Background="Transparent"
                       BorderThickness="0"
-                      Margin="0">
+                      Margin="8">
                 <Expander.Header>
                     <TextBlock Text="Часто задаваемые вопросы" Style="{StaticResource MainExpanderHeaderStyle}"/>
                 </Expander.Header>
-                <StackPanel Background="Transparent" VerticalAlignment="Stretch">
-                    <TextBlock Text="Здесь можно разместить подсказки, FAQ, контактную информацию или статус системы."
-                       TextWrapping="Wrap" 
-                       Foreground="{DynamicResource MaterialDesignBody}"
-                       Margin="0,8,0,0"/>
-                </StackPanel>
+                <faq:FaqPageControl Background="Transparent" VerticalAlignment="Stretch"/>                
             </Expander>
         </Grid>
 

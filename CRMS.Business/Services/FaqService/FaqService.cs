@@ -32,9 +32,7 @@ namespace CRMS.Business.Services.FaqService
 
         public async Task<List<FaqCategory>> GetAllCategoriesAsync()
         {
-            return await _unitOfWork.FaqCategoriesRepository.GetAllAsync() is IEnumerable<FaqCategory> result
-                ? result.ToList()
-                : new List<FaqCategory>();
+            return await _unitOfWork.FaqCategoriesRepository.GetAllWithItemsAsync();
         }
 
         public async Task<List<FaqItem>> GetFaqsByCategoryAsync(int categoryId)
