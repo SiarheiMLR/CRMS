@@ -187,7 +187,7 @@
                                 BorderBrush="{DynamicResource MaterialDesignDivider}"
                                 Background="Gray"
                                 Padding="10">
-                            <TextBlock Text="Перетащите файлы сюда или нажмите, чтобы выбрать"
+                            <TextBlock Text="Перетащите файлы сюда или нажмите чтобы выбрать"
                                        HorizontalAlignment="Center"
                                        Foreground="White"
                                        FontWeight="Bold"

@@ -15,7 +15,7 @@ namespace CRMS.Domain.Entities
 
         public string AnswerMarkdown { get; set; } = string.Empty;
 
-        public DateTime EditedAt { get; set; } = DateTime.UtcNow;
+        public DateTime EditedAt { get; set; } = DateTime.Now;
         public string EditedBy { get; set; } = "Неизвестно";
     }
 

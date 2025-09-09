@@ -410,7 +410,7 @@ namespace CRMS.DAL.Data
                 ManagerName = "не указан",
                 PasswordHash = hash,
                 PasswordSalt = salt,
-                AccountCreated = DateTime.UtcNow,
+                AccountCreated = DateTime.Now,
                 Status = UserStatus.Active,
                 Role = UserRole.Admin
             });
@@ -497,7 +497,7 @@ namespace CRMS.DAL.Data
                     ManagerName = "не указан",
                     PasswordHash = hash,
                     PasswordSalt = salt,
-                    AccountCreated = DateTime.UtcNow,
+                    AccountCreated = DateTime.Now,
                     Status = UserStatus.Active,
                     Role = UserRole.Admin
                 };
@@ -530,9 +530,9 @@ namespace CRMS.DAL.Data
                 existingAdmin.ManagerName = "не указан";
                 //existingAdmin.PasswordHash = hash;
                 //existingAdmin.PasswordSalt = salt;
-                existingAdmin.AccountCreated = DateTime.UtcNow;
+                existingAdmin.AccountCreated = DateTime.Now;
                 existingAdmin.Status = UserStatus.Active;
-                existingAdmin.Role = UserRole.Admin;                
+                existingAdmin.Role = UserRole.Admin;
             }
 
             SaveChanges();

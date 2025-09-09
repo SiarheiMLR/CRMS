@@ -26,8 +26,8 @@ namespace CRMS.Domain.Entities
         public int Id { get; set; }
         public string Content { get; set; } = string.Empty; // XAML-контент с изображениями в base64
         public string Subject { get; set; } = string.Empty;
-        public DateTime Created { get; set; } = DateTime.UtcNow;
-        //public DateTime LastUpdated { get; set; } = DateTime.UtcNow;
+        public DateTime Created { get; set; } = DateTime.Now;
+        //public DateTime LastUpdated { get; set; } = DateTime.Now;
 
         // Новые поля для статистики
         public DateTime? StartedAt { get; set; }

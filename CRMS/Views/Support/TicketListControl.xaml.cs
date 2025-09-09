@@ -24,8 +24,7 @@ namespace CRMS.Views.Support
     {
         public TicketListControl()
         {
-            InitializeComponent();
-            DataContext = App.ServiceProvider.GetRequiredService<SupportTicketsViewModel>();
+            InitializeComponent();            
         }
     }
 }

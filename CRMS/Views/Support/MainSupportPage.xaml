@@ -37,33 +37,36 @@
 
         <!-- Вкладки -->
         <TabControl Grid.Row="1" HorizontalAlignment="Stretch" Background="Transparent" BorderThickness="0">
-            <TabItem  Margin="10">
+            <TabItem  Margin="10,10,10,20">
                 <TabItem.Header>
-                    <TextBlock Text="Ваши заявки" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Ваши заявки" Style="{StaticResource MainTabItemHeaderStyle}"/>
                 </TabItem.Header>
-                <local:MyTicketsView/>
+                <local:MyTicketsView DataContext="{Binding}" 
+                         Tag="{x:Static uservm:SupportTicketsViewModel+ViewType.MyTickets}"/>
             </TabItem>
 
-            <TabItem Margin="10">
+            <TabItem Margin="10,10,10,20">
                 <TabItem.Header>
-                    <TextBlock Text="Все новые" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Все новые" Style="{StaticResource MainTabItemHeaderStyle}"/>
                 </TabItem.Header>
-                <local:NewTicketsView/>
+                <local:NewTicketsView DataContext="{Binding}" 
+                          Tag="{x:Static uservm:SupportTicketsViewModel+ViewType.NewTickets}"/>
             </TabItem>
 
-            <TabItem Margin="10">
+            <TabItem Margin="10,10,10,20">
                 <TabItem.Header>
-                    <TextBlock Text="Закрытые" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Закрытые" Style="{StaticResource MainTabItemHeaderStyle}"/>
                 </TabItem.Header>
-                <local:ClosedTicketsView/>                
+                <local:ClosedTicketsView DataContext="{Binding}" 
+                             Tag="{x:Static uservm:SupportTicketsViewModel+ViewType.ClosedTickets}"/>
             </TabItem>
 
-            <TabItem Margin="10">
+            <TabItem Margin="10,10,10,20">
 
                 <TabItem.Header>
                     <TextBlock Text="Статистика" Style="{StaticResource MainTabItemHeaderStyle}" HorizontalAlignment="Center"/>
                 </TabItem.Header>
-                <local:TicketsStatsView/>
+                <local:TicketsStatsView DataContext="{Binding}"/>
             </TabItem>
         </TabControl>
         

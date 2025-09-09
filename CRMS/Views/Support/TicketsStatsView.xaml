@@ -6,5 +6,5 @@
              xmlns:local="clr-namespace:CRMS.Views.Support"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <local:TicketStatsControl/>
+    <local:TicketStatsControl Height="Auto" Width="Auto" Margin="0,0,10,0" DataContext="{Binding}"/>
 </UserControl>

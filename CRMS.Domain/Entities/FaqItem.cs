@@ -32,7 +32,7 @@ namespace CRMS.Domain.Entities
         public int PositiveVotes { get; set; } = 0;
         public int NegativeVotes { get; set; } = 0;
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
 
         public virtual ICollection<FaqVote> Votes { get; set; } = new List<FaqVote>();

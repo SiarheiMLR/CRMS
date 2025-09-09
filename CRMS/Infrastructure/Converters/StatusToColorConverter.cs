@@ -9,6 +9,9 @@ namespace CRMS.Infrastructure.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return Brushes.White; // Белый для null значений
+
             if (value is TicketStatus status)
             {
                 return status switch
@@ -20,7 +23,7 @@ namespace CRMS.Infrastructure.Converters
                 };
             }
 
-            return Brushes.White; // Белый для null значений
+            return value;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

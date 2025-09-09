@@ -17,6 +17,6 @@ namespace CRMS.Domain.Entities
         public int GroupId { get; set; } // Внешний ключ группы
         public Group Group { get; set; } // Навигационное свойство
 
-        public DateTime JoinedAt { get; set; } = DateTime.UtcNow; // Дата добавления в группу
+        public DateTime JoinedAt { get; set; } = DateTime.Now; // Дата добавления в группу
     }
 }

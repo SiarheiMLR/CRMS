@@ -12,8 +12,8 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
-        <local:TicketFiltersControl Grid.Column="0"/>
-        <local:TicketListControl Grid.Column="1"/>
-        <local:TicketStatsControl Grid.Column="2"/>
+        <local:TicketFiltersControl Grid.Column="0" Height="Auto" Width="Auto" Margin="0,0,10,0" DataContext="{Binding}"/>
+        <local:TicketListControl Grid.Column="1" Height="Auto" Width="Auto" Margin="0,0,10,0" DataContext="{Binding}"/>
+        <local:TicketDetailsControl Grid.Column="2" Height="Auto" Width="Auto" Margin="0,0,10,0" DataContext="{Binding}"/>
     </Grid>
 </UserControl>

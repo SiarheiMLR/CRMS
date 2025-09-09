@@ -10,6 +10,7 @@ namespace CRMS.Domain.Interfaces
         public EfTicketsRepository Tickets { get; }
         public EfQueuesRepository Queues { get; }
         public EfUsersRepository Users { get; }
+        public EfTransactionsRepository Transactions { get; } // Добавлено свойство
         //IRepository<CustomField> CustomFieldsRepository { get; }
         //IRepository<CustomFieldValue> CustomFieldValuesRepository { get; }
 
@@ -23,8 +24,7 @@ namespace CRMS.Domain.Interfaces
 
         IRepository<Group> GroupsRepository { get; }
         IRepository<GroupMember> GroupMembersRepository { get; }
-        IRepository<GroupRoleMapping> GroupRoleMappings { get; }
-        //IRepository<Transaction> TransactionsRepository { get; }
+        IRepository<GroupRoleMapping> GroupRoleMappings { get; }        
 
         // Методы сохраняют все изменения в БД
         Task<int> SaveChangesAsync();

@@ -27,7 +27,7 @@ namespace CRMS.Business.Services.UserService
             try
             {
                 if (user.AccountCreated == default)
-                    user.AccountCreated = DateTime.UtcNow;
+                    user.AccountCreated = DateTime.Now;
 
                 await _unitOfWork.Users.AddAsync(user);
                 await _unitOfWork.SaveChangesAsync(); // Сохраняем изменения
@@ -54,7 +54,7 @@ namespace CRMS.Business.Services.UserService
                     { "Email", user.UserLogonName },
                     { "Password", user.InitialPassword ?? "неизвестен" },
                     { "Source", "Active Directory" },
-                    { "Date", DateTime.UtcNow.ToString("g") }
+                    { "Date", DateTime.Now.ToString("g") }
                 };
 
                 await _emailService.SendTemplateAsync(
@@ -75,7 +75,7 @@ namespace CRMS.Business.Services.UserService
             try
             {
                 if (user.AccountCreated == default)
-                    user.AccountCreated = DateTime.UtcNow;
+                    user.AccountCreated = DateTime.Now;
 
                 await _unitOfWork.Users.AddAsync(user);
                 await _unitOfWork.SaveChangesAsync();
@@ -103,7 +103,7 @@ namespace CRMS.Business.Services.UserService
                     { "Email", user.UserLogonName },
                     { "Password", user.InitialPassword ?? "неизвестен" },
                     { "Source", "Active Directory" },
-                    { "Date", DateTime.UtcNow.ToString("g") }
+                    { "Date", DateTime.Now.ToString("g") }
                 };
 
                 await _emailService.SendTemplateAsync(

@@ -35,7 +35,7 @@ namespace CRMS.ViewModels.Admin
                 if (e.PropertyName != nameof(HasChanges))
                     HasChanges = true;
             };
-            EditableUser.AccountCreated = DateTime.UtcNow;
+            EditableUser.AccountCreated = DateTime.Now;
             EditableUser.Status = UserStatus.Active;
         }
 
@@ -50,7 +50,7 @@ namespace CRMS.ViewModels.Admin
         {
             EditableUser = new User
             {
-                AccountCreated = DateTime.UtcNow,
+                AccountCreated = DateTime.Now,
                 Status = UserStatus.Active
             };
             HasChanges = false;
@@ -138,7 +138,7 @@ namespace CRMS.ViewModels.Admin
                     await _userService.DeleteUserAsync(EditableUser);
                     EditableUser = new User
                     {
-                        AccountCreated = DateTime.UtcNow,
+                        AccountCreated = DateTime.Now,
                         Status = UserStatus.Active
                     };
                     _isUserCreated = false;

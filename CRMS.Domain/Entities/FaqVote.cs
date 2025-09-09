@@ -18,7 +18,7 @@ namespace CRMS.Domain.Entities
 
         public bool IsPositive { get; set; }
 
-        public DateTime VotedAt { get; set; } = DateTime.UtcNow;
+        public DateTime VotedAt { get; set; } = DateTime.Now;
     }
 
 }

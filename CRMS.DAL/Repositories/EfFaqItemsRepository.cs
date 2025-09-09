@@ -53,7 +53,7 @@ namespace CRMS.DAL.Repositories
                 FaqItemId = faqId,
                 UserId = userId,
                 IsPositive = isPositive,
-                VotedAt = DateTime.UtcNow
+                VotedAt = DateTime.Now
             };
 
             await _context.FaqVotes.AddAsync(vote);

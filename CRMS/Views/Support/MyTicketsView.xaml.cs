@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CRMS.ViewModels.Support;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace CRMS.Views.Support
         public MyTicketsView()
         {
             InitializeComponent();
+            Loaded += (s, e) =>
+            {
+                if (DataContext is SupportTicketsViewModel vm && Tag is SupportTicketsViewModel.ViewType type)
+                    vm.CurrentView = type;
+            };
         }
     }
+
 }

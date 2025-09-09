@@ -39,7 +39,7 @@ namespace CRMS.Domain.Entities
         /// <summary>
         /// Дата и время загрузки вложения.
         /// </summary>
-        public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UploadedAt { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Пользователь, который загрузил файл.

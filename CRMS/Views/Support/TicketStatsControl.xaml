@@ -1,22 +1,71 @@
 ﻿<UserControl x:Class="CRMS.Views.Support.TicketStatsControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CRMS.Views.Support"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Border Margin="10" Background="Transparent" CornerRadius="8">
-        <StackPanel Margin="10">
-            <TextBlock Text="Статистика" FontSize="18" Margin="0,0,0,20"/>
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:metro="http://metro.mahapps.com/winfx/xaml/controls"
+            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+            xmlns:local="clr-namespace:CRMS.Views.Support"
+            xmlns:viewModels="clr-namespace:CRMS.ViewModels.Support"
+            xmlns:converters="clr-namespace:CRMS.Infrastructure.Converters"
+            xmlns:domain="clr-namespace:CRMS.Domain.Entities;assembly=CRMS.Domain"
+            mc:Ignorable="d"
+            Background="Transparent"
+            d:DesignHeight="450" d:DesignWidth="800">
 
-            <TextBlock Text="Закрытые: 57"/>
-            <TextBlock Text="В ожидании: 23"/>
-            <TextBlock Text="Открытые: 33" Margin="0,0,0,20"/>
+    <Border CornerRadius="8"
+            BorderThickness="1"
+            BorderBrush="{DynamicResource MaterialDesignDivider}"
+            Background="Transparent"
+            Padding="10">
+        <ScrollViewer>
+            <StackPanel Margin="10">
+                <TextBlock Text="Статистика заявок" FontSize="16" Margin="0,0,0,20" Foreground="White" FontWeight="Bold"/>
 
-            <!-- тут потом можно будет подключить LiveCharts -->
-            <TextBlock Text="График по месяцам"/>
-            <Rectangle Fill="Gray" Height="100" Margin="0,10,0,0"/>
-        </StackPanel>
+                <!-- Карточки статистики -->
+                <WrapPanel Margin="0,0,0,20">
+                    <Border Background="#333333" CornerRadius="5" Padding="15" Margin="0,0,10,10" Width="200">
+                        <StackPanel>
+                            <TextBlock Text="Всего заявок" Foreground="LightGray"/>
+                            <TextBlock Text="152" FontSize="24" FontWeight="Bold" Foreground="White"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#333333" CornerRadius="5" Padding="15" Margin="0,0,10,10" Width="200">
+                        <StackPanel>
+                            <TextBlock Text="Активные" Foreground="LightGray"/>
+                            <TextBlock Text="45" FontSize="24" FontWeight="Bold" Foreground="Green"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#333333" CornerRadius="5" Padding="15" Margin="0,0,10,10" Width="200">
+                        <StackPanel>
+                            <TextBlock Text="В работе" Foreground="LightGray"/>
+                            <TextBlock Text="27" FontSize="24" FontWeight="Bold" Foreground="Orange"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="#333333" CornerRadius="5" Padding="15" Margin="0,0,10,10" Width="200">
+                        <StackPanel>
+                            <TextBlock Text="Закрытые" Foreground="LightGray"/>
+                            <TextBlock Text="80" FontSize="24" FontWeight="Bold" Foreground="MediumVioletRed"/>
+                        </StackPanel>
+                    </Border>
+                </WrapPanel>
+
+                <!-- Графики -->
+                <TextBlock Text="Распределение по приоритетам" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                <Border Background="#333333" CornerRadius="5" Padding="15" Height="200" Margin="0,0,0,20">
+                    <!-- Здесь будет график -->
+                    <TextBlock Text="График будет здесь" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="LightGray"/>
+                </Border>
+
+                <TextBlock Text="Статистика по времени решения" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,0,0,10"/>
+                <Border Background="#333333" CornerRadius="5" Padding="15" Height="200">
+                    <!-- Здесь будет график -->
+                    <TextBlock Text="График будет здесь" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="LightGray"/>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
     </Border>
 </UserControl>

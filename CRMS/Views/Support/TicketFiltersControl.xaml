@@ -17,7 +17,8 @@
         <converters:StatusToColorConverter x:Key="StatusToColorConverter"/>
         <converters:StatusToRussianConverter x:Key="StatusToRussianConverter"/>
         <converters:PriorityToRussianConverter x:Key="PriorityToRussianConverter"/>
-        <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>        
+        <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
+        <converters:ViewToStatusFilterEnabledConverter x:Key="ViewToStatusFilterEnabledConverter"/>        
 
         <!-- Стиль для текста -->
         <Style TargetType="TextBlock" x:Key="CardTextStyle">
@@ -42,6 +43,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Фильтр по заявкам" FontSize="16" Margin="0,0,0,20" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center"/>
 
@@ -56,6 +58,7 @@
                       materialDesign:HintAssist.Hint="Выберите статус заявки"          
                       ItemsSource="{Binding Statuses}" 
                       SelectedItem="{Binding SelectedStatus, Mode=TwoWay}"
+                      IsEnabled="{Binding CurrentView, Converter={StaticResource ViewToStatusFilterEnabledConverter}}"                      
                       Foreground="White"
                       Margin="0,0,10,0"
                       VerticalAlignment="Center"
@@ -148,6 +151,15 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+
+            <StackPanel Grid.Row="9" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 16 0 0">
+                <Button Content="Сбросить фильтры"
+                        Command="{Binding ResetFiltersCommand}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Background="{DynamicResource PrimaryHueMidBrush}"
+                        Foreground="White"
+                        Margin="0 0 8 0"/>
+            </StackPanel>
         </Grid>
     </Border>
 </UserControl>

@@ -36,6 +36,7 @@ using CRMS.Business.Services.QueueService;
 using System;
 using CommunityToolkit.Mvvm.Messaging;
 using CRMS.Business.Services.DocumentService;
+using CRMS.Business.Services.MessageService;
 
 //admin@bigfirm.by
 //27011984Hp
@@ -92,6 +93,7 @@ namespace CRMS
                     services.AddScoped<IFaqService, FaqService>();
                     services.AddScoped<IQueueService, QueueService>();
                     services.AddScoped<IMessenger, WeakReferenceMessenger>();
+                    services.AddScoped<IMessageService, MessageBoxService>();
                     services.AddScoped<INavigationService, NavigationService>();
                     services.AddScoped<IDocumentConverter, DocumentConverter>();
                     services.AddSingleton<NullToBoolConverter>();
@@ -125,8 +127,8 @@ namespace CRMS
 
                     services.AddTransient<UserEditWindowViewModel>();
 
-                    services.AddTransient<UserTicketsViewModel>();                    
-                    services.AddTransient<SupportTicketsViewModel>();
+                    services.AddTransient<UserTicketsViewModel>();
+                    services.AddSingleton<SupportTicketsViewModel>();
 
                     services.AddTransient<ADLoginWindowViewModel>();
 

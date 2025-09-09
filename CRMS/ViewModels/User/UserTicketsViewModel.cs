@@ -344,7 +344,7 @@ namespace CRMS.ViewModels.UserVM
                 }
 
                 var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Minsk"); // Windows на Linux/Mac может быть "Europe/Minsk"
-                var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, tz);
+                var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now, tz);
 
                 // 🔥 ВАЖНО: нормализуем изображения до сохранения чтобы все картинки в FlowDocument были inline base64
                 Ticket.NormalizeImagesInFlowDocument(BodyDocument);

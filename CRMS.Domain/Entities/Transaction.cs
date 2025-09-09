@@ -11,8 +11,10 @@ namespace CRMS.Domain.Entities
         public int Id { get; set; }
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
-        public User Creator { get; set; }
-        public string Type { get; set; }
-        public DateTime Created { get; set; } = DateTime.UtcNow;
+        public int? UserId { get; set; }
+        public User User { get; set; }
+        public string ActionType { get; set; } // "Take", "Unassign", "Reopen", "Close"
+        public string Details { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
     }
 }

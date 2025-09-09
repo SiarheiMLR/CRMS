@@ -99,7 +99,7 @@ namespace CRMS.Domain.Entities
         private string passwordSalt = string.Empty; // Соль для пароля
 
         [ObservableProperty]
-        //private DateTime accountCreated = DateTime.UtcNow;
+        //private DateTime accountCreated = DateTime.Now;
         private DateTime accountCreated; // Дата создания учетной записи
 
         [ObservableProperty]

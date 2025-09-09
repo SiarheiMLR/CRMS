@@ -17,7 +17,7 @@ namespace CRMS.Domain.Interfaces
         Task<IEnumerable<TEntity>> GetWhereNoTrackingAsync(Expression<Func<TEntity, bool>> predicate);
         IQueryable<TEntity> AsQueryable();
         Task<IEnumerable<TEntity>> FindWithIncludesAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null);
-        Task AddAsync(TEntity entity);
+        Task AddAsync(TEntity entity);        
         void Update(TEntity entity);
         void Remove(TEntity entity);
     }

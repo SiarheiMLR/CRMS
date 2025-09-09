@@ -10,7 +10,6 @@
   <ItemGroup>
     <Compile Remove="Repositories\EfCustomFieldsRepository.cs" />
     <Compile Remove="Repositories\EfCustomFieldValuesRepository.cs" />
-    <Compile Remove="Repositories\EfTransactionsRepository.cs" />
   </ItemGroup>
 
   <ItemGroup>

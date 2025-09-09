@@ -22,6 +22,8 @@ namespace CRMS.Views.Support
     /// </summary>
     public partial class MainSupportPage : Page
     {
+        private readonly SupportTicketsViewModel _viewModel;
+
         public MainSupportPage()
         {
             InitializeComponent();

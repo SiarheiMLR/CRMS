@@ -9,7 +9,7 @@ namespace CRMS.Business.Services.TicketService
         public Task<IEnumerable<Ticket>> GetAllTicketsAsync();
         public Task<Ticket> GetTicketByIdAsync(int id);
         public Task AddTicketAsync(Ticket ticket);
-        public void UpdateTicket(Ticket ticket);
+        Task UpdateTicketAsync(Ticket ticket);
         public void DeleteTicket(Ticket ticket);
         public Task<IEnumerable<Ticket>> FindTicketsAsync(Expression<Func<Ticket, bool>> predicate);
         Task<IEnumerable<Ticket>> FindTicketsNoTrackingAsync(Expression<Func<Ticket, bool>> predicate);
@@ -20,5 +20,12 @@ namespace CRMS.Business.Services.TicketService
         public Task UnassignTicket(Ticket ticket);
         Task<IEnumerable<Ticket>> FindTicketsWithDetailsAsync(Expression<Func<Ticket, bool>> predicate, Func<IQueryable<Ticket>, IIncludableQueryable<Ticket, object>> include = null);
         public Task MigrateTicketContentFormat();
+        Task<IEnumerable<Ticket>> GetAllTicketsWithDetailsAsync();
+
+        // Новые методы для работы с транзакциями
+        Task AddTransactionAsync(Transaction transaction);
+        Task<IEnumerable<Transaction>> GetTransactionsAsync(int? userId = null, string actionType = null, DateTime? startDate = null, DateTime? endDate = null);
+        Task<IEnumerable<Transaction>> GetUserUnassignStats(int userId, DateTime startDate, DateTime endDate);
+        Task<IEnumerable<Transaction>> GetUserReopenStats(int userId, DateTime startDate, DateTime endDate);
     }
 }
