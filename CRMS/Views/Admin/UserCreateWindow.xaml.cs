@@ -15,7 +15,6 @@ using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using CRMS.Views.Admin.Groups;
 using MaterialDesignThemes.Wpf;
-using MahApps.Metro.Controls;
 using CRMS.Domain.Entities;
 using CRMS.ViewModels.Admin;
 using CRMS.Business.Services.UserService;

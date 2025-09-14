@@ -12,15 +12,19 @@
       Title="Панель службы поддержки"
       d:DesignHeight="450" d:DesignWidth="800">
 
-    <!-- Верхний отступ для меню -->
-    <Grid Margin="45,16,16,16">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>            <!-- верхняя строка с датой -->
-            <RowDefinition Height="*"/>            <!-- основная панель -->
-            <RowDefinition Height="Auto"/>            <!-- футер/подвал -->
-        </Grid.RowDefinitions>
+    <materialDesign:DialogHost Identifier="TicketDetailsDialog" DialogTheme="Inherit" DialogMargin="40" CloseOnClickAway="False">
+        <!-- Верхний отступ для меню -->
+        <Grid Margin="45,16,16,16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- верхняя строка с датой -->
+                <RowDefinition Height="*"/>
+                <!-- основная панель -->
+                <RowDefinition Height="Auto"/>
+                <!-- футер/подвал -->
+            </Grid.RowDefinitions>
 
-        <!-- Ресурсы для стилей заголовков Expander -->
+            <!-- Ресурсы для стилей заголовков Expander -->
         <Grid.Resources>
             <Style x:Key="MainTabItemHeaderStyle" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="18"/>
@@ -76,4 +80,5 @@
             <TextBlock Text="Copyright © 2025 CRMS by Siarhei Kuzmich" VerticalAlignment="Center" Foreground="{DynamicResource MaterialDesignBody}" Margin="0,0,8,0"/>
         </StackPanel>-->
     </Grid>
+    </materialDesign:DialogHost>
 </Page>

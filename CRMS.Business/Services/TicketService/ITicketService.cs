@@ -27,5 +27,10 @@ namespace CRMS.Business.Services.TicketService
         Task<IEnumerable<Transaction>> GetTransactionsAsync(int? userId = null, string actionType = null, DateTime? startDate = null, DateTime? endDate = null);
         Task<IEnumerable<Transaction>> GetUserUnassignStats(int userId, DateTime startDate, DateTime endDate);
         Task<IEnumerable<Transaction>> GetUserReopenStats(int userId, DateTime startDate, DateTime endDate);
+
+        // Новые методы для работы с комментариями
+        Task<TicketComment> AddCommentAsync(TicketComment comment);
+        Task<TicketComment> AddCommentAsync(int ticketId, int userId, string content, bool isInternal = false);
+        Task<IEnumerable<TicketComment>> GetCommentsByTicketIdAsync(int ticketId);
     }
 }

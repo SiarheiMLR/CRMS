@@ -26,6 +26,7 @@ namespace CRMS.DAL.Data
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<GroupRoleMapping> GroupRoleMappings { get; set; }
+        public DbSet<TicketComment> TicketComments { get; set; }
 
         // Модель FAQ
         public DbSet<FaqItem> FaqItems { get; set; }
@@ -372,6 +373,32 @@ namespace CRMS.DAL.Data
                 entity.HasOne(a => a.UploadedBy)
                       .WithMany()
                       .HasForeignKey(a => a.UploadedById)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // // Конфигурация для TicketComment
+            modelBuilder.Entity<TicketComment>(entity =>
+            {
+                entity.ToTable("TicketComments");
+
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.Content)
+                      .HasColumnType("LONGTEXT")
+                      .IsRequired();
+
+                // Не задаём дефолт в БД, используем DateTime.Now из кода
+                entity.Property(c => c.Created)
+                      .IsRequired();
+
+                entity.HasOne(c => c.Ticket)
+                      .WithMany(t => t.Comments)
+                      .HasForeignKey(c => c.TicketId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(c => c.User)
+                      .WithMany()
+                      .HasForeignKey(c => c.UserId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
 

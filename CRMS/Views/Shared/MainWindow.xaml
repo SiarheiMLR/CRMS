@@ -290,8 +290,7 @@
                                                         <materialDesign:PackIcon Kind="HomeImportOutline" Width="20" Height="20" Margin="0,0,5,0"/>
                                                         <TextBlock Text="Главная"/>
                                                     </StackPanel>
-                                                </Button>
-                                                <Button Content="Тикеты" Command="{Binding SupportTicketsPageCommand}" Style="{StaticResource MenuTextButtonStyle}"/>
+                                                </Button>                                                
                                                 <Button Command="{Binding OpenFaqAdminPageCommand}" 
                                                         Style="{StaticResource MenuTextButtonStyle}">
                                                     <StackPanel Orientation="Horizontal">

@@ -204,16 +204,28 @@ namespace CRMS.Business.Services.TicketService
             return await _unitOfWork.Tickets.FindWithIncludesAsync(predicate, include);
         }
 
+        //public async Task<IEnumerable<Ticket>> GetAllTicketsWithDetailsAsync()
+        //{
+        //    return await _unitOfWork.Tickets.FindWithIncludesAsync(
+        //        predicate: t => true, // Получаем все тикеты
+        //        includes: q => q
+        //            .Include(t => t.Requestor)
+        //            .Include(t => t.Supporter)
+        //            .Include(t => t.Queue)
+        //            .Include(t => t.Attachments)
+        //    );
+        //}
+
         public async Task<IEnumerable<Ticket>> GetAllTicketsWithDetailsAsync()
         {
-            return await _unitOfWork.Tickets.FindWithIncludesAsync(
-                predicate: t => true, // Получаем все тикеты
-                includes: q => q
-                    .Include(t => t.Requestor)
-                    .Include(t => t.Supporter)
-                    .Include(t => t.Queue)
-                    .Include(t => t.Attachments)
-            );
+            return await _unitOfWork.Tickets.AsQueryable()
+                .Include(t => t.Requestor)
+                .Include(t => t.Supporter)
+                .Include(t => t.Queue)
+                .Include(t => t.Attachments)
+                .Include(t => t.Comments)        // добавляем комментарии
+                    .ThenInclude(c => c.User)    // подтягиваем автора
+                .ToListAsync();
         }
 
         public async Task<IEnumerable<Ticket>> GetAllActiveTickets()
@@ -226,14 +238,34 @@ namespace CRMS.Business.Services.TicketService
             return await _unitOfWork.Tickets.GetAllAsync();
         }
 
+        //public async Task<Ticket> GetTicketByIdAsync(int id)
+        //{
+        //    var ticket = await _unitOfWork.Tickets.GetByIdAsync(id);
+        //    if (ticket != null)
+        //    {
+        //        // Автоматически конвертируем при загрузке
+        //        var _ = ticket.ContentDocument;
+        //    }
+        //    return ticket;
+        //}
+
         public async Task<Ticket> GetTicketByIdAsync(int id)
         {
-            var ticket = await _unitOfWork.Tickets.GetByIdAsync(id);
+            var ticket = await _unitOfWork.Tickets
+                .AsQueryable()
+                .Include(t => t.Requestor)
+                .Include(t => t.Supporter)
+                .Include(t => t.Queue)
+                .Include(t => t.Attachments)
+                .Include(t => t.Comments)        // добавляем комментарии
+                    .ThenInclude(c => c.User)    // подтягиваем автора
+                .FirstOrDefaultAsync(t => t.Id == id);
+
             if (ticket != null)
             {
-                // Автоматически конвертируем при загрузке
-                var _ = ticket.ContentDocument;
+                var _ = ticket.ContentDocument; // твоя автоконвертация XAML
             }
+
             return ticket;
         }
 
@@ -311,6 +343,91 @@ namespace CRMS.Business.Services.TicketService
         {
             return await GetTransactionsAsync(userId, "Reopen", startDate, endDate);
         }
+
+        /// <summary>
+        /// Добавляет комментарий (если передан готовый объект TicketComment).
+        /// Выполняет валидацию существования тикета и автора, конвертацию простого текста в XAML-представление при необходимости,
+        /// устанавливает Created = DateTime.Now и сохраняет в БД.
+        /// </summary>
+        public async Task<TicketComment> AddCommentAsync(TicketComment comment)
+        {
+            if (comment == null) throw new ArgumentNullException(nameof(comment));
+
+            // Проверяем тикет
+            var ticket = await _unitOfWork.Tickets.GetByIdAsync(comment.TicketId);
+            if (ticket == null) throw new Exception($"Ticket with Id {comment.TicketId} not found");
+
+            // Проверяем автора
+            var user = await _unitOfWork.Users.GetByIdAsync(comment.UserId);
+            if (user == null) throw new Exception($"User with Id {comment.UserId} not found");
+
+            // Контент не должен быть пустым
+            if (string.IsNullOrWhiteSpace(comment.Content))
+                throw new Exception("Comment content cannot be empty");
+
+            // Если контент — не XAML (теоретически простой текст), превращаем в XAML FlowDocument (аналогично тикету)
+            if (!string.IsNullOrWhiteSpace(comment.Content) && !comment.Content.TrimStart().StartsWith("<"))
+            {
+                var doc = new FlowDocument();
+                doc.Blocks.Add(new Paragraph(new Run(comment.Content)));
+                comment.Content = Ticket.ConvertFlowDocumentToXaml(doc);
+            }
+
+            // Устанавливаем время создания в локальном формате (DateTime.Now — как у тебя в проекте)
+            comment.Created = DateTime.Now;
+
+            // Добавляем в репозиторий комментариев
+            await _unitOfWork.TicketComments.AddAsync(comment);
+            await _unitOfWork.SaveChangesAsync();
+
+            // Поддержим навигационное свойство Ticket.Comments если оно загружено
+            if (ticket.Comments != null)
+            {
+                ticket.Comments.Add(comment);
+            }
+
+            return comment;
+        }
+
+        /// <summary>
+        /// Удобная перегрузка: создаёт TicketComment по параметрам и вызывает AddCommentAsync(TicketComment).
+        /// </summary>
+        public async Task<TicketComment> AddCommentAsync(int ticketId, int userId, string content, bool isInternal = false)
+        {
+            var comment = new TicketComment
+            {
+                TicketId = ticketId,
+                UserId = userId,
+                Content = content ?? string.Empty,
+                IsInternal = isInternal,
+                Created = DateTime.Now // на всякий случай; основной установки делает AddCommentAsync
+            };
+
+            return await AddCommentAsync(comment);
+        }
+
+        /// <summary>
+        /// Возвращает список комментариев, привязанных к тикету, с включённой информацией об авторе (User).
+        /// Сортировка по Created ASC (старые сверху).
+        /// </summary>
+        public async Task<IEnumerable<TicketComment>> GetCommentsByTicketIdAsync(int ticketId)
+        {
+            return await _unitOfWork.TicketComments.AsQueryable()
+                .Include(c => c.User)
+                .Where(c => c.TicketId == ticketId)
+                .OrderBy(c => c.Created)
+                .ToListAsync();
+        }
+        //public async Task<IEnumerable<TicketComment>> GetCommentsByTicketIdAsync(int ticketId)
+        //{
+        //    var query = _unitOfWork.TicketComments.AsQueryable()
+        //                    .Where(c => c.TicketId == ticketId)
+        //                    .Include(c => c.User)
+        //                    .OrderBy(c => c.Created)
+        //                    .AsQueryable();
+
+        //    return await query.ToListAsync();
+        //}
 
     }
 }

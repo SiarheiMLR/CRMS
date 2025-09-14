@@ -34,15 +34,8 @@ namespace CRMS.ViewModels
         private string _userName;
 
         [RelayCommand]
-        private void ToggleMenu() => IsMenuOpen = !IsMenuOpen;          
-
-        [RelayCommand]
-        private void SupportTicketsPage()
-        {
-            _navigationService.NavigateTo<SupportTicketsPage>();
-            ToggleMenu();
-        }
-
+        private void ToggleMenu() => IsMenuOpen = !IsMenuOpen;    
+              
         [RelayCommand]
         private void MainPage()
         {

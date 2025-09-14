@@ -63,8 +63,39 @@ namespace CRMS.Views.User
         {
             if (d is RichTextEditor editor)
             {
-                editor.Editor.Document = e.NewValue as FlowDocument ?? new FlowDocument();
+                try
+                {
+                    // Пытаемся установить документ напрямую
+                    editor.Editor.Document = e.NewValue as FlowDocument ?? new FlowDocument();
+                }
+                catch (ArgumentException)
+                {
+                    // Если возникает исключение, создаем глубокую копию документа
+                    var newDocument = CloneFlowDocument(e.NewValue as FlowDocument) ?? new FlowDocument();
+                    editor.Editor.Document = newDocument;
+
+                    // Обновляем привязанное свойство
+                    editor.Document = newDocument;
+                }
             }
+        }
+
+        // Добавьте этот метод для глубокого копирования документа
+        private static FlowDocument CloneFlowDocument(FlowDocument source)
+        {
+            if (source == null) return new FlowDocument();
+
+            var range = new TextRange(source.ContentStart, source.ContentEnd);
+            using var ms = new MemoryStream();
+
+            range.Save(ms, DataFormats.XamlPackage);
+            ms.Position = 0;
+
+            var clone = new FlowDocument();
+            var cloneRange = new TextRange(clone.ContentStart, clone.ContentEnd);
+            cloneRange.Load(ms, DataFormats.XamlPackage);
+
+            return clone;
         }
 
         public ObservableCollection<double> FontSizes { get; } =
@@ -78,7 +109,7 @@ namespace CRMS.Views.User
 
         public static readonly DependencyProperty SelectedFontSizeProperty =
             DependencyProperty.Register("SelectedFontSize", typeof(double), typeof(RichTextEditor),
-            new PropertyMetadata(12.0));        
+            new PropertyMetadata(12.0));
 
         public RichTextEditor()
         {
@@ -100,7 +131,7 @@ namespace CRMS.Views.User
             EmojiCache[path] = image;
             return image;
         }
-        
+
         private void LoadEmojis()
         {
             Emojis.Clear();
@@ -127,9 +158,9 @@ namespace CRMS.Views.User
                 if (stream == null)
                 {
                     // Ничего не найдено — логирование/обработка
-                    #if DEBUG
+#if DEBUG
                     System.Diagnostics.Debug.WriteLine($"Не найден {gResourceName}. Проверьте Build Action и путь к ресурсам.");
-                    #endif
+#endif
                     return;
                 }
 
@@ -170,9 +201,9 @@ namespace CRMS.Views.User
             }
             catch (Exception ex)
             {
-                #if DEBUG
+#if DEBUG
                 System.Diagnostics.Debug.WriteLine($"Ошибка при добавлении {fileName}: {ex}");
-                #endif
+#endif
             }
         }
 
@@ -246,7 +277,7 @@ namespace CRMS.Views.User
                     toggleButton.IsChecked = false;
                 }
             }
-        }        
+        }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
         {
@@ -292,6 +323,6 @@ namespace CRMS.Views.User
                     MessageBox.Show($"Ошибка загрузки изображения: {ex.Message}");
                 }
             }
-        }       
+        }
     }
 }

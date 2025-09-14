@@ -26,12 +26,12 @@ namespace CRMS.Business.Services.EmailService
         /// <summary>
         /// Адрес, который видит получатель в поле "От кого"
         /// </summary>
-        public string From { get; set; } = "it-support@bigfirm.by";
+        public string From { get; set; } = "crms-ns@bigfirm.by";
 
         /// <summary>
         /// Имя, отображаемое рядом с адресом "От кого"
         /// </summary>
-        public string FromDisplayName { get; set; } = "Служба поддержки пользователей CRMS";
+        public string FromDisplayName { get; set; } = "CRMS Notification Service";
 
         /// <summary>
         /// Реальный SMTP-аккаунт (relay-учетка в hMailServer)

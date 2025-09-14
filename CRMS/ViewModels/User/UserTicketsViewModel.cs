@@ -31,6 +31,8 @@ using CRMS.Business.Services.EmailService;
 using CRMS.Business.Services.EmailService.Templates;
 using CRMS.Helpers;
 using System.Diagnostics;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Input;
 
 namespace CRMS.ViewModels.UserVM
 {
@@ -45,7 +47,7 @@ namespace CRMS.ViewModels.UserVM
 
         private readonly IMessenger _messenger;
 
-        public ICommand ShowFullContentCommand { get; }
+        public ICommand ShowFullContentCommand { get; }        
 
         // Правильный формат даты и времени
         private string _currentDate = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
@@ -108,6 +110,9 @@ namespace CRMS.ViewModels.UserVM
         [ObservableProperty]
         private Brush _attachmentsSummaryColor = Brushes.White;
 
+        [ObservableProperty]
+        private Ticket _selectedTicket;
+
         private TicketPriority? _selectedPriority = null;
         public TicketPriority? SelectedPriority
         {
@@ -140,7 +145,7 @@ namespace CRMS.ViewModels.UserVM
                 LineHeight = 14 // Одинарный интервал
             };
 
-            ShowFullContentCommand = new RelayCommand<Ticket>(ShowFullContent);
+            ShowFullContentCommand = new RelayCommand<Ticket>(ShowFullContent);            
 
             // Запускаем загрузку асинхронно
             _ = InitializeAsync();
@@ -156,6 +161,27 @@ namespace CRMS.ViewModels.UserVM
                     _ = LoadTicketsAsync();
                 });
             }
+
+            _messenger.Register<CommentAddedMessage>(this, (recipient, message) =>
+            {
+                // Обновляем комментарии для соответствующего тикета
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    var ticket = Tickets.FirstOrDefault(t => t.Id == message.TicketId);
+                    if (ticket != null)
+                    {
+                        ticket.Comments.Add(message.Comment);
+                        OnPropertyChanged(nameof(ticket.Comments));
+
+                        // Если диалог открыт для этого тикета, обновляем его
+                        if (SelectedTicket?.Id == message.TicketId)
+                        {
+                            SelectedTicket.Comments.Add(message.Comment);
+                            OnPropertyChanged(nameof(SelectedTicket));
+                        }
+                    }
+                });
+            });
         }
 
         // Вынесем инициализацию в отдельный метод
@@ -221,6 +247,8 @@ namespace CRMS.ViewModels.UserVM
                     .Include(t => t.Supporter)
                     .Include(t => t.Queue)
                     .Include(t => t.Attachments)
+                    .Include(t => t.Comments)
+                        .ThenInclude(c => c.User) // Убедитесь, что загружаются пользователи
             );
 
             // Очищаем коллекции
@@ -343,9 +371,6 @@ namespace CRMS.ViewModels.UserVM
                     return;
                 }
 
-                var tz = TimeZoneInfo.FindSystemTimeZoneById("Europe/Minsk"); // Windows на Linux/Mac может быть "Europe/Minsk"
-                var local = TimeZoneInfo.ConvertTimeFromUtc(DateTime.Now, tz);
-
                 // 🔥 ВАЖНО: нормализуем изображения до сохранения чтобы все картинки в FlowDocument были inline base64
                 Ticket.NormalizeImagesInFlowDocument(BodyDocument);
 
@@ -353,7 +378,7 @@ namespace CRMS.ViewModels.UserVM
                 var newTicket = new Ticket
                 {
                     Status = TicketStatus.Active,
-                    Created = local,
+                    Created = DateTime.Now,
                     //LastUpdated = local,               
                     QueueId = SelectedQueue.Id,        // <-- используем выбранную очередь                
                     RequestorId = CurrentUser.Id,
@@ -817,6 +842,22 @@ namespace CRMS.ViewModels.UserVM
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        [RelayCommand]
+        private async Task ShowComments(Ticket ticket)
+        {
+            if (ticket == null || ticket.Comments == null || ticket.Comments.Count == 0)
+                return;
+
+            SelectedTicket = ticket;
+
+            var view = new ViewCommentDialog
+            {
+                DataContext = this   // 👈 передаём текущий VM
+            };
+
+            await DialogHost.Show(view, "CommentsDialogHost");
         }
 
         // Вспомогательный проверочный метод (чтобы не забыть _authService в коде)

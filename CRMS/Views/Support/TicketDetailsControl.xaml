@@ -55,13 +55,23 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <!-- Стиль для заглушки "Комментарии отсутствуют" (отслеживает HasItems у ItemsControl) -->
+        <Style x:Key="NoCommentsTextStyle" TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding ElementName=CommentsList, Path=HasItems}" Value="False">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
 
     <Border CornerRadius="8" 
-        BorderThickness="1" 
-        BorderBrush="{DynamicResource MaterialDesignDivider}" 
-        Background="Transparent" 
-        Padding="10">
+            BorderThickness="1" 
+            BorderBrush="{DynamicResource MaterialDesignDivider}" 
+            Background="Transparent" 
+            Padding="10">
 
         <Grid>
             <Grid.RowDefinitions>
@@ -73,21 +83,21 @@
 
             <!-- Заголовок (фиксированный) -->
             <TextBlock Grid.Row="0"
-                   Text="Информация о заявке:"
-                   FontSize="16"
-                   HorizontalAlignment="Center"
-                   Margin="0,0,0,5"
-                   Foreground="White"
-                   FontWeight="Bold"/>
+                       Text="Информация о заявке:"
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,5"
+                       Foreground="White"
+                       FontWeight="Bold"/>
             <!-- Контейнер для состояния "нет выбранной заявки" -->
             <Grid Grid.Row="1">
                 <TextBlock Text="Выберите заявку для просмотра подробной информации"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"
-                       Foreground="White"
-                       FontSize="16"
-                       FontStyle="Italic"
-                       Style="{StaticResource NoSelectionTextStyle}" />
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           FontSize="16"
+                           FontStyle="Italic"
+                           Style="{StaticResource NoSelectionTextStyle}" />
 
                 <!-- Контейнер для деталей заявки -->
                 <ScrollViewer Style="{StaticResource DetailsViewStyle}">
@@ -105,17 +115,17 @@
 
                             <!-- Номер заявки -->
                             <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Text="{Binding SelectedTicket.TicketNumber}" 
-                                   FontSize="25" 
-                                   FontWeight="Bold" 
-                                   Foreground="White"
-                                   VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                                       FontSize="25" 
+                                       FontWeight="Bold" 
+                                       Foreground="White"
+                                       VerticalAlignment="Top" HorizontalAlignment="Center"/>
 
-                        <!-- Плашки статуса и приоритета (в правом верхнем углу) -->
+                            <!-- Плашки статуса и приоритета (в правом верхнем углу) -->
                             <StackPanel Grid.Row="0" Grid.ColumnSpan="2"
-                                    Orientation="Horizontal" 
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Top"
-                                    Margin="5,0,50,0">
+                                        Orientation="Horizontal" 
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Margin="5,0,50,0">
                                 <!-- Плашка статуса -->
                                 <Border Background="{Binding SelectedTicket.Status, Converter={StaticResource StatusToColorConverter}}" 
                                         CornerRadius="3" 
@@ -123,14 +133,14 @@
                                         Margin="0,0,0,2">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <fa:ImageAwesome Icon="{Binding SelectedTicket.Status, Converter={StaticResource StatusToIconConverter}}"
-                                                 Foreground="White"
-                                                 Width="14"
-                                                 Height="14"
-                                                 Margin="0,0,4,0"/>
+                                                         Foreground="White"
+                                                         Width="14"
+                                                         Height="14"
+                                                         Margin="0,0,4,0"/>
                                         <TextBlock Text="{Binding SelectedTicket.Status, Converter={StaticResource StatusToRussianConverter}}"
-                                           Foreground="White"
-                                           FontSize="8"
-                                           FontWeight="Bold"
+                                                   Foreground="White"
+                                                   FontSize="8"
+                                                   FontWeight="Bold"
                                                    VerticalAlignment="Top" HorizontalAlignment="Left"/>
                                     </StackPanel>
                                 </Border>
@@ -142,20 +152,20 @@
                                         Margin="10,0,0,2">
                                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                         <fa:ImageAwesome Icon="{Binding SelectedTicket.Priority, Converter={StaticResource PriorityToIconConverter}}"
-                                                 Foreground="White"
-                                                 Width="14"
-                                                 Height="14"
-                                                 Margin="0,0,4,0"/>
+                                                         Foreground="White"
+                                                         Width="14"
+                                                         Height="14"
+                                                         Margin="0,0,4,0"/>
                                         <TextBlock Text="{Binding SelectedTicket.Priority, Converter={StaticResource PriorityToRussianConverter}}"
-                                           Foreground="White"
-                                           FontSize="8"
-                                           FontWeight="Bold"/>
+                                                   Foreground="White"
+                                                   FontSize="8"
+                                                   FontWeight="Bold"/>
                                     </StackPanel>
                                 </Border>
                             </StackPanel>
                         </Grid>
 
-                    <!-- Карточка заявки -->
+                        <!-- Карточка заявки -->
                         <Border Background="#333333" CornerRadius="5" Padding="15" Margin="0,0,0,20">
                             <StackPanel>
                                 <TextBlock Text="Общая информация:" FontSize="14" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,10"/>
@@ -188,12 +198,12 @@
                                         <TextBlock Grid.Row="1" Grid.Column="0" Text="Контакты: " Foreground="LightGray" Margin="0,0,10,5"/>
                                         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="0,0,0,5">
                                             <TextBlock Margin="0,0,10,5"> 
-                                                <Hyperlink Command="{Binding OpenEmailClientCommand}" 
-                                                           CommandParameter="{Binding SelectedTicket.Requestor.Email}" 
-                                                           Foreground="LightBlue" 
-                                                           TextDecorations="Underline"> 
-                                                    <Run Text="{Binding SelectedTicket.Requestor.Email}"/> 
-                                                </Hyperlink>
+                                            <Hyperlink Command="{Binding OpenEmailClientCommand}" 
+                                                       CommandParameter="{Binding SelectedTicket.Requestor.Email}" 
+                                                       Foreground="LightBlue" 
+                                                       TextDecorations="Underline"> 
+                                                <Run Text="{Binding SelectedTicket.Requestor.Email}"/> 
+                                            </Hyperlink>
                                             </TextBlock>
                                             <TextBlock Text="{Binding SelectedTicket.Requestor.WorkPhone, FallbackValue='Не указан'}" Foreground="White" Margin="0,0,0,5"/>
                                             <TextBlock Text="{Binding SelectedTicket.Requestor.MobilePhone, FallbackValue='Не указан'}" Foreground="White" Margin="0,0,0,5"/>
@@ -290,119 +300,216 @@
                                         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding CompletedAtHeader}" Foreground="LightGray" Margin="0,0,0,5"/>
                                         <TextBlock Grid.Row="2" Grid.Column="3" Text="{Binding CompletedAtTimeValue}" Foreground="{Binding CompletedAtTimeColor}" FontWeight="Bold" Margin="0,0,0,5"/>
                                     </Grid>
-                                </Border>                                
+                                </Border>
                             </StackPanel>
                         </Border>
 
                         <!-- Тема -->
-                    <TextBlock Text="{Binding SelectedTicket.Subject}" 
-                               FontSize="25" 
-                               FontWeight="Bold" 
-                               Foreground="White" 
-                               Margin="0,0,0,5" 
-                               TextWrapping="Wrap"
-                               HorizontalAlignment="Center"/>
+                        <TextBlock Text="{Binding SelectedTicket.Subject}" 
+                                   FontSize="25" 
+                                   FontWeight="Bold" 
+                                   Foreground="White" 
+                                   Margin="0,0,0,5" 
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"/>
                         <Border CornerRadius="8" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="#333333" Padding="15" Margin="0,0,0,20">
-                        <FlowDocumentScrollViewer 
-                                Document="{Binding SelectedTicket.Content, Converter={StaticResource XamlToFlowDocumentConverter}}"
-                                Foreground="White"
-                                MaxHeight="300"
-		                        VerticalScrollBarVisibility="Auto"
-                                HorizontalScrollBarVisibility="Auto"
-                                Padding="0"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                            <FlowDocumentScrollViewer.Resources>
-                                <Style TargetType="{x:Type Image}">
-                                    <Setter Property="Source" Value="{Binding Source, RelativeSource={RelativeSource Self}}"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Source, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
-                                            <Setter Property="ToolTip" Value="Изображение не может быть загружено"/>
-                                            <Setter Property="Source" Value="/Resources/Images/placeholder.png"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </FlowDocumentScrollViewer.Resources>
-                        </FlowDocumentScrollViewer>
-                    </Border>
-
-                    <!-- Секция для вложений -->
-                    <TextBlock Text="Прикрепленные файлы:" 
-                               FontSize="14" 
-                               FontWeight="Bold" 
-                               Foreground="White"
-                               VerticalAlignment="Center"
-                               Margin="0,0,0,10"/>
-                    <Border CornerRadius="8" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="#333333" Padding="5" Margin="0,0,0,20">
-                        <StackPanel Orientation="Horizontal">
-                            <ItemsControl ItemsSource="{Binding SelectedTicket.Attachments}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Button Content="{Binding FileName}" 
-                                                Command="{Binding DataContext.DownloadAttachmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
-                                                CommandParameter="{Binding}"
-                                                Style="{StaticResource MaterialDesignFlatButton}"
-                                                Foreground="LightBlue"
-                                                Margin="0,0,5,0"
-                                                VerticalAlignment="Center" 
-                                                HorizontalAlignment="Left"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                                <ItemsControl.Style>
-                                    <Style TargetType="ItemsControl">
-                                        <Setter Property="Visibility" Value="Visible"/>
+                            <FlowDocumentScrollViewer 
+                                    Document="{Binding SelectedTicket.Content, Converter={StaticResource XamlToFlowDocumentConverter}}"
+                                    Foreground="White"
+                                    MaxHeight="300"
+	                                VerticalScrollBarVisibility="Auto"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    Padding="0"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch">
+                                <FlowDocumentScrollViewer.Resources>
+                                    <Style TargetType="{x:Type Image}">
+                                        <Setter Property="Source" Value="{Binding Source, RelativeSource={RelativeSource Self}}"/>
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding SelectedTicket.Attachments.Count}" Value="0">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                            <DataTrigger Binding="{Binding Source, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                                                <Setter Property="ToolTip" Value="Изображение не может быть загружено"/>
+                                                <Setter Property="Source" Value="/Resources/Images/placeholder.png"/>
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </ItemsControl.Style>
-                            </ItemsControl>
+                                </FlowDocumentScrollViewer.Resources>
+                            </FlowDocumentScrollViewer>
+                        </Border>
 
-                            <TextBlock Text="Отсутствуют"
-                                       FontSize="14"
-                                       Foreground="LightBlue"
-                                       FontStyle="Italic"
-                                       VerticalAlignment="Center"
-                                       Margin="10,0,0,0">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding SelectedTicket.Attachments.Count}" Value="0">
+                        <!-- Секция для вложений -->
+                        <TextBlock Text="Прикрепленные файлы:" 
+                                   FontSize="14" 
+                                   FontWeight="Bold" 
+                                   Foreground="White"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,0,10"/>
+                        <Border CornerRadius="8" BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}" Background="#333333" Padding="5" Margin="0,0,0,20">
+                            <StackPanel Orientation="Horizontal">
+                                <ItemsControl ItemsSource="{Binding SelectedTicket.Attachments}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Button Content="{Binding FileName}" 
+                                                    Command="{Binding DataContext.DownloadAttachmentCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}"
+                                                    Style="{StaticResource MaterialDesignFlatButton}"
+                                                    Foreground="LightBlue"
+                                                    Margin="0,0,5,0"
+                                                    VerticalAlignment="Center" 
+                                                    HorizontalAlignment="Left"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.Style>
+                                        <Style TargetType="ItemsControl">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedTicket.Attachments.Count}" Value="0">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ItemsControl.Style>
+                                </ItemsControl>
+
+                                <TextBlock Text="Отсутствуют"
+                                           FontSize="14"
+                                           Foreground="LightBlue"
+                                           FontStyle="Italic"
+                                           VerticalAlignment="Center"
+                                           Margin="10,0,0,0">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding SelectedTicket.Attachments.Count}" Value="0">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Секция для комментариев -->
+                        <Expander IsExpanded="True" Background="Transparent" BorderThickness="0" Margin="-20,-10,0,0">
+
+                            <Expander.Header>
+                                <TextBlock Text="Комментарии к заявке:" FontSize="14" FontWeight="Bold" Foreground="White" Margin="0,0,0,10" HorizontalAlignment="Left"/>
+                            </Expander.Header>
+                            <!-- Единый тёмно-серый блок для всех комментариев -->
+                            <Border CornerRadius="8"
+			                        BorderThickness="1"
+			                        BorderBrush="{DynamicResource MaterialDesignDivider}"
+			                        Background="#333333"
+			                        Padding="15"
+			                        Margin="20,0,2,20">
+                                <Grid>
+                                    <!-- Список комментариев -->
+                                    <ItemsControl x:Name="CommentsList"
+						                          ItemsSource="{Binding SelectedTicketComments}">
+                                        <ItemsControl.Style>
+                                            <Style TargetType="ItemsControl">
                                                 <Setter Property="Visibility" Value="Visible"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                        </StackPanel>
-                    </Border>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedTicket.Comments.Count}" Value="0">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ItemsControl.Style>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderBrush="LightGray" 
+								                        BorderThickness="1" 
+								                        CornerRadius="5" 
+								                        Background="#20FFFFFF" 
+								                        Margin="0,0,0,10"
+								                        Padding="10">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
+
+                                                        <!-- Автор и дата -->
+                                                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,6">
+                                                            <TextBlock Text="{Binding User.DisplayName}" 
+											                           FontWeight="Bold"
+											                           Foreground="LightBlue"
+											                           Margin="0,0,10,0"/>
+                                                            <TextBlock Text="{Binding Created, StringFormat='dd.MM.yyyy HH:mm'}" 
+											                           FontSize="12"
+											                           Foreground="LightGray"
+											                           FontStyle="Italic"/>
+                                                        </StackPanel>
+
+                                                        <!-- Сам комментарий с фиксированной высотой и прокруткой -->
+                                                        <Border Grid.Row="1" CornerRadius="5" Background="#20FFFFFF" Padding="10">
+                                                            <ScrollViewer VerticalScrollBarVisibility="Auto"
+												                          HorizontalScrollBarVisibility="Disabled"
+												                          MaxHeight="200">
+                                                                <FlowDocumentScrollViewer 
+												                    Document="{Binding Content, Converter={StaticResource XamlToFlowDocumentConverter}}"
+												                    Foreground="White"
+												                    IsHitTestVisible="False"/>
+                                                            </ScrollViewer>
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                    </ItemsControl>
+
+                                    <!-- Текст-заглушка для комментариев -->
+                                    <TextBlock Text="Отсутствуют"
+					                           FontSize="14"
+					                           Foreground="LightBlue"
+					                           FontStyle="Italic"
+					                           HorizontalAlignment="Center"
+					                           VerticalAlignment="Center">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding SelectedTicket.Comments.Count}" Value="0">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                        </Expander>
 
                         <!-- Действия -->
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
                             <Button Content="Взять заявку" 
+                                Style="{StaticResource MaterialDesignRaisedButton}"
+                                Background="{DynamicResource PrimaryHueMidBrush}"
+                                Foreground="White"
+                                Margin="0 0 8 0" 
+                                Command="{Binding TakeTicketCommand}"
+                                IsEnabled="{Binding TakeTicketCommand.IsRunning, Converter={StaticResource InverseBooleanConverter}, Mode=OneWay}"/>
+
+                            <Grid>
+                                <Button Content="Изменить статус" 
                                     Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="{DynamicResource PrimaryHueMidBrush}"
                                     Foreground="White"
                                     Margin="0 0 8 0" 
-                                    Command="{Binding TakeTicketCommand}"
-                                    IsEnabled="{Binding TakeTicketCommand.IsRunning, Converter={StaticResource InverseBooleanConverter}, Mode=OneWay}"/>
-
-                            <Grid>
-                                <Button Content="Изменить статус" 
-                                        Style="{StaticResource MaterialDesignRaisedButton}"
-                                        Background="{DynamicResource PrimaryHueMidBrush}"
-                                        Foreground="White"
-                                        Margin="0 0 8 0" 
-                                        Command="{Binding ToggleStatusMenuCommand}"
-                                        IsEnabled="{Binding CanChangeStatus}"/>
+                                    Command="{Binding ToggleStatusMenuCommand}"
+                                    IsEnabled="{Binding CanChangeStatus}"/>
 
                                 <!-- Всплывающее меню изменения статуса -->
                                 <Popup IsOpen="{Binding IsStatusMenuOpen}" 
@@ -445,12 +552,14 @@
                                 </Popup>
                             </Grid>
 
+                            <!-- Кнопка теперь включает/выключает в зависимости от CanAddComment -->
                             <Button Content="Добавить комментарий" 
                                     Style="{StaticResource MaterialDesignRaisedButton}"
                                     Background="{DynamicResource PrimaryHueMidBrush}"
                                     Foreground="White"
                                     Margin="0 0 8 0"  
-                                    Command="{Binding AddCommentCommand}"/>
+                                    Command="{Binding AddCommentCommand}"
+                                    IsEnabled="{Binding CanAddComment}"/>
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

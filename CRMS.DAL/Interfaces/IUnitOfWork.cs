@@ -10,7 +10,8 @@ namespace CRMS.Domain.Interfaces
         public EfTicketsRepository Tickets { get; }
         public EfQueuesRepository Queues { get; }
         public EfUsersRepository Users { get; }
-        public EfTransactionsRepository Transactions { get; } // Добавлено свойство
+        public EfTransactionsRepository Transactions { get; } // Добавлено свойство для Transactions
+        public EfTicketCommentsRepository TicketComments { get; } // Добавлено свойство для TicketComments
         //IRepository<CustomField> CustomFieldsRepository { get; }
         //IRepository<CustomFieldValue> CustomFieldValuesRepository { get; }
 

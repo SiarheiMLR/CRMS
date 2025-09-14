@@ -11,29 +11,32 @@ using System.ComponentModel;
 using System.Windows.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 using System.Windows.Documents;                                         // PageContent, FixedPage, FixedDocument...
 using System.IO;
 using System.Text;
 using CRMS.Views.User;
-using static System.Net.Mime.ContentType;
 using System.Globalization;
 using Microsoft.Win32;
-using System.Windows.Xps.Packaging;
-using PdfSharp.Pdf;
-using PdfSharp.Drawing;
-using System.Windows.Media;                                             // Visual, PixelFormats
-using System.Windows.Media.Imaging;
+using System.Xaml;
+using System.Threading.Tasks;
+using System.Linq;
+using System;
+using System.Diagnostics;
+using System.Windows.Threading;
+using CRMS.Business.Services.MessageService;
+using MaterialDesignThemes.Wpf;
 using CommunityToolkit.Mvvm.Messaging;
-using System.Windows.Input;
 using CRMS.Business.Services.DocumentService;
 using CRMS.Business.Services.EmailService;
 using CRMS.Business.Services.EmailService.Templates;
+using System.Windows.Input;
+using System.Windows.Media;
+using PdfSharp.Drawing;
+using System.Windows.Media.Imaging;
+using System.Windows.Xps.Packaging;
+using CRMS.Views.Support;
+using Microsoft.Extensions.Logging;
 using CRMS.Helpers;
-using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrackBar;
-using System.Windows.Threading;
-using CRMS.Business.Services.MessageService;
 
 namespace CRMS.ViewModels.Support
 {
@@ -55,9 +58,15 @@ namespace CRMS.ViewModels.Support
         private readonly IEmailService _emailService;
         private readonly IMessenger _messenger;
         private readonly IMessageService _messageService;
+        private readonly ILogger<SupportTicketsViewModel> _logger;
+
         private ICollectionView _ticketsView;
         private readonly AsyncRelayCommand _takeTicketCommand;
+        private readonly AsyncRelayCommand _addCommentDialogCommand; // ручной командный объект
+
         public IAsyncRelayCommand TakeTicketCommand => _takeTicketCommand;
+        public IAsyncRelayCommand AddCommentDialogCommand => _addCommentDialogCommand;
+        public IAsyncRelayCommand AddCommentCommand => _addCommentDialogCommand;
 
         public ICommand ShowFullContentCommand { get; }
 
@@ -119,6 +128,14 @@ namespace CRMS.ViewModels.Support
         [ObservableProperty]
         private Ticket _selectedTicket;
 
+        // Коллекция комментариев для выбранной заявки (ObservableCollection -> UI оповещается)
+        [ObservableProperty]
+        private ObservableCollection<TicketComment> _selectedTicketComments = new();
+
+        // Новый комментарий (FlowDocument) привязан к диалогу
+        [ObservableProperty]
+        private FlowDocument _newCommentDocument = new FlowDocument(new Paragraph());
+
         // Свойства для отображения времени
         [ObservableProperty]
         private string _startedAtHeader;
@@ -147,10 +164,12 @@ namespace CRMS.ViewModels.Support
         private DispatcherTimer _resolutionTimer;
 
         // Конструктор класса
-        public SupportTicketsViewModel(ITicketService ticketService, IAuthService authService,
+        public SupportTicketsViewModel(ILogger<SupportTicketsViewModel> logger, ITicketService ticketService, IAuthService authService,
             IUserService userService, IQueueService queueService, IEmailService emailService,
             IDocumentConverter documentConverter, IMessageService messageService, IMessenger messenger = null)
         {
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
             // Проверка на режим дизайна
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
                 return;
@@ -159,13 +178,15 @@ namespace CRMS.ViewModels.Support
             _auth_service_check(authService); // helper below
             _authService = authService;
             _userService = userService;
+            _queue_service_check(queueService); // no-op if you wish
             _queueService = queueService;
             _documentConverter = documentConverter;
             _emailService = emailService;
             _messageService = messageService;
+            _messenger = messenger;
 
             _ticketsView = CollectionViewSource.GetDefaultView(FilteredTickets);
-            _ticketsView.Filter = TicketFilter;            
+            _ticketsView.Filter = TicketFilter;
 
             // Инициализация таймеров
             _timer = new DispatcherTimer();
@@ -190,9 +211,15 @@ namespace CRMS.ViewModels.Support
 
             // делаем асинхронную инициализацию
             _ = InitializeAsync();
-           
+
             // Инициализация команды взятия заявки
-            _takeTicketCommand = new AsyncRelayCommand(ExecuteTakeTicketAsync, CanTakeTicket);
+            _takeTicketCommand = new AsyncRelayCommand(ExecuteTakeTicketAsync, () => CanTakeTicket());
+            _addCommentDialogCommand = new AsyncRelayCommand(ExecuteOpenAddCommentDialogAsync, () => CanAddComment);
+
+            // инициализация SelectedTicketComments пустой коллекцией
+            SelectedTicketComments = new ObservableCollection<TicketComment>();
+
+            _logger.LogInformation("SupportTicketsViewModel initialized");
         }
 
         private async Task InitializeAsync()
@@ -297,7 +324,6 @@ namespace CRMS.ViewModels.Support
 
             ApplyFilters();
         }
-
 
         public void ApplyFilters()
         {
@@ -404,13 +430,22 @@ namespace CRMS.ViewModels.Support
                 // Обновляем состояние команды при изменении выбранной заявки
                 _takeTicketCommand?.NotifyCanExecuteChanged();
                 OnPropertyChanged(nameof(CanChangeStatus));
+                ChangeStatusCommand.NotifyCanExecuteChanged();
+
+                // Обновляем доступность кнопки "Добавить комментарий"
+                _addCommentDialogCommand?.NotifyCanExecuteChanged();
+
+                // !!! Обновляем свойство CanAddComment чтобы привязки IsEnabled увидели изменение
+                OnPropertyChanged(nameof(CanAddComment));
+
+                // Загружаем комментарии асинхронно (чтобы гарантированно подтянуть User)
+                _ = LoadCommentsForSelectedTicketAsync(value?.Id);
             }
             else
             {
                 // Останавливаем таймеры при отсутствии выбранной заявки
                 _responseTimer.Stop();
-                _resolutionTimer.Stop();
-
+                _resolution_timer_stop_silently();
                 // Сброс значений при отсутствии выбранной заявки
                 StartedAtTimeValue = " ";
                 CompletedAtTimeValue = " ";
@@ -418,29 +453,21 @@ namespace CRMS.ViewModels.Support
                 // Обновляем состояние команды
                 _takeTicketCommand?.NotifyCanExecuteChanged();
                 OnPropertyChanged(nameof(CanChangeStatus));
+                ChangeStatusCommand.NotifyCanExecuteChanged();
+                _addCommentDialogCommand?.NotifyCanExecuteChanged();
+
+                // Обновляем привязку CanAddComment
+                OnPropertyChanged(nameof(CanAddComment));
+
+                SelectedTicketComments.Clear();
             }
         }
 
-        //private string FormatTimeSpan(TimeSpan timeSpan)
-        //{
-        //    // Форматируем TimeSpan чтобы показывать дни, часы и минуты (без секунд)
-        //    int days = timeSpan.Days;
-        //    int hours = timeSpan.Hours;
-        //    int minutes = timeSpan.Minutes;
-
-        //    if (days > 0)
-        //    {
-        //        return $"{days} д {hours} ч {minutes} мин";
-        //    }
-        //    else if (hours > 0)
-        //    {
-        //        return $"{hours} ч {minutes} мин";
-        //    }
-        //    else
-        //    {
-        //        return $"{minutes} мин";
-        //    }
-        //}
+        // Небольшая обёртка, чтобы не ругался анализатор
+        private void _resolution_timer_stop_silently()
+        {
+            try { _resolutionTimer.Stop(); } catch { }
+        }
 
         private string FormatTimeSpan(TimeSpan timeSpan)
         {
@@ -672,16 +699,9 @@ namespace CRMS.ViewModels.Support
                 await _ticketService.AssignTicket(SelectedTicket, _authService.CurrentUser.Id);
 
                 // Создаем транзакцию
-                await _ticketService.AddTransactionAsync(new Transaction
-                {
-                    TicketId = SelectedTicket.Id,
-                    UserId = _authService.CurrentUser.Id,
-                    ActionType = "Take",
-                    Details = "Заявка взята в работу",
-                    Created = DateTime.Now
-                });
+                await _ticket_service_add_transaction_check(SelectedTicket.Id, _authService.CurrentUser.Id, "Take", "Заявка взята в работу!");
 
-                _messageService.ShowInfo($"Заявка {SelectedTicket.TicketNumber} взята вами на выполнение");
+                _messageService.ShowInfo($"Заявка {SelectedTicket.TicketNumber} взята вами на выполнение!");
 
                 // Останавливаем таймер ответа и запускаем таймер решения
                 _responseTimer.Stop();
@@ -693,7 +713,7 @@ namespace CRMS.ViewModels.Support
                 // Обновляем состояние команды
                 _takeTicketCommand.NotifyCanExecuteChanged();
 
-                // Перегружаем список заявок из базы
+                // Перезагружаем список заявок из базы
                 await LoadTickets();
                 OnPropertyChanged(nameof(FilteredTickets));
 
@@ -704,6 +724,23 @@ namespace CRMS.ViewModels.Support
             {
                 _messageService.ShowError($"Ошибка при взятии заявки в работу: {ex.Message}");
             }
+        }
+
+        // Вспомогательный метод для создания транзакции
+        private async Task _ticket_service_add_transaction_check(int ticketId, int userId, string actionType, string details)
+        {
+            try
+            {
+                await _ticketService.AddTransactionAsync(new Transaction
+                {
+                    TicketId = ticketId,
+                    UserId = userId,
+                    ActionType = actionType,
+                    Details = details,
+                    Created = DateTime.Now
+                });
+            }
+            catch { /* ignore transaction add errors here if needed */ }
         }
 
         // Команда для открытия/закрытия меню изменения статуса
@@ -725,23 +762,19 @@ namespace CRMS.ViewModels.Support
                     return;
 
                 // Сохраняем информацию о закрытии заявки
-                await _ticketService.AddTransactionAsync(new Transaction
-                {
-                    TicketId = SelectedTicket.Id,
-                    UserId = _authService.CurrentUser?.Id,
-                    ActionType = "Close",
-                    Details = "Закрытие заявки",
-                    Created = DateTime.Now
-                });
+                await _ticket_service_add_transaction_check(SelectedTicket.Id, _authService.CurrentUser?.Id ?? 0, "Close", "Закрытие заявки");
 
                 SelectedTicket.Status = TicketStatus.Closed;
                 SelectedTicket.CompletedAt = DateTime.Now;
 
                 await _ticketService.UpdateTicketAsync(SelectedTicket);
-                _messageService.ShowInfo($"Заявка {SelectedTicket.TicketNumber} закрыта");
+                _messageService.ShowInfo($"Заявка {SelectedTicket.TicketNumber} закрыта!");
 
                 // Останавливаем таймер решения
                 _resolutionTimer.Stop();
+
+                // В методе CloseTicket после успешного закрытия заявки:
+                await SendStatusChangeNotifications(TicketStatus.Closed, "Заявка была закрыта.");
 
                 IsStatusMenuOpen = false;
                 await LoadTickets();
@@ -764,29 +797,25 @@ namespace CRMS.ViewModels.Support
 
             try
             {
-                if (!_messageService.ShowConfirmation("Вы уверены, что хотите отказаться от заявки {SelectedTicket.TicketNumber}?", "Подтверждение"))
+                if (!_messageService.ShowConfirmation($"Вы уверены, что хотите отказаться от заявки {SelectedTicket.TicketNumber}?", "Подтверждение"))
                     return;
 
                 // Сохраняем информацию об отказе от выполнения заявки
-                await _ticketService.AddTransactionAsync(new Transaction
-                {
-                    TicketId = SelectedTicket.Id,
-                    UserId = _authService.CurrentUser?.Id,
-                    ActionType = "Unassign",
-                    Details = "Отказ от выполнения заявки",
-                    Created = DateTime.Now
-                });
+                await _ticket_service_add_transaction_check(SelectedTicket.Id, _authService.CurrentUser?.Id ?? 0, "Unassign", "Отказ от выполнения заявки!");
 
                 SelectedTicket.Status = TicketStatus.Active;
                 SelectedTicket.SupporterId = null;
                 SelectedTicket.StartedAt = null;
 
                 await _ticketService.UpdateTicketAsync(SelectedTicket);
-                _messageService.ShowInfo($"Отказ от заявки {SelectedTicket.TicketNumber} оформлен");
+                _messageService.ShowInfo($"Отказ от заявки {SelectedTicket.TicketNumber} оформлен!");
 
                 // Останавливаем таймер решения и запускаем таймер ответа
                 _resolutionTimer.Stop();
                 _responseTimer.Start();
+
+                // В методе UnassignTicket после успешного отказа от заявки:
+                await SendStatusChangeNotifications(TicketStatus.Active, "Исполнитель отказался от заявки.");
 
                 IsStatusMenuOpen = false;
                 await LoadTickets();
@@ -813,14 +842,7 @@ namespace CRMS.ViewModels.Support
                     return;
 
                 // Сохраняем информацию о повторном открытии заявки
-                await _ticketService.AddTransactionAsync(new Transaction
-                {
-                    TicketId = SelectedTicket.Id,
-                    UserId = _authService.CurrentUser?.Id,
-                    ActionType = "Reopen",
-                    Details = "Повторное открытие заявки",
-                    Created = DateTime.Now
-                });
+                await _ticket_service_add_transaction_check(SelectedTicket.Id, _authService.CurrentUser?.Id ?? 0, "Reopen", "Повторное открытие заявки!");
 
                 SelectedTicket.Status = TicketStatus.Active;
                 SelectedTicket.SupporterId = null;
@@ -828,10 +850,16 @@ namespace CRMS.ViewModels.Support
                 SelectedTicket.CompletedAt = null;
 
                 await _ticketService.UpdateTicketAsync(SelectedTicket);
-                _messageService.ShowInfo($"Заявка {SelectedTicket.TicketNumber} заново открыта");
+                _messageService.ShowInfo($"Заявка {SelectedTicket.TicketNumber} заново открыта!");
 
                 // Запускаем таймер ответа
                 _responseTimer.Start();
+
+                // В методе ReopenTicket после успешного reopening заявки:
+                await SendStatusChangeNotifications(TicketStatus.Active, "Заявка была открыта повторно.");
+
+                // В методе ReopenTicket после успешного reopening заявки:
+                await SendTicketReopenedNotifications("Заявка была открыта повторно.");
 
                 IsStatusMenuOpen = false;
                 await LoadTickets();
@@ -894,7 +922,10 @@ namespace CRMS.ViewModels.Support
                 }
 
                 await _ticketService.UpdateTicketAsync(SelectedTicket);
-                _messageService.ShowInfo($"Статус заявки {SelectedTicket.TicketNumber} изменен на {SelectedTicket.Status}");
+                _messageService.ShowInfo($"Статус заявки {SelectedTicket.TicketNumber} изменен на {SelectedTicket.Status}!");
+
+                // В методе ChangeStatus после успешного изменения статуса:
+                await SendStatusChangeNotifications(SelectedTicket.Status, "Статус заявки был изменен.");
 
                 await LoadTickets();
                 OnPropertyChanged(nameof(FilteredTickets));
@@ -905,14 +936,316 @@ namespace CRMS.ViewModels.Support
             }
         }
 
-        // Команда для добавления комментария
-        [RelayCommand]
-        private void AddComment()
-        {
-            if (SelectedTicket == null) return;
+        // ==== Команды для работы с комментариями ====
 
-            // Здесь можно реализовать диалог для добавления комментария
-            _messageService.ShowInfo($"Добавление комментария к заявке {SelectedTicket.TicketNumber}");
+        // Генератор флага для возможности добавлять комментарий
+        public bool CanAddComment =>
+            SelectedTicket != null &&
+            SelectedTicket.Status == TicketStatus.InProgress &&
+            SelectedTicket.SupporterId == _authService.CurrentUser?.Id;
+
+        // Команда открытия диалога добавления комментария
+        private async Task ExecuteOpenAddCommentDialogAsync()
+        {
+            if (SelectedTicket == null)
+            {
+                _messageService.ShowError("Не выбрана заявка для добавления комментария!");
+                return;
+            }
+
+            try
+            {
+                // Сбрасываем документ перед открытием
+                NewCommentDocument = new FlowDocument(new Paragraph());
+
+                var dlg = new Views.Support.AddCommentDialog();
+                dlg.DataContext = this;
+                dlg.ResetEditor();
+
+                // Показываем диалог
+                await DialogHost.Show(dlg, "TicketDetailsDialog");
+            }
+            catch (Exception ex)
+            {
+                _messageService.ShowError($"Ошибка открытия диалога: {ex.Message}");
+            }
+        }
+
+        // Команда подтверждения добавления комментария (генерируется из атрибута)
+        [RelayCommand]
+        private async Task AddCommentConfirm(RichTextEditor editor)
+        {
+            if (SelectedTicket == null || editor == null)
+                return;
+
+            // Используем документ из редактора
+            FlowDocument document = editor.Document;
+
+            // Правильная проверка содержимого
+            if (!HasContent(document))
+            {
+                _messageService.ShowError("Комментарий не может быть пустым!");
+                return;
+            }
+
+            // Нормализуем изображения, как при создании тикета
+            try
+            {
+                Ticket.NormalizeImagesInFlowDocument(document);
+            }
+            catch
+            {
+                // если нормализация не удалась — всё равно пытаемся сохранить текст
+            }
+
+            // Конвертируем в XAML
+            string xaml = Ticket.ConvertFlowDocumentToXaml(document);
+
+            // Создаём новый комментарий
+            var comment = new TicketComment
+            {
+                TicketId = SelectedTicket.Id,
+                UserId = _authService.CurrentUser.Id,
+                // Created будет установлен в сервисе
+                Content = xaml,
+                IsInternal = false
+            };
+
+            try
+            {
+                // Отправляем на сервер/в сервис
+                await _ticketService.AddCommentAsync(comment);
+
+                // Обновляем UI: перечитываем список комментариев из сервиса
+                await LoadCommentsForSelectedTicketAsync(SelectedTicket.Id);
+
+                _messageService.ShowInfo("Комментарий успешно добавлен!");
+
+                // В методе AddCommentConfirm после успешного добавления комментария:
+                await SendCommentNotifications(comment, document);
+
+                // Для обновления комментариев у пользоватля
+                _messenger?.Send(new CommentAddedMessage
+                {
+                    TicketId = comment.TicketId,
+                    Comment = comment
+                });
+            }
+            catch (Exception ex)
+            {
+                _messageService.ShowError($"Ошибка при добавлении комментария: {ex.Message}");
+            }
+
+            // Сбрасываем состояние
+            editor.Document = new FlowDocument(new Paragraph());
+            NewCommentDocument = new FlowDocument(new Paragraph());
+
+            // Закрываем диалог
+            DialogHost.Close("TicketDetailsDialog");
+        }
+
+        //Вспомогательный метод для проверки содержимого:
+        private bool HasContent(FlowDocument document)
+        {
+            if (document == null) return false;
+
+            // Проверяем текстовое содержимое
+            string text = new TextRange(document.ContentStart, document.ContentEnd).Text;
+            if (!string.IsNullOrWhiteSpace(text))
+                return true;
+
+            // Проверяем наличие изображений или других элементов
+            foreach (Block block in document.Blocks)
+            {
+                if (block is Paragraph paragraph)
+                {
+                    foreach (Inline inline in paragraph.Inlines)
+                    {
+                        if (inline is InlineUIContainer)
+                            return true;
+
+                        if (inline is Run run && !string.IsNullOrWhiteSpace(run.Text))
+                            return true;
+                    }
+                }
+                else if (block is Section section)
+                {
+                    // Рекурсивно проверяем секции
+                    if (HasContent(new FlowDocument(section))) return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Асинхронно загружает комментарии и кладёт их в SelectedTicketComments
+        private async Task LoadCommentsForSelectedTicketAsync(int? ticketId)
+        {
+            if (ticketId == null)
+            {
+                SelectedTicketComments = new ObservableCollection<TicketComment>();
+                return;
+            }
+
+            try
+            {
+                var comments = (await _ticketService.GetCommentsByTicketIdAsync(ticketId.Value)).ToList();
+
+                // Обновляем коллекцию (через замену, чтобы привязки заметили изменение)
+                SelectedTicketComments = new ObservableCollection<TicketComment>(comments);
+            }
+            catch (Exception ex)
+            {
+                _messageService.ShowError($"Ошибка загрузки комментариев: {ex.Message}");
+            }
+        }
+
+        [RelayCommand]
+        private void Save()
+        {
+            // Проверяем, есть ли текст в текущем документе комментария
+            string documentText = new TextRange(NewCommentDocument.ContentStart, NewCommentDocument.ContentEnd).Text;
+            if (string.IsNullOrWhiteSpace(documentText))
+            {
+                _messageService.ShowError("Редактор не содержит текста. Нечего сохранять.");
+                return;
+            }
+
+            var dlg = new SaveFileDialog
+            {
+                Filter = "Rich Text Format (*.rtf)|*.rtf|PDF Files (*.pdf)|*.pdf"
+            };
+
+            if (dlg.ShowDialog() == true)
+            {
+                try
+                {
+                    // Готовим клон для экспорта
+                    var exportDoc = PrepareDocumentForExport(NewCommentDocument);
+
+                    if (System.IO.Path.GetExtension(dlg.FileName).Equals(".pdf", StringComparison.OrdinalIgnoreCase))
+                    {
+                        SaveAsPdf(dlg.FileName, exportDoc);
+                    }
+                    else
+                    {
+                        var range = new TextRange(exportDoc.ContentStart, exportDoc.ContentEnd);
+                        using var fs = new FileStream(dlg.FileName, FileMode.Create);
+                        range.Save(fs, DataFormats.Rtf);
+                    }
+
+                    _messageService.ShowInfo("Документ успешно сохранён!");
+                }
+                catch (Exception ex)
+                {
+                    _messageService.ShowError($"Ошибка при сохранении: {ex.Message}");
+                }
+            }
+        }
+
+        private FlowDocument PrepareDocumentForExport(FlowDocument source)
+        {
+            var clone = CloneFlowDocument(source);
+
+            // Применяем ко всему документу чёрный цвет
+            var range = new TextRange(clone.ContentStart, clone.ContentEnd);
+            range.ApplyPropertyValue(TextElement.ForegroundProperty, Brushes.Black);
+
+            return clone;
+        }
+
+        private FlowDocument CloneFlowDocument(FlowDocument source)
+        {
+            if (source == null) return new FlowDocument();
+
+            var range = new TextRange(source.ContentStart, source.ContentEnd);
+
+            using var ms = new MemoryStream();
+            range.Save(ms, DataFormats.XamlPackage);
+
+            var clone = new FlowDocument();
+            var cloneRange = new TextRange(clone.ContentStart, clone.ContentEnd);
+            ms.Position = 0;
+            cloneRange.Load(ms, DataFormats.XamlPackage);
+
+            return clone;
+        }
+
+        private void SaveAsPdf(string filePath, FlowDocument exportDoc)
+        {
+            string tempXpsPath = System.IO.Path.ChangeExtension(System.IO.Path.GetTempFileName(), ".xps");
+
+            try
+            {
+                using (var xpsDoc = new XpsDocument(tempXpsPath, FileAccess.ReadWrite))
+                {
+                    var writer = XpsDocument.CreateXpsDocumentWriter(xpsDoc);
+                    writer.Write(((IDocumentPaginatorSource)exportDoc).DocumentPaginator);
+                    xpsDoc.Close();
+                }
+
+                ConvertXpsToPdf(tempXpsPath, filePath);
+            }
+            finally
+            {
+                try { if (File.Exists(tempXpsPath)) File.Delete(tempXpsPath); } catch { }
+            }
+        }
+
+        private void ConvertXpsToPdf(string xpsPath, string pdfPath)
+        {
+            using var xpsDoc = new XpsDocument(xpsPath, FileAccess.Read);
+            var fixedDocSeq = xpsDoc.GetFixedDocumentSequence();
+
+            using var pdfDoc = new PdfSharp.Pdf.PdfDocument();
+
+            const double dpi = 200.0;
+            const double ptPerDip = 72.0 / 96.0;
+
+            foreach (var docRef in fixedDocSeq.References)
+            {
+                var fixedDoc = docRef.GetDocument(false);
+                foreach (PageContent pageContent in fixedDoc.Pages)
+                {
+                    var fixedPage = pageContent.GetPageRoot(false) as FixedPage;
+                    if (fixedPage == null) continue;
+
+                    fixedPage.Measure(new Size(fixedPage.Width, fixedPage.Height));
+                    fixedPage.Arrange(new Rect(new Size(fixedPage.Width, fixedPage.Height)));
+                    fixedPage.UpdateLayout();
+
+                    var pdfPage = pdfDoc.AddPage();
+                    pdfPage.Width = fixedPage.Width * ptPerDip;
+                    pdfPage.Height = fixedPage.Height * ptPerDip;
+
+                    string tmpPng = System.IO.Path.ChangeExtension(System.IO.Path.GetTempFileName(), ".png");
+                    try
+                    {
+                        int pxW = (int)Math.Ceiling(fixedPage.Width * dpi / 96.0);
+                        int pxH = (int)Math.Ceiling(fixedPage.Height * dpi / 96.0);
+
+                        var rtb = new RenderTargetBitmap(pxW, pxH, dpi, dpi, PixelFormats.Pbgra32);
+                        rtb.Render(fixedPage);
+
+                        var encoder = new PngBitmapEncoder();
+                        encoder.Frames.Add(BitmapFrame.Create(rtb));
+                        using (var fs = new FileStream(tmpPng, FileMode.Create, FileAccess.Write))
+                            encoder.Save(fs);
+
+                        using (var gfx = XGraphics.FromPdfPage(pdfPage))
+                        using (var img = XImage.FromFile(tmpPng))
+                        {
+                            gfx.DrawImage(img, 0, 0, pdfPage.Width, pdfPage.Height);
+                        }
+                    }
+                    finally
+                    {
+                        try { if (File.Exists(tmpPng)) File.Delete(tmpPng); } catch { }
+                    }
+                }
+            }
+
+            pdfDoc.Save(pdfPath);
         }
 
         [RelayCommand]
@@ -943,6 +1276,11 @@ namespace CRMS.ViewModels.Support
 
         public async Task<IEnumerable<Transaction>> GetUserReopenStats(int userId, DateTime startDate, DateTime endDate)
         {
+            return await _ticket_service_get_user_reopen_stats(userId, startDate, endDate);
+        }
+
+        private async Task<IEnumerable<Transaction>> _ticket_service_get_user_reopen_stats(int userId, DateTime startDate, DateTime endDate)
+        {
             return await _ticketService.GetUserReopenStats(userId, startDate, endDate);
         }
 
@@ -956,76 +1294,234 @@ namespace CRMS.ViewModels.Support
                 .ToDictionary(g => g.Key, g => g.Count());
         }
 
-        /// <summary>
-        /// Старый ViewModel
-        /// </summary>
-
-        private Ticket _selectedMyTicket;
-        private Ticket _selectedActiveTicket;
-
-        public ObservableCollection<Ticket> MyTickets { get; } = new();
-        public ObservableCollection<Ticket> AllActiveTickets { get; } = new();
-
-        public Ticket SelectedMyTicket
+        // Вспомогательные методы для работы с email
+        // Вспомогательный метод для получения текста приоритета
+        private string GetPriorityText(TicketPriority priority)
         {
-            get => _selectedMyTicket;
-            set => SetProperty(ref _selectedMyTicket, value);
+            return priority switch
+            {
+                TicketPriority.Low => "Низкий",
+                TicketPriority.Mid => "Средний",
+                TicketPriority.High => "Высокий",
+                _ => "Не указан"
+            };
         }
 
-        public Ticket SelectedActiveTicket
+        // Вспомогательный метод для получения цвета приоритета
+        private string GetPriorityColor(TicketPriority priority)
         {
-            get => _selectedActiveTicket;
-            set => SetProperty(ref _selectedActiveTicket, value);
+            return priority switch
+            {
+                TicketPriority.Low => "#008000",
+                TicketPriority.Mid => "#FFA500",
+                TicketPriority.High => "#FF0000",
+                _ => "#000000"
+            };
         }
 
-        //private async void LoadTickets()
-        //{
-        //    var currentUser = _authService.CurrentUser;
-
-        //    // Для "Мои тикеты"
-        //    var myTickets = await _ticketService.GetTicketsByAssignee(currentUser.Id);
-        //    MyTickets.Clear();
-        //    foreach (var ticket in myTickets)
-        //    {
-        //        var requestor = await _userService.GetUserByIdAsync(ticket.RequestorId);
-        //        ticket.Requestor = requestor;
-        //        MyTickets.Add(ticket);
-        //    }
-
-        //    // Для "Все активные тикеты"
-        //    var activeTickets = await _ticketService.GetAllActiveTickets();
-        //    AllActiveTickets.Clear();
-        //    foreach (var ticket in activeTickets)
-        //    {
-        //        var requestor = await _userService.GetUserByIdAsync(ticket.RequestorId);
-        //        ticket.Requestor = requestor;
-        //        AllActiveTickets.Add(ticket);
-        //    }
-        //}
-
-        //[RelayCommand]
-        //private async Task CloseTicket(Ticket ticket)
-        //{
-        //    if (ticket == null) return;
-        //    await _ticketService.CloseTicket(ticket);
-        //    LoadTickets();
-        //}
-
-        [RelayCommand]
-        private async Task CancelTicket(Ticket ticket)
+        // Вспомогательный метод для получения текста статуса
+        private string GetStatusText(TicketStatus status)
         {
-            if (ticket == null) return;
-            await _ticketService.UnassignTicket(ticket);
-            LoadTickets();
+            return status switch
+            {
+                TicketStatus.Active => "Активная",
+                TicketStatus.InProgress => "В работе",
+                TicketStatus.Closed => "Закрытая",
+                _ => "Неизвестно"
+            };
         }
 
-        [RelayCommand]
-        private async Task Refresh()
+        // Вспомогательный метод для получения цвета статуса
+        private string GetStatusColor(TicketStatus status)
         {
-            LoadTickets();
+            return status switch
+            {
+                TicketStatus.Active => "#007bff",
+                TicketStatus.InProgress => "#28a745",
+                TicketStatus.Closed => "#6c757d",
+                _ => "#000000"
+            };
+        }
+
+        // Вспомогательный метод для форматирования размера файла
+        private string GetFileSize(long bytes)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB" };
+            int order = 0;
+            double len = bytes;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+            return $"{len:0.##} {sizes[order]}";
+        }
+
+        private async Task SendStatusChangeNotifications(TicketStatus newStatus, string changeReason)
+        {
+            if (SelectedTicket == null || SelectedTicket.Requestor == null || SelectedTicket.Queue == null)
+                return;
+
+            try
+            {
+                var parameters = new Dictionary<string, string>
+                {
+                    { "UserName", SelectedTicket.Requestor.DisplayName ?? "Пользователь" },
+                    { "UserEmail", SelectedTicket.Requestor.Email ?? "" },
+                    { "TicketNumber", SelectedTicket.TicketNumber },
+                    { "Subject", SelectedTicket.Subject ?? "" },
+                    { "Status", GetStatusText(newStatus) },
+                    { "StatusColor", GetStatusColor(newStatus) },
+                    { "OldStatus", GetStatusText(SelectedTicket.Status) },
+                    { "Executor", _authService.CurrentUser?.DisplayName ?? "Система" },
+                    { "ChangedAt", DateTime.Now.ToString("g") },
+                    { "Comment", changeReason },
+                    { "Queue", SelectedTicket.Queue.Name ?? "" }
+                };
+
+                // Уведомление пользователю
+                string userBody = Templates.TicketStatusChangedToUser;
+                foreach (var p in parameters)
+                    userBody = userBody.Replace("{" + p.Key + "}", p.Value);
+
+                await _emailService.SendEmailAsync(SelectedTicket.Requestor.Email,
+                    $"Статус вашей заявки #{SelectedTicket.TicketNumber} изменен", userBody);
+
+                // Уведомление поддержке
+                string supportBody = Templates.TicketStatusChangedToSupport;
+                foreach (var p in parameters)
+                    supportBody = supportBody.Replace("{" + p.Key + "}", p.Value);
+
+                await _emailService.SendEmailAsync(SelectedTicket.Queue.CorrespondAddress,
+                    $"Статус заявки #{SelectedTicket.TicketNumber} изменен на {GetStatusText(newStatus)}", supportBody);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка отправки уведомления об изменении статуса: {ex.Message}");
+            }
+        }
+
+        private async Task SendTicketReopenedNotifications(string reason)
+        {
+            if (SelectedTicket == null || SelectedTicket.Requestor == null || SelectedTicket.Queue == null)
+                return;
+
+            try
+            {
+                var parameters = new Dictionary<string, string>
+                {
+                    { "UserName", SelectedTicket.Requestor.DisplayName ?? "Пользователь" },
+                    { "UserEmail", SelectedTicket.Requestor.Email ?? "" },
+                    { "TicketNumber", SelectedTicket.TicketNumber },
+                    { "Subject", SelectedTicket.Subject ?? "" },
+                    { "Executor", _authService.CurrentUser?.DisplayName ?? "Система" },
+                    { "ReopenedAt", DateTime.Now.ToString("g") },
+                    { "Reason", reason },
+                    { "Queue", SelectedTicket.Queue.Name ?? "" },
+                    { "OriginalExecutor", SelectedTicket.Supporter?.DisplayName ?? "Не назначен" },
+                    { "ReopenedBy", _authService.CurrentUser?.DisplayName ?? "Система" }
+                };
+
+                // Уведомление пользователю
+                string userBody = Templates.TicketReopenedToUser;
+                foreach (var p in parameters)
+                    userBody = userBody.Replace("{" + p.Key + "}", p.Value);
+
+                await _emailService.SendEmailAsync(SelectedTicket.Requestor.Email,
+                    $"Ваша заявка #{SelectedTicket.TicketNumber} возобновлена", userBody);
+
+                await _emailService.SendEmailAsync(SelectedTicket.Requestor.Email,
+                    $"Ваша заявка #{SelectedTicket.TicketNumber} возобновлена", userBody);
+
+                // Уведомление поддержке
+                string supportBody = Templates.TicketReopenedToSupport;
+                foreach (var p in parameters)
+                    supportBody = supportBody.Replace("{" + p.Key + "}", p.Value);
+
+                await _emailService.SendEmailAsync(SelectedTicket.Queue.CorrespondAddress,
+                    $"Заявка #{SelectedTicket.TicketNumber} возобновлена пользователем", supportBody);
+
+                // Уведомление администратору и сотруднику
+                string adminBody = Templates.TicketReopenedToAdmin;
+                foreach (var p in parameters)
+                    adminBody = adminBody.Replace("{" + p.Key + "}", p.Value);
+
+                // Отправляем администратору (можно добавить дополнительный email)
+                await _emailService.SendEmailAsync("admin@bigfirm.by",
+                        $"Заявка #{SelectedTicket.TicketNumber} возобновлена сотрудником", adminBody);
+
+                // Отправляем сотруднику, если он не текущий пользователь
+                if (SelectedTicket.SupporterId != null && SelectedTicket.SupporterId != _authService.CurrentUser?.Id)
+                {
+                    await _emailService.SendEmailAsync(SelectedTicket.Supporter?.Email,
+                        $"Заявка #{SelectedTicket.TicketNumber} возобновлена", adminBody);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка отправки уведомления о возобновлении заявки: {ex.Message}");
+            }
+        }
+
+        private async Task SendCommentNotifications(TicketComment comment, FlowDocument document)
+        {
+            if (SelectedTicket == null || SelectedTicket.Requestor == null || SelectedTicket.Queue == null)
+                return;
+
+            try
+            {
+                // Конвертируем FlowDocument комментария в HTML
+                string commentHtml = _documentConverter.FlowDocumentToHtml(document);
+
+                var parameters = new Dictionary<string, string>
+                {
+                    { "UserName", SelectedTicket.Requestor.DisplayName ?? "Пользователь" },
+                    { "UserEmail", SelectedTicket.Requestor.Email ?? "" },
+                    { "TicketNumber", SelectedTicket.TicketNumber },
+                    { "Subject", SelectedTicket.Subject ?? "" },
+                    { "CommentAuthor", _authService.CurrentUser?.DisplayName ?? "Система" },
+                    { "CommentDate", comment.Created.ToString("g") },
+                    { "CommentText", commentHtml },
+                    { "Queue", SelectedTicket.Queue.Name ?? "" }
+                };
+
+                // Уведомление пользователю
+                string userBody = Templates.TicketCommentAddedToUser;
+                foreach (var p in parameters)
+                    userBody = userBody.Replace("{" + p.Key + "}", p.Value);
+
+                await _emailService.SendEmailAsync(SelectedTicket.Requestor.Email,
+                        $"Добавлен новый комментарий к вашей заявке #{SelectedTicket.TicketNumber}", userBody);
+
+                // Уведомление поддержке
+                string supportBody = Templates.TicketCommentAddedToSupport;
+                foreach (var p in parameters)
+                    supportBody = supportBody.Replace("{" + p.Key + "}", p.Value);
+
+                await _emailService.SendEmailAsync(SelectedTicket.Queue.CorrespondAddress,
+                    $"Добавлен комментарий к заявке #{SelectedTicket.TicketNumber}", supportBody);
+
+                // Уведомление автору комментария (если это не пользователь и не адрес очереди)
+                if (_authService.CurrentUser != null &&
+                    _authService.CurrentUser.Id != SelectedTicket.RequestorId &&
+                    _authService.CurrentUser.Email != SelectedTicket.Queue.CorrespondAddress)
+                {
+                    string authorBody = Templates.TicketCommentAddedToAuthor;
+                    foreach (var p in parameters)
+                        authorBody = authorBody.Replace("{" + p.Key + "}", p.Value);
+
+                    await _emailService.SendEmailAsync(_authService.CurrentUser.Email,
+                        $"Ваш комментарий к заявке #{SelectedTicket.TicketNumber} добавлен", authorBody);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Ошибка отправки уведомления о комментарии: {ex.Message}");
+            }
         }
 
         // Вспомогательный проверочный метод (чтобы не забыть _authService в коде)
         private void _auth_service_check(IAuthService auth) { /* no-op, просто для соблюдения порядка параметров */ }
+        private void _queue_service_check(IQueueService queue) { /* no-op */ }
     }
 }

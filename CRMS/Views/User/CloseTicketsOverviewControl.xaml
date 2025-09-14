@@ -155,7 +155,7 @@
                                                         HorizontalAlignment="Center"
                                                         Margin="0,12,0,0"
                                                         Style="{StaticResource MaterialDesignOutlinedButton}"
-                                                        Foreground="White"/>
+                                                        Foreground="LightBlue"/>
 
                                                 <!-- Секция для вложений -->
                                                 <StackPanel Orientation="Horizontal" Margin="0,8,0,0">

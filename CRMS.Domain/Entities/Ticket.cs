@@ -51,5 +51,6 @@ namespace CRMS.Domain.Entities
         public ICollection<Transaction> Transactions { get; set; } = new List<Transaction>();
         public ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
         public ICollection<CustomFieldValue> CustomFieldValues { get; set; } = new List<CustomFieldValue>();
+        public ICollection<TicketComment> Comments { get; set; } = new List<TicketComment>();
     }
 }

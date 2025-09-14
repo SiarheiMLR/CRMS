@@ -26,6 +26,7 @@ namespace CRMS.DAL.Repositories
             Queues = new EfQueuesRepository(_context);
             Users = new EfUsersRepository(_context);
             Transactions = new EfTransactionsRepository(_context); // Добавлена инициализация
+            TicketComments = new EfTicketCommentsRepository(_context); // Добавлена инициализация
 
             GroupsRepository = new EfGroupsRepository(_context);
             GroupMembersRepository = new EfGroupMembersRepository(_context);
@@ -45,6 +46,7 @@ namespace CRMS.DAL.Repositories
         public EfQueuesRepository Queues { get; }
         public EfUsersRepository Users { get; }
         public EfTransactionsRepository Transactions { get; } // Добавлено свойство
+        public EfTicketCommentsRepository TicketComments { get; } // Добавлено свойство
 
         // Модель FAQ
         public EfFaqItemsRepository FaqItemsRepository { get; }

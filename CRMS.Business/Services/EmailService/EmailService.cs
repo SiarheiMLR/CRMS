@@ -27,9 +27,9 @@ namespace CRMS.Business.Services.EmailService
         {
             var message = new MimeMessage();
 
-            // Устанавливаем отображаемое имя и подменяемый адрес (it-support@bigfirm.by)
+            // Устанавливаем отображаемое имя и подменяемый адрес (crms-ns@bigfirm.by)
             message.From.Add(new MailboxAddress(
-                fromName ?? "Служба поддержки пользователей системы CRMS",
+                fromName ?? "CRMS Notification Service",
                 fromEmail ?? _settings.From));
             message.To.Add(MailboxAddress.Parse(to));
             message.Subject = subject;

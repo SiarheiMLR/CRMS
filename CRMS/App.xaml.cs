@@ -112,8 +112,7 @@ namespace CRMS
 
                     // Страницы
                     services.AddTransient<MainAdminPage>();
-                    services.AddTransient<MainSupportPage>();
-                    services.AddTransient<SupportTicketsPage>();
+                    services.AddTransient<MainSupportPage>();                    
                     services.AddTransient<MainUserPage>();                    
                     services.AddTransient<UsersOverviewPage>();
                     services.AddTransient<GroupManagerPage>();
