@@ -1,4 +1,5 @@
 ﻿using CRMS.ViewModels.Support;
+using CRMS.ViewModels.UserVM;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,8 @@ namespace CRMS.Views.Support
     {
         public TicketStatsControl()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            DataContext = App.ServiceProvider.GetRequiredService<SupportStatsViewModel>();
         }
     }
 }

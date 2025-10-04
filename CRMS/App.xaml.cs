@@ -37,6 +37,8 @@ using System;
 using CommunityToolkit.Mvvm.Messaging;
 using CRMS.Business.Services.DocumentService;
 using CRMS.Business.Services.MessageService;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
 
 //admin@bigfirm.by
 //27011984Hp
@@ -128,6 +130,7 @@ namespace CRMS
 
                     services.AddTransient<UserTicketsViewModel>();
                     services.AddSingleton<SupportTicketsViewModel>();
+                    services.AddTransient<SupportStatsViewModel>();
 
                     services.AddTransient<ADLoginWindowViewModel>();
 
@@ -183,6 +186,13 @@ namespace CRMS
                 MessageBox.Show($"Ошибка: {args.Exception.Message}", "Критическая ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 args.Handled = true;
             };
+
+            // Инициализация LiveCharts
+            LiveCharts.Configure(config =>
+                config
+                    .AddDarkTheme() // или другая тема
+                    .AddSkiaSharp()
+                    .AddDefaultMappers());
         }
 
         private void LoadConfiguration()

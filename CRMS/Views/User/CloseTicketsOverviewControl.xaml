@@ -21,6 +21,8 @@
         <converters:PriorityToColorConverter x:Key="PriorityToColorConverter"/>
         <converters:XamlToFlowDocumentConverter x:Key="XamlToFlowDocumentConverter"/>
         <converters:XamlToTextConverter x:Key="XamlToTextConverter"/>
+        <converters:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter"/>
+        <converters:ZeroToCollapsedConverter x:Key="ZeroToCollapsedConverter"/>
 
         <!-- Стиль для текста -->
         <Style TargetType="TextBlock" x:Key="CardTextStyle">
@@ -243,7 +245,37 @@
                                                                Style="{StaticResource CardTextStyle}"/>
                                                     <TextBlock Text="{Binding Supporter.DisplayName}"
                                                                Style="{StaticResource CardTextStyle}"/>
-                                                </StackPanel>                                                
+                                                </StackPanel>
+
+                                                <!-- Секция комментариев -->
+                                                <StackPanel Orientation="Horizontal" Margin="0,20,0,20" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                                                    <Button Command="{Binding DataContext.ShowCommentsCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                            CommandParameter="{Binding}"
+                                                            IsEnabled="{Binding Comments.Count, Converter={StaticResource GreaterThanZeroConverter}}"
+                                                            Margin="10,0,0,0"
+                                                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                                                            Foreground="White">
+                                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                            <materialDesign:PackIcon Kind="Comment" 
+                                                                                     Width="16" 
+                                                                                    Height="16" 
+                                                                                    Margin="0,0,5,0"
+                                                                                    Foreground="LightBlue"/>
+                                                            <TextBlock Text="Комментарии к заявке" Foreground="LightBlue"/>
+                                                            <Border Background="{DynamicResource PrimaryHueMidBrush}"
+                                                                    CornerRadius="10"
+                                                                    Padding="5,2"
+                                                                    Margin="5,0,0,0"
+                                                                    Visibility="{Binding Comments.Count, Converter={StaticResource ZeroToCollapsedConverter}}">
+                                                                <TextBlock Text="{Binding Comments.Count}" 
+                                                                           Foreground="White"
+                                                                           FontWeight="Bold"
+                                                                           FontSize="13"/>
+                                                            </Border>
+                                                        </StackPanel>
+                                                    </Button>
+                                                </StackPanel>
                                             </StackPanel>
                                         </ScrollViewer>
                                     </Grid>

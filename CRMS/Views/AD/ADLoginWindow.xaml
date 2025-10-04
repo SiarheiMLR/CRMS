@@ -44,13 +44,14 @@
                        FontWeight="Bold" 
                        HorizontalAlignment="Center" 
                        Margin="0,0,0,5"
-                       Foreground="{DynamicResource MahApps.Brushes.ThemeForeground}"/>
+                       Foreground="White"/>
 
             <!-- Поле Логин -->
             <TextBox Grid.Row="1" 
                      materialDesign:HintAssist.Hint="Логин:" 
                      Margin="0,0,0,5"
                      Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     Foreground="White"
                      HorizontalAlignment="Center" 
                      Height="50" 
                      Width="200">
@@ -72,6 +73,7 @@
                          materialDesign:HintAssist.Hint="Пароль:" 
                          Margin="0,0,0,10"
                          Style="{StaticResource MaterialDesignOutlinedPasswordBox}"
+                         Foreground="White"
                          HorizontalAlignment="Center" 
                          Height="50" 
                          Width="200"

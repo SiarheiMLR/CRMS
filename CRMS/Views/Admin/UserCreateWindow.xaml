@@ -97,11 +97,11 @@
                         <TextBox Text="{Binding EditableUser.DisplayName, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                  materialDesign:HintAssist.Hint="Отображаемое имя"
-                                 FontSize="20" FontWeight="Bold"/>
+                                 FontSize="20" FontWeight="Bold" Foreground="White"/>
                         <TextBox Text="{Binding EditableUser.JobTitle, UpdateSourceTrigger=PropertyChanged}"
                                  Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                  materialDesign:HintAssist.Hint="Должность"
-                                 FontStyle="Italic" Foreground="Black"/>
+                                 FontStyle="Italic" Foreground="White"/>
                     </StackPanel>
                 </Grid>
 
@@ -110,7 +110,7 @@
                     <TabItem Header="Общие" Background="#FFFBEEC1">
                         <StackPanel Margin="0,0,0,-29">
                             <!-- Основная информация -->
-                            <GroupBox Header="Основная информация" Height="223">
+                            <GroupBox Header="Основная информация" Height="223" Foreground="White">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -132,19 +132,19 @@
                                     <TextBox Grid.Row="0" Grid.Column="1"
                                              Text="{Binding EditableUser.FirstName, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите имя пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите имя пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="0" Grid.Column="3" Text="Инициалы:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="0" Grid.Column="4"
                                              Text="{Binding EditableUser.Initials, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите инициалы пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите инициалы пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Фамилия:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="1" Grid.Column="1"
                                              Text="{Binding EditableUser.LastName, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите фамилию пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите фамилию пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="1" Grid.Column="3" Text="День рождения:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <DatePicker Grid.Row="1" Grid.Column="4"
@@ -160,13 +160,13 @@
                                              TextWrapping="Wrap"
                                              Margin="0,0,0,10"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите описание пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите описание пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Офис:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="3" Grid.Column="1"
                                              Text="{Binding EditableUser.Office, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите офис пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите офис пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="3" Grid.Column="3" Text="Телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="3" Grid.Column="4"
@@ -174,19 +174,19 @@
                                              PreviewTextInput="OnlyPhoneChars_PreviewTextInput"
                                              DataObject.Pasting="OnlyPhoneChars_Pasting"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите рабочий телефон пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите рабочий телефон пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Email:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="4" Grid.Column="1"
                                              Text="{Binding EditableUser.Email, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите email пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите email пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="4" Grid.Column="3" Text="Веб-страница:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="4" Grid.Column="4"
                                              Text="{Binding EditableUser.WebPage, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите сайт пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите сайт пользователя" Foreground="White"/>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
@@ -194,7 +194,7 @@
 
                     <TabItem Header="Адрес" Background="Azure">
                         <StackPanel Margin="0,0,0,-29">
-                            <GroupBox Header="Почтовый адрес" Height="223">
+                            <GroupBox Header="Почтовый адрес" Height="223" Foreground="White">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -213,21 +213,21 @@
                                     <TextBox Grid.Row="0" Grid.Column="1"
                                              Text="{Binding EditableUser.Country, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите название страны"/>
+                                             materialDesign:HintAssist.Hint="Введите название страны" Foreground="White"/>
 
                                     <!-- Область/край -->
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Область/край:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="1" Grid.Column="1"
                                              Text="{Binding EditableUser.State, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите наименование области"/>
+                                             materialDesign:HintAssist.Hint="Введите наименование области" Foreground="White"/>
 
                                     <!-- Город -->
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Город:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="2" Grid.Column="1"
                                              Text="{Binding EditableUser.City, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите название города"/>
+                                             materialDesign:HintAssist.Hint="Введите название города" Foreground="White"/>
 
                                     <!-- Индекс -->
                                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Почтовый индекс:" FontWeight="Bold" Margin="0,10,10,0"/>
@@ -236,14 +236,14 @@
                                              PreviewTextInput="OnlyDigits_PreviewTextInput"
                                              DataObject.Pasting="OnlyDigits_Pasting"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите почтовый индекс"/>
+                                             materialDesign:HintAssist.Hint="Введите почтовый индекс" Foreground="White"/>
 
                                     <!-- Улица -->
                                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Адрес:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="4" Grid.Column="1"
                                              Text="{Binding EditableUser.Street, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите адрес"/>
+                                             materialDesign:HintAssist.Hint="Введите адрес" Foreground="White"/>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
@@ -251,7 +251,7 @@
 
                     <TabItem Header="Учетная запись" Background="#FFE1F5FE">
                         <StackPanel Margin="0,0,0,-29">
-                            <GroupBox Header="Параметры учетной записи" Height="223">
+                            <GroupBox Header="Параметры учетной записи" Height="223" Foreground="White">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -269,14 +269,14 @@
                                     <TextBox Grid.Row="0" Grid.Column="1"
                                              Text="{Binding EditableUser.UserLogonName, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите логин пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите логин пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Пароль пользователя:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <PasswordBox Grid.Row="1" Grid.Column="1"
                                                  PasswordChanged="PasswordBox_PasswordChanged"
                                                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                                                  materialDesign:HintAssist.Hint="Введите пароль пользователя"
-                                                 Margin="0,0,0,5"/>
+                                                 Margin="0,0,0,5" Foreground="White"/>
 
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Дата создания учетной записи:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <DatePicker Grid.Row="2" Grid.Column="1"
@@ -284,7 +284,7 @@
                                                 SelectedDateFormat="Short"
                                                 Margin="0"
                                                 Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                                                materialDesign:HintAssist.Hint="Дата создания"/>
+                                                materialDesign:HintAssist.Hint="Дата создания" Foreground="White"/>
 
                                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Статус активности пользователя:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <ComboBox Grid.Row="3" Grid.Column="1"
@@ -317,7 +317,7 @@
 
                     <TabItem Header="Контакты" Background="#FFF3E5F5">
                         <StackPanel Margin="0,0,0,-29">
-                            <GroupBox Header="Контактные данные" Height="223">
+                            <GroupBox Header="Контактные данные" Height="223" Foreground="White">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto"/>
@@ -336,7 +336,7 @@
                                     <TextBox Grid.Row="0" Grid.Column="1"
                                              Text="{Binding EditableUser.Company, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите название компании"/>
+                                             materialDesign:HintAssist.Hint="Введите название компании" Foreground="White"/>
 
                                     <TextBlock Grid.Row="0" Grid.Column="3" Text="Рабочий телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="0" Grid.Column="4"
@@ -344,13 +344,13 @@
                                              PreviewTextInput="OnlyPhoneChars_PreviewTextInput"
                                              DataObject.Pasting="OnlyPhoneChars_Pasting"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите рабочий телефон пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите рабочий телефон пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Отдел:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="1" Grid.Column="1"
                                              Text="{Binding EditableUser.Department, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите наименование отдела"/>
+                                             materialDesign:HintAssist.Hint="Введите наименование отдела" Foreground="White"/>
 
                                     <TextBlock Grid.Row="1" Grid.Column="3" Text="Мобильный телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="1" Grid.Column="4"
@@ -359,19 +359,19 @@
                                              TextChanged="PhoneTextBox_TextChanged"
                                              MaxLength="19"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите мобильный телефон пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите мобильный телефон пользователя" Foreground="White"/>
 
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Менеджер:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="2" Grid.Column="1"
                                              Text="{Binding EditableUser.ManagerName, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите email менеджера"/>
+                                             materialDesign:HintAssist.Hint="Введите email менеджера" Foreground="White"/>
 
                                     <TextBlock Grid.Row="2" Grid.Column="3" Text="IP-телефон:" FontWeight="Bold" Margin="0,10,10,0"/>
                                     <TextBox Grid.Row="2" Grid.Column="4"
                                              Text="{Binding EditableUser.IPPhone, UpdateSourceTrigger=PropertyChanged}"
                                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                             materialDesign:HintAssist.Hint="Введите IP-телефон пользователя"/>
+                                             materialDesign:HintAssist.Hint="Введите IP-телефон пользователя" Foreground="White"/>
                                 </Grid>
                             </GroupBox>
                         </StackPanel>
